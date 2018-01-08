@@ -1,0 +1,29 @@
+.slideshow__portrait {
+  .slideshow {
+      display: none;
+    }
+
+  .slideshow__backup {
+
+      &--container {
+        overflow: hidden;
+        height: 100%;
+
+      }
+
+      &--content {
+        height: 100%;
+        width: 100%;
+        overflow: auto;  
+
+
+        -webkit-overflow-scrolling: touch;
+        .js & {
+          -ms-overflow-style: -ms-autohiding-scrollbar;
+          &::-webkit-scrollbar {
+            display: none;
+          }
+        }
+      }
+  }
+}
