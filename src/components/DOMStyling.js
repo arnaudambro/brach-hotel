@@ -1,9 +1,10 @@
 'use strict';
 
 import { exactCapitalLetterSize } from './_measureFont.js'; 
+import PerfectScrollbar from 'perfect-scrollbar';
 
 
-
+const wholeContentDiv = document.querySelector('#wholeContent')
 const slideshowDiv = document.querySelector(".slideshow");
 const slideshowDescription = document.querySelector('.slideshow__description');
 const hotelOptions = document.querySelector('.slideshow__description--options');
@@ -16,11 +17,11 @@ const hotelOptionsLetters = [...hotelOptions.children];
 function landscapeOrPortrait() {
   let landscapeOrientation = window.innerHeight <= window.innerWidth;
   if ((window.innerWidth > 1024) && landscapeOrientation) {
-    document.body.classList.add('slideshow__landscape');
-    document.body.classList.remove('slideshow__portrait');
+    wholeContentDiv.classList.add('slideshow__landscape');
+    wholeContentDiv.classList.remove('slideshow__portrait');
   } else {
-    document.body.classList.remove('slideshow__landscape');
-    document.body.classList.add('slideshow__portrait');  
+    wholeContentDiv.classList.remove('slideshow__landscape');
+    wholeContentDiv.classList.add('slideshow__portrait');  
   };
 };
 
@@ -73,10 +74,5 @@ alignDescriptionWithCursorOnMiddle();
 /*------------------------------------*\
     HIDE SCROLLBAR
 \*------------------------------------*/
-
-window.addEventListener('resize', function (e) {
-  const slideshowBackupContainer = document.querySelector('.slideshow__backup--content');
-  slideshowBackupContainer.style.paddingRight = `${slideshowBackupContainer.offsetWidth - slideshowBackupContainer.clientWidth}px`
-});
 
 export { alSize };

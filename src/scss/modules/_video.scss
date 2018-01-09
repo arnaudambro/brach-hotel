@@ -1,0 +1,15 @@
+.video {
+  overflow: hidden;
+  display: flex;
+  
+  justify-content: center;
+  align-items: center;
+  //align-content: center;
+  
+  &__video1 {
+    width: 200vw;
+    height: 100vh;
+    overflow: hidden;
+  }
+}
+

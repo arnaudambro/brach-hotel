@@ -12,6 +12,9 @@
 import { buildFakeHotelOptionLetters} from './_fakeDom';
 import { populateHotelOptions } from './_populateLetters';
 import { alSize } from '../DOMStyling';
+require('smoothscroll-polyfill').polyfill();   //https://github.com/iamdustan/smoothscroll
+import PerfectScrollbar from 'perfect-scrollbar';
+
 /*------------------------------------*\
     VARIABLES & DATA
 \*------------------------------------*/
@@ -20,6 +23,7 @@ import { alSize } from '../DOMStyling';
 import { slideshowParams } from './_params';
 
 //DOM
+const wholeContentDiv = document.querySelector('#wholeContent')
 const slideshowDiv = document.querySelector(".slideshow");
 const slideshowContentDiv = document.querySelector(".slideshow__content");
 const totemDiv = document.querySelector('.slideshow__totem');
@@ -29,6 +33,7 @@ const hotelOptions = document.querySelector('.slideshow__description--options');
 const hotelSlogan = document.querySelector('.slideshow__description--slogan');
 const hotelName = slideshowDiv.querySelector('.slideshow__description');
 const dividerInDescription = slideshowDiv.querySelector('.slideshow__description--divider');
+const video1 = document.querySelector('.video__video1');
 
 //CSS
 const totemDivHeight = 90;
@@ -36,13 +41,10 @@ const cursorVerticalSpacing = 20;
 const transitionDuration = 1300;  //A bit higher than the one in CSS for a proper totem transition
 
     /*  CURSOR  */
-movingCursorDiv.style.boxShadow = `0px ${(cursorVerticalSpacing * 0)}px, 0px ${(cursorVerticalSpacing * 1)}px, 0px ${(cursorVerticalSpacing * 2)}px, 0px ${(cursorVerticalSpacing * 3)}px, 0px ${(cursorVerticalSpacing * 4)}px, 0px ${(cursorVerticalSpacing * 5)}px`;
+movingCursorDiv.style.boxShadow = `0px ${(cursorVerticalSpacing * 0)}px, 0px ${(cursorVerticalSpacing * 1)}px, 0px ${(cursorVerticalSpacing * 2)}px, 0px ${(cursorVerticalSpacing * 3)}px, 0px ${(cursorVerticalSpacing * 4)}px, 0px ${(cursorVerticalSpacing * 5)}px, 0px ${(cursorVerticalSpacing * 6)}px`;
 
 
 //SLIDESHOW PARAMS
-/*------------------------------------*/  
-let CURRENT_INDEX = 0;
-/*------------------------------------*/
 const numberOfSlides = Object.keys(slideshowParams).length;
 let biggestWordLength = 0;
 let biggestWordParam = 0;
@@ -53,6 +55,9 @@ Object.keys(slideshowParams).map(param => {
   }; 
 });
 
+/*------------------------------------*/  
+let CURRENT_INDEX = /*numberOfSlides - 1*/ 0;
+/*------------------------------------*/
 hotelOptions.style.width = `750px`
 
 
@@ -84,6 +89,12 @@ function cursorMove(index) {
 const init = (index) => {
 
   const theme = Object.keys(slideshowParams)[index];
+  /*    SCROLLBAR   */
+  const ps = new PerfectScrollbar(wholeContentDiv, {
+    handlers: ['click-rail', 'drag-thumb', 'keyboard', /*'wheel',*/ 'touch'],
+
+  });
+
   /* BACKGROUND AND TEXT COLORS */
   colorsChange(index);
 
@@ -127,15 +138,15 @@ function startTransition(e) {
   const eventGoDown = (eventCases.keyDown || eventCases.wheeledDown || eventCases.clickedMouseForDown);
 
   //If portrait or mobile
-  if (!document.body.classList.contains('slideshow__landscape')) {
-    return
-  }
   //Prevent transit while already transiting
   if (slideshowDiv.classList.contains('inTransition')) {
     return;
   } else if (eventGoUp && CURRENT_INDEX === 0) {
     return;
   } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides - 1)) {
+    console.log('youpi')
+    // wholeContentDiv.overflow = '';
+    scrollOneHeight();
     return;
   } else {
     [slideshowDiv, movingCursorDiv, dividerInDescription, hotelName].forEach(item => {
@@ -144,9 +155,13 @@ function startTransition(e) {
   }
 
 
+  if (!wholeContentDiv.classList.contains('slideshow__landscape')) {
+    return
+  }
   const previousIndex = CURRENT_INDEX;
   let direction;
-  if (eventGoUp && CURRENT_INDEX > 0) { 
+  if (eventGoUp && CURRENT_INDEX > 0 && CURRENT_INDEX < numberOfSlides) { 
+    console.log('ouais gros')
     CURRENT_INDEX--;
     direction = 'down';
   } else if (eventGoDown && CURRENT_INDEX < numberOfSlides)  {
@@ -230,7 +245,7 @@ function hotelOptionsTransit(e, index, anyHotelOptions, direction) {
   
   /*    FAKE DOM     */
   const newHotelOptions = buildFakeHotelOptionLetters(anyHotelOptions, slideshowParams, index, offset, alSize);
-  document.body.append(newHotelOptions);
+  wholeContentDiv.append(newHotelOptions);
 
   //STEP 1: move up the existing letter and transit opacity from 1 to 0 during 1/2 transition
   [...anyHotelOptions.children].forEach(letter => {
@@ -253,7 +268,7 @@ function hotelOptionsTransit(e, index, anyHotelOptions, direction) {
 
   window.setTimeout(() => {
     populateHotelOptions(anyHotelOptions, index, slideshowParams, alSize);
-    document.body.removeChild(newHotelOptions);
+    wholeContentDiv.removeChild(newHotelOptions);
   }, transitionDuration)
 }
 
@@ -286,23 +301,41 @@ function letterAppear(letter, transition, offset) {
 }
 
 
+function scrollOneHeight() {
+  CURRENT_INDEX++;
+  console.log('on est là')
+  wholeContentDiv.scrollBy({
+    left: 0,
+    top: window.innerHeight,
+    behavior: 'smooth'
+  });
+}
+
 /*------------------------------------*\
     EVENT LISTENERS
 \*------------------------------------*/
 
 window.addEventListener('keyup', function(e) {
+  console.log('on tape une touche')
   //Prevent scrolling when pressing space
   e.preventDefault();
+  if (CURRENT_INDEX === numberOfSlides - 1) {
+    return
+  }
   startTransition(e);
 })
 
-window.addEventListener('mousewheel', function(e) {
+wholeContentDiv.addEventListener('mousewheel', function(e) {
+  console.log('salut toi')
   e.preventDefault();
+
   startTransition(e);
 })
 
 document.querySelector('.scroll-btn').addEventListener('click', function(e) {
+  console.log('coucou')
   e.preventDefault();
+
   startTransition(e);
 })
 

@@ -26,57 +26,62 @@
   <title>Brach Hotel | Un style de vie à Paris  </title>
 </head>
 
-<body>
+<body id="noscrollbar">
+  <div id="wholeContent">
+    
 
+    <!--                      SLIDESHOW                   -->
 
-  <!--                      SLIDESHOW                   -->
+    <div class="slideshow">
 
-  <div class="slideshow">
+      <!-- SLIDESHOW - CONTENT -->
+      <div class="slideshow__content">
+        <!-- SLIDESHOW - TOTEM -->
+        <div class="slideshow__totem"></div>
 
-    <!-- SLIDESHOW - CONTENT -->
-    <div class="slideshow__content">
-      <!-- SLIDESHOW - TOTEM -->
-      <div class="slideshow__totem"></div>
-
-      <!-- SLIDESHOW - DESCRIPTION -->  
-      <div class="slideshow__description">
-        <div class="slideshow__description--establishment-name">
-          <p class="first-last-letter"><span>B</span></p>
-          <p class="middle-letters"><span>R</span></p>
-          <p class="middle-letters"><span>A</span></p>
-          <p class="middle-letters"><span>C</span></p>
-          <p class="first-last-letter"><span>H</span></p>
+        <!-- SLIDESHOW - DESCRIPTION -->  
+        <div class="slideshow__description">
+          <div class="slideshow__description--establishment-name">
+            <p class="first-last-letter"><span>B</span></p>
+            <p class="middle-letters"><span>R</span></p>
+            <p class="middle-letters"><span>A</span></p>
+            <p class="middle-letters"><span>C</span></p>
+            <p class="first-last-letter"><span>H</span></p>
+          </div>
+          <div class="slideshow__description--divider"></div>
+          <div class="slideshow__description--options"></div>
+          <div class="slideshow__description--slogan"><span></span></div>
         </div>
-        <div class="slideshow__description--divider"></div>
-        <div class="slideshow__description--options"></div>
-        <div class="slideshow__description--slogan"><span></span></div>
       </div>
-    </div>
 
-    <!-- SLIDESHOW - CURSOR -->
-    <div class="slideshow__cursor">
-      <div class="slideshow__cursor--fixed"></div>
-      <div class="slideshow__cursor--moving"></div>
-    </div>
+      <!-- SLIDESHOW - CURSOR -->
+      <div class="slideshow__cursor">
+        <div class="slideshow__cursor--fixed"></div>
+        <div class="slideshow__cursor--moving"></div>
+      </div>
 
-    <div class="slideshow__mouseScroll">
-      <a class="scroll-btn" href="#">
-        <span class="mouse">
-          <span>
+      <div class="slideshow__mouseScroll">
+        <a class="scroll-btn" href="#">
+          <span class="mouse">
+            <span>
+            </span>
           </span>
-        </span>
-      </a>
-      <div class="verticalDivider"></div>
-    </div> 
+        </a>
+        <div class="verticalDivider"></div>
+      </div> 
+    </div>
+
+    <div class="slideshow__backup--container">
+      <div class="slideshow__backup--content"></div>
+    </div>
+
+    <div class="video video1">
+      <iframe class="video__video1" id="video__video1" type="text/html" src="https://www.youtube.com/embed/M6kQi1_Btqg?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+    </div>
+
+    <script src="./_build/bundle.js"></script>
+
   </div>
-
-  <div class="slideshow__backup--container">
-    <div class="slideshow__backup--content"></div>
-  </div>
-
-  <video src="./src/video/video_1_480p.mov"></video>
-
-  <script src="./_build/bundle.js"></script>
 </body>
 
 </html>
