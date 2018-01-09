@@ -1,6 +1,6 @@
 'use strict';
 
-import { exactCapitalLetterSize } from './measureFont'; 
+import { exactCapitalLetterSize } from './_measureFont.js'; 
 
 
 
@@ -76,8 +76,6 @@ alignDescriptionWithCursorOnMiddle();
 
 window.addEventListener('resize', function (e) {
   const slideshowBackupContainer = document.querySelector('.slideshow__backup--content');
-  console.log(`slideshowBackupContainer.offsetWidth: ${slideshowBackupContainer.offsetWidth}`);
-  console.log(`slideshowBackupContainer.clientWidth: ${slideshowBackupContainer.clientWidth}`);
   slideshowBackupContainer.style.paddingRight = `${slideshowBackupContainer.offsetWidth - slideshowBackupContainer.clientWidth}px`
 });
 

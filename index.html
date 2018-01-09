@@ -4,21 +4,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" href="./src/img/icons/favicon.png">
   <!-- BRACH POLICE -->
   <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-  <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-  <!-- <script src="https://use.fontawesome.com/45d80bbe59.js"></script> -->
+
   <link rel="stylesheet" href="./src/css/styles.css">
-  <link rel="preload" href="./src/img/totems/totem_clubDeSport.png" as="image">
-  <link rel="preload" href="./src/img/totems/totem_evenementiel.png" as="image">
-  <link rel="preload" href="./src/img/totems/totem_hotel.png" as="image">
-  <link rel="preload" href="./src/img/totems/totem_patisserie.png" as="image">
-  <link rel="preload" href="./src/img/totems/totem_potager.png" as="image">
-  <link rel="preload" href="./src/img/totems/totem_restaurant.png" as="image">
-  <title></title>
+  <!-- PREFETCH ON BIG SCREENS -->
+  <link rel="preload" href="./src/img/totems/totem_hotel.png" as="image" type="image/png">
+  <link rel="prefetch" href="./src/img/totems/totem_evenementiel.png" as="image" type="image/png">
+  <link rel="prefetch" href="./src/img/totems/totem_clubDeSport.png" as="image" type="image/png">
+  <link rel="prefetch" href="./src/img/totems/totem_patisserie.png" as="image" type="image/png">
+  <link rel="prefetch" href="./src/img/totems/totem_potager.png" as="image" type="image/png">
+  <link rel="prefetch" href="./src/img/totems/totem_restaurant.png" as="image" type="image/png">
+  <!-- PRELOAD ON SMALL SCREENS -->
+  <link rel="preload" href="./src/img/totems/totem_hotel.png" as="image" media="(max-width: 1024px)" type="image/png">
+  <link rel="preload" href="./src/img/totems/totem_evenementiel.png" as="image" media="(max-width: 1024px)" type="image/png">
+  <link rel="preload" href="./src/img/totems/totem_clubDeSport.png" as="image" media="(max-width: 1024px)" type="image/png">
+  <link rel="preload" href="./src/img/totems/totem_patisserie.png" as="image" media="(max-width: 1024px)" type="image/png">
+  <link rel="preload" href="./src/img/totems/totem_potager.png" as="image" media="(max-width: 1024px)" type="image/png">
+  <link rel="preload" href="./src/img/totems/totem_restaurant.png" as="image" media="(max-width: 1024px)" type="image/png">
+  <title>Brach Hotel | Un style de vie à Paris  </title>
 </head>
 
-<body class='js'>
+<body>
 
 
   <!--                      SLIDESHOW                   -->
@@ -65,6 +73,8 @@
   <div class="slideshow__backup--container">
     <div class="slideshow__backup--content"></div>
   </div>
+
+  <video src="./src/video/video_1_480p.mov"></video>
 
   <script src="./_build/bundle.js"></script>
 </body>

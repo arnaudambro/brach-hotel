@@ -1,5 +1,4 @@
 .slideshow__landscape {
-
   overflow: hidden;
   > .slideshow__backup {
     display: none;
@@ -14,6 +13,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  &.inTransition {
+    transition: background-color $transitionDuration ease-in-out; 
+  }
 
     &__content {
       @include size(100%);
@@ -36,6 +38,23 @@
       background-position-y: bottom;
 
       will-change: transform;
+
+      &.totemOnTransitionUp {
+        transition: transform $transitionDuration cubic-bezier(0.64, 0.46, 0.38, 1.41);
+        transform: translateY(-100vh);
+      }
+      &.totemOnTransitionDown {
+        transition: transform $transitionDuration cubic-bezier(0.64, 0.46, 0.38, 1.41);
+        transform: translateY(+100vh);
+      }
+      &.fakeTotemUp {
+        top: calc(5% + 100vh);
+        height: 90%;
+      }
+      &.fakeTotemDown {
+        top: calc(5% - 100vh);
+        height: 90%;
+      }
     }
 
     &__description {
@@ -50,7 +69,9 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-
+      &.inTransition {
+        transition: color $transitionDuration ease-in-out; 
+      }
       
 
       &--establishment-name {
@@ -72,6 +93,9 @@
         margin-top: 12px;
         margin-bottom: 17px;
         border-top: 1px solid; //IMPORTANT
+        &.inTransition {
+          transition: border-color $transitionDuration ease-in-out; 
+        }
       }
 
 
@@ -107,7 +131,14 @@
         top: 1px;
         right: 15%;
         width: 25px;
-        border: 1px solid;   //IMPORTANT   
+        border: 1px solid;   //IMPORTANT  
+        &.inTransition {
+          transition: 
+            color $transitionDuration ease-in-out, 
+            border-color $transitionDuration ease-in-out, 
+            transform $transitionDuration ease-in-out; 
+          //COLOR FOR THE SHADOW + BORDER-COLOR FOR THE MAIN + TRANSFORM
+        }
       }
     }
   }
@@ -115,15 +146,40 @@
 
 
 .slideshow__description--options {
-        display: flex;
+  display: flex;
 
-        justify-content: center;
-        align-items: flex-start;
-        align-content: flex-start;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
 
-        font-weight: 500;
-        text-transform: uppercase; 
-        > p {
-         margin: 0 5px;
-        }
-      }
+  font-weight: 500;
+  text-transform: uppercase; 
+  > p {
+   margin: 0 5px;
+ }
+}
+
+
+// .onTransitionUp {
+//   transform: translateY(-100vh);
+// }
+// .onTransitionDown {
+//   transform: translateY(+100vh);
+// }
+// .totemUp {
+//   transition: transform $transitionDuration cubic-bezier(0.64, 0.46, 0.38, 1.41);
+// }
+// .totemDown {
+//   transition: transform $transitionDuration cubic-bezier(0.64, 0.46, 0.38, 1.41);
+// }
+
+// .fakeUp {
+//   top: calc(5% + 100vh);
+//   height: 90%;
+// }
+
+// .fakeDown {
+//   top: calc(5% - 100vh);
+//   height: 90%;
+// }
+

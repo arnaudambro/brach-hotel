@@ -1,29 +1,18 @@
 'use strict';
 
-/* ADVICE FOR SLIDESHOWS :
--> add class instead of CSS property when it's possible
--> add class to the direct element, not the motherDiv, when possible
--> for the fake DOM, use absolute position to have the minimum calculation as possible
--> use transitionend at the end of the transitions
--> create fragment instead of crete element: https://coderwall.com/p/o9ws2g/why-you-should-always-append-dom-elements-using-documentfragments
--> good advices hear : https://medium.com/outsystems-experts/how-to-achieve-60-fps-animations-with-css3-db7b98610108
-*/
-
-import { buildFakeHotelOptionLetters} from './_fakeDom';
-import { populateHotelOptions } from './_populateLetters';
+import { buildFakeTotem, buildFakeHotelOptionLetters} from './fakeDom';
+import { populateHotelOptions } from './populateLetters';
 import { alSize } from '../DOMStyling';
 /*------------------------------------*\
     VARIABLES & DATA
 \*------------------------------------*/
 
 //DATA
-import { slideshowParams } from './_params';
+import { slideshowParams } from './params';
 
 //DOM
 const slideshowDiv = document.querySelector(".slideshow");
-const slideshowContentDiv = document.querySelector(".slideshow__content");
 const totemDiv = document.querySelector('.slideshow__totem');
-let nextTotemDiv = 0;
 const movingCursorDiv = document.querySelector('.slideshow__cursor--moving');
 const hotelOptions = document.querySelector('.slideshow__description--options');
 const hotelSlogan = document.querySelector('.slideshow__description--slogan');
@@ -33,16 +22,14 @@ const dividerInDescription = slideshowDiv.querySelector('.slideshow__description
 //CSS
 const totemDivHeight = 90;
 const cursorVerticalSpacing = 20;
-const transitionDuration = 1300;  //A bit higher than the one in CSS for a proper totem transition
+const transitionDuration = 1000;
 
     /*  CURSOR  */
 movingCursorDiv.style.boxShadow = `0px ${(cursorVerticalSpacing * 0)}px, 0px ${(cursorVerticalSpacing * 1)}px, 0px ${(cursorVerticalSpacing * 2)}px, 0px ${(cursorVerticalSpacing * 3)}px, 0px ${(cursorVerticalSpacing * 4)}px, 0px ${(cursorVerticalSpacing * 5)}px`;
 
 
 //SLIDESHOW PARAMS
-/*------------------------------------*/  
-let CURRENT_INDEX = 0;
-/*------------------------------------*/
+let currentIndex = 0;
 const numberOfSlides = Object.keys(slideshowParams).length;
 let biggestWordLength = 0;
 let biggestWordParam = 0;
@@ -60,7 +47,7 @@ hotelOptions.style.width = `750px`
     INIT
 \*------------------------------------*/
 
-//function to use also on transition and init
+
 function colorsChange(index) {
   const theme = Object.keys(slideshowParams)[index];
 
@@ -74,12 +61,13 @@ function colorsChange(index) {
   movingCursorDiv.style.borderColor = slideshowParams[theme].textColor;
 }
 
-//function to use also on transition and init
 function cursorMove(index) {
   movingCursorDiv.style.transform = `translateY(${-cursorVerticalSpacing * index}px)`;
   window.setTimeout(() => {
+    // console.log('step 5 end: cursor moved')
   }, transitionDuration);
 }
+
 
 const init = (index) => {
 
@@ -91,7 +79,7 @@ const init = (index) => {
   cursorMove(index);
 
   /*   TOTEM   */
-  totemDiv.style.backgroundImage = `url('${slideshowParams[theme].totemPictureUrl()}')`;
+  totemDiv.style.backgroundImage = `url('${slideshowParams[theme].totemPicture()}')`;
 
   /*  OPTIONS  */
   populateHotelOptions(hotelOptions, index, slideshowParams, alSize, true);
@@ -99,7 +87,8 @@ const init = (index) => {
   /* SLOGAN   */
   hotelSlogan.firstChild.textContent = 'un style de vie à paris';
 };
-init(CURRENT_INDEX);
+
+init(currentIndex);
 
 
 /*------------------------------------*\
@@ -108,118 +97,101 @@ init(CURRENT_INDEX);
 
 
 function startTransition(e) {
+  //console.log(`${e.code}: ${e.keyCode}`);
   //Prevent pressing any other key
-  const keyPressedIsNoGood = (e.type === 'keyup') && (e.keyCode != 38 && e.keyCode != 40 && e.keyCode != 32);
-  if (keyPressedIsNoGood) { 
+  if (e.keyCode != 38 && e.keyCode != 40 && e.keyCode != 32) { 
+    // console.error('ni space, ni flèche haut, ni flèche bas')
     return; 
   };
 
-  //EVENT CASES
-  const eventCases = {
-    wheeledUp: (e.type === 'mousewheel' && e.deltaY < 0),
-    wheeledDown: (e.type === 'mousewheel' && e.deltaY > 0),
-    keyDown: (e.type === 'keyup' && ((e.keyCode === 40) || (e.keyCode === 32))),
-    keyUp: (e.type === 'keyup' && (e.keyCode === 38)),  //38 = arrow up
-    clickedMouseForDown: (e.type === 'click' && e.srcElement.className === 'mouse'),
-  };
-
-  const eventGoUp = (eventCases.keyUp || eventCases.wheeledUp);
-  const eventGoDown = (eventCases.keyDown || eventCases.wheeledDown || eventCases.clickedMouseForDown);
-
-  //If portrait or mobile
   if (!document.body.classList.contains('slideshow__landscape')) {
     return
   }
   //Prevent transit while already transiting
   if (slideshowDiv.classList.contains('inTransition')) {
-    return;
-  } else if (eventGoUp && CURRENT_INDEX === 0) {
-    return;
-  } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides - 1)) {
+    // console.error('déjà en transition')
     return;
   } else {
+    // console.log('step 1: add class transition')
+    slideshowDiv.classList.add('inTransition');
     [slideshowDiv, movingCursorDiv, dividerInDescription, hotelName].forEach(item => {
-      item.classList.add('inTransition');
-    });
+      item.style.transition = `all ${transitionDuration}ms ease-in-out`;
+    })
   }
 
-
-  const previousIndex = CURRENT_INDEX;
+  const previousIndex = currentIndex;
+  // console.log(`step 2: define previous index: ${previousIndex}`)
   let direction;
-  if (eventGoUp && CURRENT_INDEX > 0) { 
-    CURRENT_INDEX--;
-    direction = 'down';
-  } else if (eventGoDown && CURRENT_INDEX < numberOfSlides)  {
-    CURRENT_INDEX === numberOfSlides - 1 ? CURRENT_INDEX = 0 : CURRENT_INDEX++;
+  if (!(e.keyCode === 38)) {
+    currentIndex === numberOfSlides - 1 ? currentIndex = 0 : currentIndex++;
+    // console.log(`step 3: define next index: ${currentIndex}`)
     direction = 'up';
+    // console.log(`step 4: define direction: ${direction}`)
+  } else {
+    currentIndex === 0 ? currentIndex = numberOfSlides - 1 : currentIndex--;
+    // console.log(`step 3: define next index: ${currentIndex}`)
+    direction = 'down';
+    // console.log(`step 4: define direction: ${direction}`)
   }
+
   //Cursor move
-  cursorMove(CURRENT_INDEX);
+  // console.log('step 5: moving the cursor');
+  cursorMove(currentIndex);
   
   //Totem move
-  totemMove(CURRENT_INDEX, direction);
+  // console.log('step 6: moving the totem');
+  totemMove(currentIndex, direction);
   
   //Hotel Options change
-  hotelOptionsTransit(e, CURRENT_INDEX, hotelOptions, direction);
+  hotelOptionsTransit(e, currentIndex, hotelOptions, direction);
 
   //Background color change
-  colorsChange(CURRENT_INDEX);
+  // console.log('step 7: changing the colors');
+  colorsChange(currentIndex);
+
+  // window.setTimeout(() => {
+  //   debugger
+  // }, transitionDuration / 2)
 
   //Make the slideshow ready for new transition
   window.setTimeout(() => {
-    [slideshowDiv, movingCursorDiv, dividerInDescription, hotelName].forEach(item => {
-      item.classList.remove('inTransition');
-    });
-  }, transitionDuration + 200);
+    slideshowDiv.classList.remove('inTransition');
+    // console.log('step 8: taking out the transition class');
+  }, transitionDuration);
 }
 
-/*----- TOTEM FUNCTIONS-----*/
+
+
 function totemMove(index, direction) {
   const up = direction === 'up' ? true : false;
-  const timeOffset = 100;
+  // console.log(`step 6.1: direction up ? ${up}`)
+  const theme = Object.keys(slideshowParams)[index];
+  totemDiv.style.transition = `all ${transitionDuration}ms cubic-bezier(0.64, 0.46, 0.38, 1.41)`;
 
   //Building the new totem
-  nextTotemDiv = slideshowParams[Object.keys(slideshowParams)[index]].fakeTotem()
-
-  nextTotemDiv.classList.add(up ? 'fakeTotemUp' : 'fakeTotemDown');
-
-  slideshowContentDiv.appendChild(nextTotemDiv);
+  const newTotemDiv = buildFakeTotem(/*totem*/totemDiv, /*motherDiv*/slideshowDiv, /*data*/slideshowParams, index, up);
+  document.body.append(newTotemDiv);
 
   window.setTimeout(() => {
-    [nextTotemDiv, totemDiv].forEach(div => {
-      div.classList.add(up ? 'totemOnTransitionUp' : 'totemOnTransitionDown');
-    });
-  }, timeOffset);
+    totemDiv.style.transform = `translateY(${(up ? -1 : 1) * 100}vh)`;
 
-
-  window.setTimeout(() => {
-    totemDiv.addEventListener('transitionend', rebuildTotemDom(up, index), false);
-    totemDiv.style.backgroundImage = `url('${slideshowParams[Object.keys(slideshowParams)[index]].totemPictureUrl()}')`;
-    nextTotemDiv.addEventListener('transitionend', rebuildTotemDom(up, index), false);
-
-    }, transitionDuration + timeOffset);
+    newTotemDiv.style.transform = `translateY(${(up ? -1 : 1) * 100}vh)`;
+    // if (newTotemDiv.style.transform === `translateY(${(up ? -1 : 1) * 100}vh)`) {
+    //   // console.log(`step 6.5: newTotemDiv instructed to move`)
+    // } else {
+    //   // console.error(`step 6.5: newTotemDiv not instructed to move: ${newTotemDiv.style.transform}`)
+    // }
+    window.setTimeout(() => {
+      // debugger
+      totemDiv.style.transition = '';
+      totemDiv.style.transform = '';
+      totemDiv.style.backgroundImage = `url('${slideshowParams[theme].totemPicture()}')`;
+      document.body.removeChild(newTotemDiv);
+      // console.log('step 6 end: totem moved')
+    }, transitionDuration);
+  });
 }
 
-let finishLine = 0;  //special var for totem transitionend only
-function rebuildTotemDom(up, index) {
-
-  finishLine++;
-
-  if (finishLine === 2) {
-    totemDiv.classList.remove(up ? 'totemOnTransitionUp' : 'totemOnTransitionDown');
-    //IF NOT REMOVE THE EVENT LISTENER TRANSITIONEND, IT'S TRIGGERED EVERYTIME ONE MORE TIME
-    totemDiv.removeEventListener('transitionend', rebuildTotemDom(up, index));
-
-    slideshowContentDiv.removeChild(nextTotemDiv);
-    nextTotemDiv = 0;
-    finishLine = 0;
-  } else {
-
-    return;
-  }
-}
-
-/*------ HOTEL OPTIONS FUNCTIONS ------*/
 function hotelOptionsTransit(e, index, anyHotelOptions, direction) {
   /*    TRANSITION PARAMTERS    */
   let i = 0;
@@ -242,8 +214,10 @@ function hotelOptionsTransit(e, index, anyHotelOptions, direction) {
 
   //STEP 2: move up the new letter and transit opacity from 0 to 1 during 1/2 transition
   window.setTimeout(() => {
+    //debugger
     newHotelOptions.style.opacity = 1;
     [...newHotelOptions.children].forEach(letter => {
+      // debugger
       i++;
       window.setTimeout(() => {
       letterAppear(letter, letterTransitionDuration, offset);
@@ -258,7 +232,9 @@ function hotelOptionsTransit(e, index, anyHotelOptions, direction) {
 }
 
 function letterDisappear(letter, transition, offset) {
+  // console.log(`offset: ${offset}`);
 
+  // console.log(`letter.textContent: ${letter.textContent}`);
   letter.style.transition = `all ${transition * 2 / 3}ms linear`;
   //STEP 1: move it up
   letter.style.transform = `translateY(${-offset}px)`;
@@ -273,7 +249,9 @@ function letterDisappear(letter, transition, offset) {
 }
 
 function letterAppear(letter, transition, offset) {
+  // console.log(`offset: ${offset}`);
 
+  // console.log(`letter.textContent: ${letter.textContent}`);
   letter.style.transition = `transform ${transition * 2 / 3}ms cubic-bezier(0.64, 0.46, 0.4, 2.19), opacity ${transition * 2 / 3}ms linear`;
   //STEP 1: move it up
   letter.style.transform = `translateY(${-offset}px)`;
@@ -286,9 +264,7 @@ function letterAppear(letter, transition, offset) {
 }
 
 
-/*------------------------------------*\
-    EVENT LISTENERS
-\*------------------------------------*/
+
 
 window.addEventListener('keyup', function(e) {
   //Prevent scrolling when pressing space
@@ -296,14 +272,10 @@ window.addEventListener('keyup', function(e) {
   startTransition(e);
 })
 
-window.addEventListener('mousewheel', function(e) {
-  e.preventDefault();
-  startTransition(e);
-})
+// window.addEventListener('load', function(e) {
+//   e.preventDefault();
+//   hotelOptionsTransit(e, currentIndex, hotelOptions);
+// })
 
-document.querySelector('.scroll-btn').addEventListener('click', function(e) {
-  e.preventDefault();
-  startTransition(e);
-})
 
-export { totemDiv };
+

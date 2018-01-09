@@ -1,6 +1,6 @@
 'use strict';
 
-import { exactCapitalLetterSize } from '../measureFont'; 
+import { exactCapitalLetterSize } from '../_measureFont'; 
 
 function populateHotelOptions (motherDiv, index, data, size) {
   while (motherDiv.firstChild) {

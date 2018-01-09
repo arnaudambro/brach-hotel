@@ -10,8 +10,8 @@
 /*------------------------------------*\
     utilities
 \*------------------------------------*/
-import './bling';
-import './measureFont';
+import './_bling';
+import './_measureFont';
 
 /*------------------------------------*\
     modules
