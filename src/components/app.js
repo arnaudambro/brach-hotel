@@ -10,7 +10,7 @@
 /*------------------------------------*\
     utilities
 \*------------------------------------*/
-import './_video';
+import './_video1';
 import './_bling';
 import './_measureFont';
 

@@ -14,6 +14,7 @@ import { populateHotelOptions } from './_populateLetters';
 import { alSize } from '../DOMStyling';
 require('smoothscroll-polyfill').polyfill();   //https://github.com/iamdustan/smoothscroll
 import PerfectScrollbar from 'perfect-scrollbar';
+import { player1, playerPlay } from '../_video1';
 
 /*------------------------------------*\
     VARIABLES & DATA
@@ -25,6 +26,7 @@ import { slideshowParams } from './_params';
 //DOM
 const wholeContentDiv = document.querySelector('#wholeContent')
 const slideshowDiv = document.querySelector(".slideshow");
+const slideshowBackupDiv = document.querySelector(".slideshow__backup--container");
 const slideshowContentDiv = document.querySelector(".slideshow__content");
 const totemDiv = document.querySelector('.slideshow__totem');
 let nextTotemDiv = 0;
@@ -56,7 +58,7 @@ Object.keys(slideshowParams).map(param => {
 });
 
 /*------------------------------------*/  
-let CURRENT_INDEX = /*numberOfSlides - 1*/ 0;
+let CURRENT_INDEX = numberOfSlides - 1 ;
 /*------------------------------------*/
 hotelOptions.style.width = `750px`
 
@@ -144,9 +146,8 @@ function startTransition(e) {
   } else if (eventGoUp && CURRENT_INDEX === 0) {
     return;
   } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides - 1)) {
-    console.log('youpi')
-    // wholeContentDiv.overflow = '';
-    scrollOneHeight();
+        // wholeContentDiv.overflow = '';
+    scrollToFirstVideo();
     return;
   } else {
     [slideshowDiv, movingCursorDiv, dividerInDescription, hotelName].forEach(item => {
@@ -161,8 +162,7 @@ function startTransition(e) {
   const previousIndex = CURRENT_INDEX;
   let direction;
   if (eventGoUp && CURRENT_INDEX > 0 && CURRENT_INDEX < numberOfSlides) { 
-    console.log('ouais gros')
-    CURRENT_INDEX--;
+        CURRENT_INDEX--;
     direction = 'down';
   } else if (eventGoDown && CURRENT_INDEX < numberOfSlides)  {
     CURRENT_INDEX === numberOfSlides - 1 ? CURRENT_INDEX = 0 : CURRENT_INDEX++;
@@ -301,14 +301,17 @@ function letterAppear(letter, transition, offset) {
 }
 
 
-function scrollOneHeight() {
+function scrollToFirstVideo() {
   CURRENT_INDEX++;
-  console.log('on est là')
+  console.log('yo');
   wholeContentDiv.scrollBy({
     left: 0,
     top: window.innerHeight,
     behavior: 'smooth'
   });
+
+  playerPlay(player1);
+
 }
 
 /*------------------------------------*\
@@ -316,8 +319,7 @@ function scrollOneHeight() {
 \*------------------------------------*/
 
 window.addEventListener('keyup', function(e) {
-  console.log('on tape une touche')
-  //Prevent scrolling when pressing space
+    //Prevent scrolling when pressing space
   e.preventDefault();
   if (CURRENT_INDEX === numberOfSlides - 1) {
     return
@@ -326,15 +328,13 @@ window.addEventListener('keyup', function(e) {
 })
 
 wholeContentDiv.addEventListener('mousewheel', function(e) {
-  console.log('salut toi')
-  e.preventDefault();
+    e.preventDefault();
 
   startTransition(e);
 })
 
 document.querySelector('.scroll-btn').addEventListener('click', function(e) {
-  console.log('coucou')
-  e.preventDefault();
+    e.preventDefault();
 
   startTransition(e);
 })
