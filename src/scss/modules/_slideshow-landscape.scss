@@ -30,30 +30,26 @@
       bottom: 5%;
       left: 15%;
       right: 5%;
-
-      // border: 1px solid #000;
+      height: 90%;
 
       background-repeat: no-repeat;
       background-size: auto 100%;
       background-position-y: bottom;
+      animation: perpetual-rotation 10s linear infinite;
 
-      will-change: transform;
 
       &.totemOnTransitionUp {
-        transition: transform $transitionDuration cubic-bezier(0.64, 0.46, 0.38, 1.41);
-        transform: translateY(-100vh);
+        animation: totem-fade-Out-Down-to-Up 1.5s ease-in-out;
       }
       &.totemOnTransitionDown {
         transition: transform $transitionDuration cubic-bezier(0.64, 0.46, 0.38, 1.41);
         transform: translateY(+100vh);
       }
       &.fakeTotemUp {
-        top: calc(5% + 100vh);
-        height: 90%;
+        animation: totem-fade-In-Down-to-Up 1.5s ease-in-out;
       }
       &.fakeTotemDown {
         top: calc(5% - 100vh);
-        height: 90%;
       }
     }
 
@@ -159,5 +155,12 @@
  }
 }
 
+.totem_hotel { background-image: url('../img/totems/totem_hotel.png'); display: none }
+.totem_clubDeSport { background-image: url('../img/totems/totem_clubDeSport.png'); display: none }
+.totem_restaurant { background-image: url('../img/totems/totem_restaurant.png'); display: none }
+.totem_bar { background-image: url('../img/totems/totem_bar.png'); display: none }
+.totem_patisserie { background-image: url('../img/totems/totem_patisserie.png'); display: none }
+.totem_evenementiel { background-image: url('../img/totems/totem_evenementiel.png'); display: none }
+.totem_potager { background-image: url('../img/totems/totem_potager.png'); display: none }
 
-
+.showTotem { display: block !important }

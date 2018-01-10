@@ -8,6 +8,7 @@ const slideshowParams = {
   hotel: {
     position: 0,
     frenchName: 'hôtel', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
     backgroundColor: 'hsla(38,5%,65%,1.00)',
     optionsLetterSpacing: 8,
     textColor: white,
@@ -18,6 +19,7 @@ const slideshowParams = {
   clubDeSport: {
     position: 1,
     frenchName: 'club de sport', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
     backgroundColor: 'hsla(194,11%,63%,1.00)',
     optionsLetterSpacing: 3,
     textColor: white,
@@ -28,6 +30,7 @@ const slideshowParams = {
   restaurant: {
     position: 2,
     frenchName: 'restaurant', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
     backgroundColor: 'hsla(2,41%,82%,1.00)',
     optionsLetterSpacing: 8,
     textColor: white,
@@ -38,6 +41,7 @@ const slideshowParams = {
   bar: {
     position: 3,
     frenchName: 'bar', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
     backgroundColor: 'hsla(2,41%,82%,1.00)',
     optionsLetterSpacing: 8,
     textColor: white,
@@ -48,6 +52,7 @@ const slideshowParams = {
   patisserie: {
     position: 4,
     frenchName: 'pâtisserie', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
     backgroundColor: 'hsla(55,76%,82%,1.00)',
     optionsLetterSpacing: 8,
     textColor: 'rgba(151,105,80,1.00)',
@@ -58,6 +63,7 @@ const slideshowParams = {
   evenementiel: {
     position: 5,
     frenchName: 'évènementiel', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
     backgroundColor: 'hsla(33,57%,84%,1.00)',
     optionsLetterSpacing: 8,
     textColor: 'rgba(151,105,80,1.00)',
@@ -68,6 +74,7 @@ const slideshowParams = {
   potager: {
     position: 6,
     frenchName: 'potager', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
     backgroundColor: 'hsla(107,12%,72%,1.00)',
     optionsLetterSpacing: 8,
     textColor: white,

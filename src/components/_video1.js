@@ -47,14 +47,12 @@ function playerResetOnFirstLoad(seconds, player) {
     player1.pause();
     player1.seek(0);
   } else {
-    console.log('let`s go');
     return
   }
 }
 
 if (player1) {
   player1.on('timeupdate', (seconds) => {
-    console.log(player1._opts)
     playerResetOnFirstLoad(seconds, player1);
   })
 
@@ -67,7 +65,6 @@ if (player1) {
     RESIZE VIDEO - ALWAYS FULL WINDOW
 \*------------------------------------*/
 const video1iFrameContainer = document.querySelector('.video__subcontainer');
-console.log()
 const wholeContentDiv = document.querySelector('#wholeContent');
 
 

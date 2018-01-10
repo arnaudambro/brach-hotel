@@ -2109,6 +2109,7 @@ const slideshowParams = {
   hotel: {
     position: 0,
     frenchName: 'hôtel', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
     backgroundColor: 'hsla(38,5%,65%,1.00)',
     optionsLetterSpacing: 8,
     textColor: white,
@@ -2119,6 +2120,7 @@ const slideshowParams = {
   clubDeSport: {
     position: 1,
     frenchName: 'club de sport', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
     backgroundColor: 'hsla(194,11%,63%,1.00)',
     optionsLetterSpacing: 3,
     textColor: white,
@@ -2129,6 +2131,7 @@ const slideshowParams = {
   restaurant: {
     position: 2,
     frenchName: 'restaurant', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
     backgroundColor: 'hsla(2,41%,82%,1.00)',
     optionsLetterSpacing: 8,
     textColor: white,
@@ -2139,6 +2142,7 @@ const slideshowParams = {
   bar: {
     position: 3,
     frenchName: 'bar', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
     backgroundColor: 'hsla(2,41%,82%,1.00)',
     optionsLetterSpacing: 8,
     textColor: white,
@@ -2149,6 +2153,7 @@ const slideshowParams = {
   patisserie: {
     position: 4,
     frenchName: 'pâtisserie', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
     backgroundColor: 'hsla(55,76%,82%,1.00)',
     optionsLetterSpacing: 8,
     textColor: 'rgba(151,105,80,1.00)',
@@ -2159,6 +2164,7 @@ const slideshowParams = {
   evenementiel: {
     position: 5,
     frenchName: 'évènementiel', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
     backgroundColor: 'hsla(33,57%,84%,1.00)',
     optionsLetterSpacing: 8,
     textColor: 'rgba(151,105,80,1.00)',
@@ -2169,6 +2175,7 @@ const slideshowParams = {
   potager: {
     position: 6,
     frenchName: 'potager', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
     backgroundColor: 'hsla(107,12%,72%,1.00)',
     optionsLetterSpacing: 8,
     textColor: white,
@@ -3403,8 +3410,8 @@ const wholeContentDiv = document.querySelector('#wholeContent')
 const slideshowDiv = document.querySelector(".slideshow");
 const slideshowContentDiv = document.querySelector(".slideshow__content");
 const slideshowBackupDiv = document.querySelector(".slideshow__backup--container");
-const totemDiv = document.querySelector('.slideshow__totem');
-let nextTotemDiv = 0;
+const totemDivs = Object.keys(__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */]).map(name => __WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */][name].totemDiv());
+console.log(totemDivs);
 const movingCursorDiv = document.querySelector('.slideshow__cursor--moving');
 const hotelOptions = document.querySelector('.slideshow__description--options');
 const hotelSlogan = document.querySelector('.slideshow__description--slogan');
@@ -3415,7 +3422,7 @@ const video1 = document.querySelector('.video__video1');
 //CSS
 const totemDivHeight = 90;
 const cursorVerticalSpacing = 20;
-const transitionDuration = 1300;  //A bit higher than the one in CSS for a proper totem transition
+const transitionDuration = 1600;  //A bit higher than the one in CSS for a proper totem transition
 
     /*  CURSOR  */
 movingCursorDiv.style.boxShadow = `0px ${(cursorVerticalSpacing * 0)}px, 0px ${(cursorVerticalSpacing * 1)}px, 0px ${(cursorVerticalSpacing * 2)}px, 0px ${(cursorVerticalSpacing * 3)}px, 0px ${(cursorVerticalSpacing * 4)}px, 0px ${(cursorVerticalSpacing * 5)}px, 0px ${(cursorVerticalSpacing * 6)}px`;
@@ -3482,7 +3489,7 @@ const init = (index) => {
   cursorMove(adjustedIndex);
 
   /*   TOTEM   */
-  totemDiv.style.backgroundImage = `url('${__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */][theme].totemPictureUrl()}')`;
+  document.querySelector(`.totem_${theme}`).classList.add('showTotem');
 
   /*  OPTIONS  */
   Object(__WEBPACK_IMPORTED_MODULE_1__populateLetters__["a" /* populateHotelOptions */])(hotelOptions, adjustedIndex, __WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */], __WEBPACK_IMPORTED_MODULE_2__DOMStyling__["a" /* alSize */], true);
@@ -3533,7 +3540,9 @@ function startTransition(e) {
     });
   }
 
-
+  const currentTotemDiv = totemDivs[CURRENT_INDEX];
+  console.log(currentTotemDiv)
+  let nextTotemDiv;
   if (!wholeContentDiv.classList.contains('slideshow__landscape')) {
     return
   }
@@ -3543,21 +3552,25 @@ function startTransition(e) {
   if (eventGoUp && CURRENT_INDEX > 0 && CURRENT_INDEX < numberOfSlides) { 
     CURRENT_INDEX--;
     direction = 'down';
+    nextTotemDiv = totemDivs[CURRENT_INDEX];
+    console.log(nextTotemDiv)
   } else if (eventGoDown && CURRENT_INDEX < numberOfSlides)  {
     CURRENT_INDEX === numberOfSlides - 1 ? CURRENT_INDEX = 0 : CURRENT_INDEX++;
     direction = 'up';
+    nextTotemDiv = totemDivs[CURRENT_INDEX];
+    console.log(nextTotemDiv)
   }
   //Cursor move
-  cursorMove(CURRENT_INDEX);
+  // cursorMove(CURRENT_INDEX);
   
   //Totem move
-  totemMove(CURRENT_INDEX, direction);
-  
+  totemMove(CURRENT_INDEX, direction, currentTotemDiv, nextTotemDiv);
+
   //Hotel Options change
-  hotelOptionsTransit(e, CURRENT_INDEX, hotelOptions, direction);
+  // hotelOptionsTransit(e, CURRENT_INDEX, hotelOptions, direction);
 
   //Background color change
-  colorsChange(CURRENT_INDEX);
+  // colorsChange(CURRENT_INDEX);
 
   //Make the slideshow ready for new transition
   window.setTimeout(() => {
@@ -3568,50 +3581,49 @@ function startTransition(e) {
 }
 
 /*----- TOTEM FUNCTIONS-----*/
-function totemMove(index, direction) {
+function totemMove(index, direction, div1, div2) {
   const up = direction === 'up' ? true : false;
   const timeOffset = 100;
 
+  const nextTheme = Object.keys(__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */])[index];
   //Building the new totem
-  nextTotemDiv = __WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */][Object.keys(__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */])[index]].fakeTotem()
-
-  nextTotemDiv.classList.add(up ? 'fakeTotemUp' : 'fakeTotemDown');
-
-  slideshowContentDiv.appendChild(nextTotemDiv);
-
-  window.setTimeout(() => {
-    [nextTotemDiv, totemDiv].forEach(div => {
-      div.classList.add(up ? 'totemOnTransitionUp' : 'totemOnTransitionDown');
-    });
-  }, timeOffset);
-
+  div2 = document.querySelector(`.totem_${nextTheme}`);
+  div2.classList.add(up ? 'fakeTotemUp' : 'fakeTotemDown');
+  div2.classList.add('showTotem');
+  div1.classList.add(up ? 'totemOnTransitionUp' : 'totemOnTransitionDown');
 
   window.setTimeout(() => {
-    totemDiv.addEventListener('transitionend', rebuildTotemDom(up, index), false);
-    totemDiv.style.backgroundImage = `url('${__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */][Object.keys(__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */])[index]].totemPictureUrl()}')`;
-    nextTotemDiv.addEventListener('transitionend', rebuildTotemDom(up, index), false);
+    console.log('c\'est là que ça se passe')
+    div1.classList.remove('showTotem');
+  }, transitionDuration * 3 / 4);
+
+  window.setTimeout(() => {
+    console.log('ou bien c\'est là que ça se passe')
+    div1.addEventListener('transitionend', removeTotemClasses(up, index, div1, div2), false);
+    div2.addEventListener('transitionend', removeTotemClasses(up, index, div1, div2), false);
 
     }, transitionDuration + timeOffset);
 }
 
 let finishLine = 0;  //special var for totem transitionend only
-function rebuildTotemDom(up, index) {
+function removeTotemClasses(up, index, div1, div2) {
+  console.log('ou là ?')
 
   finishLine++;
 
   if (finishLine === 2) {
-    totemDiv.classList.remove(up ? 'totemOnTransitionUp' : 'totemOnTransitionDown');
+    console.log('ça marche toujours ?');
     //IF NOT REMOVE THE EVENT LISTENER TRANSITIONEND, IT'S TRIGGERED EVERYTIME ONE MORE TIME
-    totemDiv.removeEventListener('transitionend', rebuildTotemDom(up, index));
-
-    slideshowContentDiv.removeChild(nextTotemDiv);
-    nextTotemDiv = 0;
     finishLine = 0;
+    div1.classList.remove(up ? 'totemOnTransitionUp' : 'totemOnTransitionDown');
+    div2.classList.remove(up ? 'fakeTotemUp' : 'fakeTotemDown');
+    // div1.removeEventListener('transitionend', removeTotemClasses(up, index, div1, div2), false);
+    // div2.removeEventListener('transitionend', removeTotemClasses(up, index, div1, div2), false);
   } else {
-
     return;
   }
 }
+
 
 /*------ HOTEL OPTIONS FUNCTIONS ------*/
 function hotelOptionsTransit(e, index, anyHotelOptions, direction) {
@@ -3816,14 +3828,12 @@ function playerResetOnFirstLoad(seconds, player) {
     player1.pause();
     player1.seek(0);
   } else {
-    console.log('let`s go');
     return
   }
 }
 
 if (player1) {
   player1.on('timeupdate', (seconds) => {
-    console.log(player1._opts)
     playerResetOnFirstLoad(seconds, player1);
   })
 
@@ -3836,7 +3846,6 @@ if (player1) {
     RESIZE VIDEO - ALWAYS FULL WINDOW
 \*------------------------------------*/
 const video1iFrameContainer = document.querySelector('.video__subcontainer');
-console.log()
 const wholeContentDiv = document.querySelector('#wholeContent');
 
 
