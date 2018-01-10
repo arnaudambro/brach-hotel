@@ -160,4 +160,26 @@
 }
 
 
+// .onTransitionUp {
+//   transform: translateY(-100vh);
+// }
+// .onTransitionDown {
+//   transform: translateY(+100vh);
+// }
+// .totemUp {
+//   transition: transform $transitionDuration cubic-bezier(0.64, 0.46, 0.38, 1.41);
+// }
+// .totemDown {
+//   transition: transform $transitionDuration cubic-bezier(0.64, 0.46, 0.38, 1.41);
+// }
+
+// .fakeUp {
+//   top: calc(5% + 100vh);
+//   height: 90%;
+// }
+
+// .fakeDown {
+//   top: calc(5% - 100vh);
+//   height: 90%;
+// }
 

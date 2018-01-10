@@ -1,31 +1,32 @@
-import PerfectScrollbar from 'perfect-scrollbar';
-require('smoothscroll-polyfill').polyfill();   //https://github.com/iamdustan/smoothscroll
 import YTPlayer from 'yt-player';   //https://github.com/feross/yt-player
-
-
 
 let player1start = 0;
 let player1autoplay = true;
 let player1loaded = false;
 let player1firstStart = false;
-const player1 = new YTPlayer('#video__video1', {
-  height: '100%',
-  width: '100%',
-  autoplay: player1autoplay,
-  captions: false,
-  controls: true,
-  keyboard: false,
-  fullscreen: true,
-  annotations: false,
-  modestBranding: true,
-  related: false,
-  info: false,
-  timeupdateFrequency: 1000,  // default: 1000
-  // enablejsapi: 1, //default: they say 0 but it's 1
-  start: player1start,
-});
+let player1;
+let videoRatio = 0.5625;  //width * 0.5625 = height 
 
-player1.load('M6kQi1_Btqg');
+const player1options = {
+    height: '100%',
+    width: '100%',
+    autoplay: player1autoplay,
+    captions: false,
+    controls: true,
+    keyboard: false,
+    fullscreen: true,
+    annotations: false,
+    modestBranding: true,
+    related: false,
+    info: false,
+    timeupdateFrequency: 1000,  // default: 1000
+}
+
+
+player1 = new YTPlayer('#video__video1', player1options);
+player1.load('M6kQi1_Btqg');  
+
+// player1.style.left = {}
 
 function playerPlay(player) {
   if (player1firstStart && player1.getCurrentTime() > 0) {
@@ -51,51 +52,56 @@ function playerResetOnFirstLoad(seconds, player) {
   }
 }
 
-player1.on('timeupdate', (seconds) => {
-  playerResetOnFirstLoad(seconds, player1);
-})
+if (player1) {
+  player1.on('timeupdate', (seconds) => {
+    console.log(player1._opts)
+    playerResetOnFirstLoad(seconds, player1);
+  })
 
-player1.on('ended', () => {
-  player1.seek(0);
-})
+  player1.on('ended', () => {
+    player1.seek(0);
+  })
+}
 
 /*------------------------------------*\
     RESIZE VIDEO - ALWAYS FULL WINDOW
 \*------------------------------------*/
-let videoRatio = 0.5625;  //width * 0.5625 = height 
-const video1Div = document.querySelector('.video1');
-const wholeContentDiv = document.querySelector('#wholeContent')
+const video1iFrameContainer = document.querySelector('.video__subcontainer');
+console.log()
+const wholeContentDiv = document.querySelector('#wholeContent');
 
-function resizeVideo(e, div) {
-  let windowHeight = window.innerHeight;
-  let windowWidth = window.innerWidth;
-  if (windowHeight < windowWidth * videoRatio) {
-    //cas extrême: mini-hauteur, maxi-largeur
-    div.style.width = `100vw`;
-    div.style.height = `${100 * videoRatio}vw`;
-  } else if (windowHeight < windowWidth * videoRatio) {
-    div.style.height = `100vh`;
-    div.style.width = `${100 / videoRatio}vh`;
-  } else if (windowHeight === windowWidth * videoRatio) {
-    div.style.height = `100vh`;
-    div.style.width = `100vw`;
-  }
 
-    if (e.type != 'load') {
-      wholeContentDiv.scrollBy({
-        left: 0,
-        top: div.getBoundingClientRect().top
-        // behavior: 'smooth'
-      });
-    };
-};
-
-window.addEventListener('resize', function(e) { resizeVideo(e, video1Div) });
-window.addEventListener('load', function(e) { resizeVideo(e, video1Div) });
 
 export { player1, playerPlay };
 
+// function resizeVideo(e, div) {
+//   let windowHeight = window.innerHeight;
+//   let windowWidth = window.innerWidth;
+//   console.log(`windowHeight: ${windowHeight}`);
+//   console.log(`windowWidth: ${windowWidth}`);
+//   console.log(`windowWidth * videoRatio: ${windowWidth * videoRatio}`);
+//   const minHeightMaxWidth = (windowHeight < windowWidth * videoRatio);
+//   const minWidthMaxHeight = (windowHeight > windowWidth * videoRatio);
 
+//   if (windowHeight < windowWidth * videoRatio) {
+//     console.log('cas extrême: mini-hauteur, maxi-largeur');
+//     const newHeight = 128;
+//     div.style.width = `${newHeight / videoRatio}vh`;
+//     div.style.height = `${newHeight}vh`;
+//   } else if (windowHeight > windowWidth * videoRatio) {
+//     console.log('cas extrême: mini-largeur, maxi-hauteur');
+//     const newHeight = 128;
+//     div.style.width = `${newHeight / videoRatio}vh`;
+//     div.style.height = `${newHeight}vh`;
+//   } else if ((windowHeight < windowWidth * (videoRatio + 0.01)) && (windowHeight > windowWidth * (videoRatio - 0.01)))  {
+//     console.log('cas extrême: perfet ratio');
+//     div.style.height = `128%`;
+//     div.style.width = `128%`;
+//   }
+// };
+
+// // window.addEventListener('load', function(e) { resizeVideo(e, video1iFrameContainer) });
+// // window.addEventListener('load', function(e) { resizeVideo(e, video1Div) });
 
 // player.play()
 // player.pause()

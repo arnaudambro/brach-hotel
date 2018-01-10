@@ -10,15 +10,14 @@
 /*------------------------------------*\
     utilities
 \*------------------------------------*/
-import './_video1';
 import './_bling';
 import './_measureFont';
 
 /*------------------------------------*\
     modules
 \*------------------------------------*/
-import './DOMStyling';
+import './_video1';
 import './slideshow/slideshow';
 import './slideshow/slideshowPortrait';
-
+import './DOMStyling';
 

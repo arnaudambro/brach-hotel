@@ -2196,12 +2196,12 @@ module.exports = __webpack_require__(28);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__video1__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__bling__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__measureFont__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DOMStyling__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__slideshow_slideshow__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__slideshow_slideshowPortrait__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bling__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__measureFont__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__video1__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__slideshow_slideshow__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__slideshow_slideshowPortrait__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMStyling__ = __webpack_require__(3);
 // import { uniq } from 'lodash';
 // import jsonp from 'jsonp';
 // import insane from 'insane';
@@ -2214,7 +2214,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /*------------------------------------*\
     utilities
 \*------------------------------------*/
-
 
 
 
@@ -3384,6 +3383,7 @@ module.exports = function createCanvas(size) {
 -> good advices hear : https://medium.com/outsystems-experts/how-to-achieve-60-fps-animations-with-css3-db7b98610108
 */
 
+// import { wholeContentDiv, slideshowDiv, slideshowContentDiv, slideshowBackupDiv, numberOfSlides, CURRENT_INDEX } from '../animationsController';
 
 
 
@@ -3401,8 +3401,8 @@ __webpack_require__(2).polyfill();   //https://github.com/iamdustan/smoothscroll
 //DOM
 const wholeContentDiv = document.querySelector('#wholeContent')
 const slideshowDiv = document.querySelector(".slideshow");
-const slideshowBackupDiv = document.querySelector(".slideshow__backup--container");
 const slideshowContentDiv = document.querySelector(".slideshow__content");
+const slideshowBackupDiv = document.querySelector(".slideshow__backup--container");
 const totemDiv = document.querySelector('.slideshow__totem');
 let nextTotemDiv = 0;
 const movingCursorDiv = document.querySelector('.slideshow__cursor--moving');
@@ -3433,7 +3433,7 @@ Object.keys(__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */]).ma
 });
 
 /*------------------------------------*/  
-let CURRENT_INDEX = numberOfSlides - 1 ;
+let CURRENT_INDEX = 0 ;
 /*------------------------------------*/
 hotelOptions.style.width = `750px`
 
@@ -3465,7 +3465,10 @@ function cursorMove(index) {
 
 const init = (index) => {
 
-  const theme = Object.keys(__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */])[index];
+  const adjustedIndex = /*index - 1*/ index //if we use animationsController, we use index - 1;
+  const theme = Object.keys(__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */])[adjustedIndex];
+  console.log(theme)
+
   /*    SCROLLBAR   */
   const ps = new __WEBPACK_IMPORTED_MODULE_3_perfect_scrollbar__["a" /* default */](wholeContentDiv, {
     handlers: ['click-rail', 'drag-thumb', 'keyboard', /*'wheel',*/ 'touch'],
@@ -3473,16 +3476,16 @@ const init = (index) => {
   });
 
   /* BACKGROUND AND TEXT COLORS */
-  colorsChange(index);
+  colorsChange(adjustedIndex);
 
   /*  CURSOR  */
-  cursorMove(index);
+  cursorMove(adjustedIndex);
 
   /*   TOTEM   */
   totemDiv.style.backgroundImage = `url('${__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */][theme].totemPictureUrl()}')`;
 
   /*  OPTIONS  */
-  Object(__WEBPACK_IMPORTED_MODULE_1__populateLetters__["a" /* populateHotelOptions */])(hotelOptions, index, __WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */], __WEBPACK_IMPORTED_MODULE_2__DOMStyling__["a" /* alSize */], true);
+  Object(__WEBPACK_IMPORTED_MODULE_1__populateLetters__["a" /* populateHotelOptions */])(hotelOptions, adjustedIndex, __WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */], __WEBPACK_IMPORTED_MODULE_2__DOMStyling__["a" /* alSize */], true);
 
   /* SLOGAN   */
   hotelSlogan.firstChild.textContent = 'un style de vie à paris';
@@ -3534,10 +3537,11 @@ function startTransition(e) {
   if (!wholeContentDiv.classList.contains('slideshow__landscape')) {
     return
   }
+  console.log(CURRENT_INDEX)
   const previousIndex = CURRENT_INDEX;
   let direction;
   if (eventGoUp && CURRENT_INDEX > 0 && CURRENT_INDEX < numberOfSlides) { 
-        CURRENT_INDEX--;
+    CURRENT_INDEX--;
     direction = 'down';
   } else if (eventGoDown && CURRENT_INDEX < numberOfSlides)  {
     CURRENT_INDEX === numberOfSlides - 1 ? CURRENT_INDEX = 0 : CURRENT_INDEX++;
@@ -3679,14 +3683,9 @@ function letterAppear(letter, transition, offset) {
 function scrollToFirstVideo() {
   CURRENT_INDEX++;
   console.log('yo');
-  wholeContentDiv.scrollBy({
-    left: 0,
-    top: window.innerHeight,
-    behavior: 'smooth'
-  });
 
+  wholeContent.classList.add('slideshow__hide');
   Object(__WEBPACK_IMPORTED_MODULE_4__video1__["b" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_4__video1__["a" /* player1 */]);
-
 }
 
 /*------------------------------------*\
@@ -3696,9 +3695,6 @@ function scrollToFirstVideo() {
 window.addEventListener('keyup', function(e) {
     //Prevent scrolling when pressing space
   e.preventDefault();
-  if (CURRENT_INDEX === numberOfSlides - 1) {
-    return
-  }
   startTransition(e);
 })
 
@@ -3769,37 +3765,37 @@ window.addEventListener('resize', statisSlidewhow);
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return player1; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return playerPlay; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_perfect_scrollbar__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_yt_player__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_yt_player___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_yt_player__);
-
-__webpack_require__(2).polyfill();   //https://github.com/iamdustan/smoothscroll
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_yt_player__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_yt_player___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_yt_player__);
    //https://github.com/feross/yt-player
-
-
 
 let player1start = 0;
 let player1autoplay = true;
 let player1loaded = false;
 let player1firstStart = false;
-const player1 = new __WEBPACK_IMPORTED_MODULE_1_yt_player___default.a('#video__video1', {
-  height: '100%',
-  width: '100%',
-  autoplay: player1autoplay,
-  captions: false,
-  controls: true,
-  keyboard: false,
-  fullscreen: true,
-  annotations: false,
-  modestBranding: true,
-  related: false,
-  info: false,
-  timeupdateFrequency: 1000,  // default: 1000
-  // enablejsapi: 1, //default: they say 0 but it's 1
-  start: player1start,
-});
+let player1;
+let videoRatio = 0.5625;  //width * 0.5625 = height 
 
-player1.load('M6kQi1_Btqg');
+const player1options = {
+    height: '100%',
+    width: '100%',
+    autoplay: player1autoplay,
+    captions: false,
+    controls: true,
+    keyboard: false,
+    fullscreen: true,
+    annotations: false,
+    modestBranding: true,
+    related: false,
+    info: false,
+    timeupdateFrequency: 1000,  // default: 1000
+}
+
+
+player1 = new __WEBPACK_IMPORTED_MODULE_0_yt_player___default.a('#video__video1', player1options);
+player1.load('M6kQi1_Btqg');  
+
+// player1.style.left = {}
 
 function playerPlay(player) {
   if (player1firstStart && player1.getCurrentTime() > 0) {
@@ -3825,51 +3821,56 @@ function playerResetOnFirstLoad(seconds, player) {
   }
 }
 
-player1.on('timeupdate', (seconds) => {
-  playerResetOnFirstLoad(seconds, player1);
-})
+if (player1) {
+  player1.on('timeupdate', (seconds) => {
+    console.log(player1._opts)
+    playerResetOnFirstLoad(seconds, player1);
+  })
 
-player1.on('ended', () => {
-  player1.seek(0);
-})
+  player1.on('ended', () => {
+    player1.seek(0);
+  })
+}
 
 /*------------------------------------*\
     RESIZE VIDEO - ALWAYS FULL WINDOW
 \*------------------------------------*/
-let videoRatio = 0.5625;  //width * 0.5625 = height 
-const video1Div = document.querySelector('.video1');
-const wholeContentDiv = document.querySelector('#wholeContent')
-
-function resizeVideo(e, div) {
-  let windowHeight = window.innerHeight;
-  let windowWidth = window.innerWidth;
-  if (windowHeight < windowWidth * videoRatio) {
-    //cas extrême: mini-hauteur, maxi-largeur
-    div.style.width = `100vw`;
-    div.style.height = `${100 * videoRatio}vw`;
-  } else if (windowHeight < windowWidth * videoRatio) {
-    div.style.height = `100vh`;
-    div.style.width = `${100 / videoRatio}vh`;
-  } else if (windowHeight === windowWidth * videoRatio) {
-    div.style.height = `100vh`;
-    div.style.width = `100vw`;
-  }
-
-    if (e.type != 'load') {
-      wholeContentDiv.scrollBy({
-        left: 0,
-        top: div.getBoundingClientRect().top
-        // behavior: 'smooth'
-      });
-    };
-};
-
-window.addEventListener('resize', function(e) { resizeVideo(e, video1Div) });
-window.addEventListener('load', function(e) { resizeVideo(e, video1Div) });
+const video1iFrameContainer = document.querySelector('.video__subcontainer');
+console.log()
+const wholeContentDiv = document.querySelector('#wholeContent');
 
 
 
 
+
+// function resizeVideo(e, div) {
+//   let windowHeight = window.innerHeight;
+//   let windowWidth = window.innerWidth;
+//   console.log(`windowHeight: ${windowHeight}`);
+//   console.log(`windowWidth: ${windowWidth}`);
+//   console.log(`windowWidth * videoRatio: ${windowWidth * videoRatio}`);
+//   const minHeightMaxWidth = (windowHeight < windowWidth * videoRatio);
+//   const minWidthMaxHeight = (windowHeight > windowWidth * videoRatio);
+
+//   if (windowHeight < windowWidth * videoRatio) {
+//     console.log('cas extrême: mini-hauteur, maxi-largeur');
+//     const newHeight = 128;
+//     div.style.width = `${newHeight / videoRatio}vh`;
+//     div.style.height = `${newHeight}vh`;
+//   } else if (windowHeight > windowWidth * videoRatio) {
+//     console.log('cas extrême: mini-largeur, maxi-hauteur');
+//     const newHeight = 128;
+//     div.style.width = `${newHeight / videoRatio}vh`;
+//     div.style.height = `${newHeight}vh`;
+//   } else if ((windowHeight < windowWidth * (videoRatio + 0.01)) && (windowHeight > windowWidth * (videoRatio - 0.01)))  {
+//     console.log('cas extrême: perfet ratio');
+//     div.style.height = `128%`;
+//     div.style.width = `128%`;
+//   }
+// };
+
+// // window.addEventListener('load', function(e) { resizeVideo(e, video1iFrameContainer) });
+// // window.addEventListener('load', function(e) { resizeVideo(e, video1Div) });
 
 // player.play()
 // player.pause()
