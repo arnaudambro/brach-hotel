@@ -1,0 +1,189 @@
+@keyframes move-letters-down-first {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(var(--letterOffsetForTransition));
+  }
+}
+
+.move-letter-down-first-1 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 1) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 1) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-2 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 2) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 2) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-3 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 3) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 3) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-4 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 4) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 4) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-5 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 5) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 5) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-6 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 6) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 6) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-7 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 7) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 7) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-8 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 8) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 8) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-9 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 9) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 9) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-10 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 10) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 10) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-11 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 11) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 11) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-12 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 12) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 12) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-13 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 13) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 13) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-14 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 14) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 14) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-15 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 15) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 15) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-16 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 16) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 16) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-17 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 17) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 17) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-18 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 18) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 18) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-19 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 19) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 19) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-20 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 20) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 20) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-21 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 21) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 21) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-22 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 22) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 22) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-23 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 23) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 23) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-24 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 24) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 24) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-25 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 25) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 25) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-26 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 26) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 26) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-27 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 27) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 27) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-28 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 28) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 28) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-29 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 29) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 29) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-30 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 30) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 30) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-31 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 31) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 31) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-32 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 32) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 32) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-33 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 33) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 33) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-34 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 34) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 34) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-35 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 35) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 35) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-36 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 36) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 36) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-37 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 37) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 37) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-38 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 38) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 38) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-39 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 39) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 39) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-40 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 40) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 40) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-41 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 41) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 41) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-42 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 42) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 42) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-43 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 43) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 43) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-44 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 44) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 44) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-45 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 45) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 45) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-46 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 46) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 46) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-47 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 47) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 47) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-48 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 48) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 48) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-49 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 49) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 49) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-50 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 50) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 50) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-51 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 51) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 51) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-52 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 52) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 52) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-53 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 53) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 53) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-54 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 54) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 54) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-55 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 55) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 55) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-56 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 56) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 56) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-57 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 57) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 57) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-58 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 58) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 58) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-59 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 59) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 59) reverse forwards move-letters-down-first;
+}
+.move-letter-down-first-60 { 
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 60) forwards move-letters-down-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 60) reverse forwards move-letters-down-first;
+}

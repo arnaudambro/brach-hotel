@@ -15,11 +15,18 @@ $letterOffsetForTransition: 20px;
     DURATION
 \*------------------------------------*/
 
-$transitionDuration: 1500ms; //150 ms lower than the one in JS, for totem smooth transition
+:root {
+  --transitionDuration: 2000ms;
+  --letterHalfTransition: calc(var(--transitionDuration) / 2);
+  --letterTimeOut: calc(var(--transitionDuration) / 100);
+  --letterTransitionDuration: calc(var(--transitionDuration) / 2 - var(--letterTimeOut) * 36);
+  --letterOffsetForTransition: 20px;
+}
+$transitionDuration: 2000ms; 
 $transitionDurationOldTotem: $transitionDuration / 2;
-$maxTransitionDuration: 1800ms;
+$maxTransitionDuration: 2200ms;
 $letterTimeOut: 20ms;
-$biggestWordNumberOfLetters: 13;
+$biggestWordNumberOfLetters: 36;
 //target: timeout of the last letter + transition of the last letter = 1/2 transition
 $letterTransitionDuration: $transitionDuration / 2 - $letterTimeOut * $biggestWordNumberOfLetters;
 

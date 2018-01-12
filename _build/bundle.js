@@ -3271,6 +3271,7 @@ const slideshowBackupDiv = document.querySelector(".slideshow__backup--container
 const movingCursorDiv = document.querySelector('.slideshow__cursor--moving');
 const hotelOptions = [...document.querySelectorAll('.slideshow__description--options')];
 const hotelSlogan = document.querySelector('.slideshow__description--slogan');
+const hotelEstablishmentName = document.querySelector('.slideshow__description--establishment-name');
 const slideshowDescription = slideshowDiv.querySelector('.slideshow__description');
 const dividerInDescription = slideshowDiv.querySelector('.slideshow__description--divider');
 const video1Div = document.querySelector('#video1');
@@ -3282,7 +3283,6 @@ const controlVideo1PointerEvents = document.querySelector('.video1').querySelect
 const controlVideo2PointerEvents = document.querySelector('.video2').querySelector('.transparent_filter-for-allow-scrolling');
 //CSS
 const cursorVerticalSpacing = 20;
-const transitionDuration = 1600;  //A bit higher than the one in CSS for a proper totem transition
 const transitionDurationBetweenVIdeos = 1000;  //A bit higher than the one in CSS for a proper totem transition
 
     /*  CURSOR  */
@@ -3549,39 +3549,91 @@ function hotelOptionsTransit(e, prevIndex, nextIndex, anyHotelOptions, direction
 
   const up = direction === 'up' ? true : false;
 
+  /****** DOM *******/
+  const nameLetters = [];
+  [...hotelEstablishmentName.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
+  const nameLength = nameLetters.length;
+  const sloganLetters = [...hotelSlogan.children];
+
   const prevOptionLettersDiv = anyHotelOptions[prevIndex];
   const prevOptionLetters = [...prevOptionLettersDiv.children];
-  for (let i = 0; i < prevOptionLetters.length; i++) {
-    const letter = prevOptionLetters[i];
-    up ? letter.classList.add(`fade-out-letter-up-${i + 1}`) : letter.classList.add(`fade-out-letter-down-${i + 1}`);
-  }
+  const prevOptionLength = prevOptionLetters.length;
 
   const nextOptionLettersDiv = anyHotelOptions[nextIndex];
+  const nextOptionLetters = [...nextOptionLettersDiv.children];
+
+  /******   NAME    ******/
+  for (var k = 0; k < nameLength; k++) {
+    const letter = nameLetters[k];
+    up 
+      ? letter.classList.add(`move-letter-up-first-${k + 1}`) 
+      : letter.classList.add(`move-letter-down-first-${k + 1}`);
+  }
+  
+  /******   CURRENT OPTION   ******/
+  for (let i = 0; i < prevOptionLength; i++) {
+    const letter = prevOptionLetters[i];
+    console.log(i, letter);
+    up 
+      ? letter.classList.add(`fade-out-letter-up-${i + nameLength + 1}`) 
+      : letter.classList.add(`fade-out-letter-down-${i + nameLength + 1}`);
+  }
+
+  /******   NEXT OPTION   ******/
   nextOptionLettersDiv.classList.add('showOption');
   nextOptionLettersDiv.classList.add('perpetual-translation');
-  const nextOptionLetters = [...nextOptionLettersDiv.children]
 
   for (let j = 0; j < nextOptionLetters.length; j++) {
     const letter = nextOptionLetters[j];
-    up ? letter.classList.add(`fade-in-letter-up-${j + 1}`) : letter.classList.add(`fade-in-letter-down-${j + 1}`);
+    up 
+      ? letter.classList.add(`fade-in-letter-up-${j + nameLength + 1}`) 
+      : letter.classList.add(`fade-in-letter-down-${j + nameLength + 1}`);
+  }
+
+  /****** SLOGAN ************/
+  for (var h = 0; h < sloganLetters.length; h++) {
+    const letter = sloganLetters[h];
+    up 
+      ? letter.classList.add(`move-letter-up-first-${h + nameLength + prevOptionLength + 1}`) 
+      : letter.classList.add(`move-letter-down-first-${h + nameLength + prevOptionLength + 1}`);
   }
 }
 
 
 function resetHotelOptions(index){
+  /****** DOM *******/
+  const nameLetters = [];
+  [...hotelEstablishmentName.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
+  const nameLength = nameLetters.length;
+  const sloganLetters = [...hotelSlogan.children];
+  console.log(sloganLetters);
+  let prevOptionLength;
+
+  /******   NAME    ******/
+  for (var k = 0; k < nameLength; k++) {
+    const letter = nameLetters[k];
+    letter.classList.remove(`move-letter-up-first-${k + 1}`);
+    letter.classList.remove(`move-letter-down-first-${k + 1}`);
+  }
+  
   hotelOptions.forEach(option => {
     const optionIsVisible = option.classList.contains('showOption');
     const optionNeedToStayVisible = hotelOptions.indexOf(option) === index;
     const letters = [...option.children];
+    if (optionIsVisible && !optionNeedToStayVisible) {
+      prevOptionLength = [...option.children].length;
+    }
     if (optionIsVisible) {
+      /******   NEXT OPTION   ******/
       for (let i = 0; i < letters.length; i++) {
         const letter = letters[i];
-        letter.classList.remove(`fade-in-letter-up-${i + 1}`);
-        letter.classList.remove(`fade-in-letter-down-${i + 1}`);
-        letter.classList.remove(`fade-out-letter-up-${i + 1}`);
-        letter.classList.remove(`fade-out-letter-down-${i + 1}`);
+        letter.classList.remove(`fade-in-letter-up-${i + nameLength + 1}`);
+        letter.classList.remove(`fade-in-letter-down-${i + nameLength + 1}`);
+        letter.classList.remove(`fade-out-letter-up-${i + nameLength + 1}`);
+        letter.classList.remove(`fade-out-letter-down-${i + nameLength + 1}`);
       }
       if (!optionNeedToStayVisible) {
+      /******   CURRENT OPTION   ******/
         option.classList.remove('showOption');
         option.classList.remove('perpetual-translation');
       } else {
@@ -3591,6 +3643,16 @@ function resetHotelOptions(index){
       return;
     };
   });
+  /****** SLOGAN ************/
+  for (var h = 0; h < sloganLetters.length; h++) {
+    const letter = sloganLetters[h];
+    console.log(letter);
+    console.log(letter.classList.contains(`move-letter-up-first-${h + nameLength + prevOptionLength + 1}`));
+    letter.classList.remove(`move-letter-up-first-${h + nameLength + prevOptionLength + 1}`);
+    letter.classList.remove(`move-letter-down-first-${h + nameLength + prevOptionLength + 1}`);
+  }
+
+  
 };
 
 
@@ -3609,18 +3671,6 @@ function scrollFromSlideshowToFirstVideo() {
   Object(__WEBPACK_IMPORTED_MODULE_0__video1__["e" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
 }
 
-// function allowScrolling(e) {
-//   if (e.animationName === 'from-slideshow-to-firstVideo') {
-//     console.log('on autorise le scrolling');
-//     wholeContent.style.animationPlayState = 'paused';
-//     wholeContent.removeEventListener('animationend', allowScrolling);
-//   } else {
-//     console.log(e)
-//     console.log(e.animationName)
-//     return;
-//   };
-
-// }
 
 function scrollFromFirstVideoToSlideshow() {
   CURRENT_INDEX--;

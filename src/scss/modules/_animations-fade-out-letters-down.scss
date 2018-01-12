@@ -1,0 +1,299 @@
+@keyframes move-and-fade-out-letter-down {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY($letterOffsetForTransition / 2);
+  }
+  60% {
+    opacity: 0.5;
+    transform: translateY($letterOffsetForTransition);
+  }
+  90% {
+    opacity: 0;
+    transform: translateY($letterOffsetForTransition);
+  }
+}
+
+.fade-out-letter-down-1 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 1);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-2 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 2);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-3 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 3);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-4 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 4);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-5 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 5);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-6 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 6);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-7 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 7);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-8 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 8);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-9 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 9);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-10 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 10);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-11 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 11);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-12 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 12);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-13 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 13);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-14 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 14);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-15 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 15);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-16 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 16);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-17 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 17);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-18 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 18);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-19 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 19);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-20 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 20);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-21 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 21);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-22 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 22);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-23 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 23);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-24 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 24);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-25 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 25);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-26 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 26);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-27 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 27);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-28 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 28);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-29 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 29);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-30 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 30);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-31 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 31);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-32 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 32);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-33 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 33);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-34 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 34);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-35 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 35);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-36 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 36);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-37 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 37);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-38 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 38);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-39 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 39);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
+.fade-out-letter-down-40 { 
+  animation: move-and-fade-out-letter-down $letterTransitionDuration linear;
+  animation-delay: calc(20ms * 40);
+  animation-fill-mode: both;
+  opacity: 0;
+  transform: translateY($letterOffsetForTransition);
+}
