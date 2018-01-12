@@ -1,7 +1,12 @@
 import YTPlayer from 'yt-player';   //https://github.com/feross/yt-player
 
+/*------------------------------------*\
+    PLAYER 1
+\*------------------------------------*/
+
+
 let player1start = 0;
-let player1autoplay = true;
+let player1autoplay = false;
 let player1loaded = false;
 let player1firstStart = false;
 let player1;
@@ -22,54 +27,139 @@ const player1options = {
     timeupdateFrequency: 1000,  // default: 1000
 }
 
-
 player1 = new YTPlayer('#video__video1', player1options);
-player1.load('M6kQi1_Btqg');  
+// player1.load('M6kQi1_Btqg');  
 
-// player1.style.left = {}
 
-function playerPlay(player) {
-  if (player1firstStart && player1.getCurrentTime() > 0) {
-    player1.seek(0);
-    player1firstStart = false;
-    player.play();
-  } else if (player1firstStart && player1.getCurrentTime() === 0) {
-    player1firstStart = false;
-    player.play();
-  } else {
-    player.play();
-  }
-};
+/*------------------------------------*\
+    PLAYER 2
+\*------------------------------------*/
 
-function playerResetOnFirstLoad(seconds, player) {
-  if (player1loaded === false) {
-    player1loaded = true;
-    player1.pause();
-    player1.seek(0);
-  } else {
-    return
+
+let player2start = 0;
+let player2autoplay = false;
+let player2loaded = false;
+let player2firstStart = false;
+let player2;
+
+const player2options = {
+    height: '100%',
+    width: '100%',
+    autoplay: player2autoplay,
+    captions: false,
+    controls: true,
+    keyboard: false,
+    fullscreen: true,
+    annotations: false,
+    modestBranding: true,
+    related: false,
+    info: false,
+    timeupdateFrequency: 1000,  // default: 1000
+}
+
+player2 = new YTPlayer('#video__video2', player2options);
+// player2.load('M6kQi1_Btqg');  
+
+
+/*------------------------------------*\
+    FUNCTIONS
+\*------------------------------------*/
+
+let player1StartLoad = 0;
+let player2StartLoad = 0;
+
+function playerLoad(player) {
+  if (player === player1) {
+    console.log('loading player 1')
+    player1StartLoad = Date.now();
+    player1.load('M6kQi1_Btqg');  
+  } else if (player === player2) {
+    console.log('loading player 2')
+    player2StartLoad = Date.now();
+    player2.load('M6kQi1_Btqg');  
   }
 }
 
+// function playerPlay(player, playerFirstStart) {
+//   if (playerFirstStart && player.getCurrentTime() > 0) {
+//     player.seek(0);
+//     playerFirstStart = false;
+//     player.play();
+//   } else if (playerFirstStart && player.getCurrentTime() === 0) {
+//     playerFirstStart = false;
+//     player.play();
+//   } else {
+//     player.play();
+//   }
+// };
+
+function playerPlay(player) {
+  console.log('play', player)
+  player.play();
+}
+
+function playerPause(player) {
+  player.pause();
+}
+
+// function player1ResetOnFirstLoad(seconds, player) {
+//   if (player1loaded === false) {
+//     player1loaded = true;
+//     player.pause();
+//     player.seek(0);
+//     console.log(`player 1 loaded in ${Date.now() - player1StartLoad}ms`, player1);
+//   } else {
+//     return
+//   }
+// }
+
+// player1._onReady = console.log(`player 1 loaded in ${Date.now() - player1StartLoad}ms`, player1);
+
+// function player2ResetOnFirstLoad(seconds, player) {
+//   if (player2loaded === false) {
+//     player2loaded = true;
+//     player.pause();
+//     player.seek(0);
+//     console.log(`player 2 loaded in ${Date.now() - player2StartLoad}ms`);
+//   } else {
+//     return
+//   }
+// }
+
+/*------------------------------------*\
+    EVENTLISTENERS
+\*------------------------------------*/
+
 if (player1) {
-  player1.on('timeupdate', (seconds) => {
-    playerResetOnFirstLoad(seconds, player1);
-  })
+  // console.log('player 1')
+  // player1.on('timeupdate', (seconds) => {
+  //   player1ResetOnFirstLoad(seconds, player1);
+  // })
 
   player1.on('ended', () => {
     player1.seek(0);
   })
 }
 
+if (player2) {
+  // console.log('player 2')
+  // player2.on('timeupdate', (seconds) => {
+  //   player2ResetOnFirstLoad(seconds, player2);
+  // })
+
+  player2.on('ended', () => {
+    player2.seek(0);
+  })
+}
+
 /*------------------------------------*\
-    RESIZE VIDEO - ALWAYS FULL WINDOW
+    RESIZE VIDEO - ALWAYS FULL WINDOW - cf CSS
 \*------------------------------------*/
 const video1iFrameContainer = document.querySelector('.video__subcontainer');
 const wholeContentDiv = document.querySelector('#wholeContent');
 
 
-
-export { player1, playerPlay };
+export { playerLoad, playerPlay, playerPause, player1, player1firstStart, player2, player2firstStart, player2ResetOnFirstLoad,  player1ResetOnFirstLoad };
 
 // function resizeVideo(e, div) {
 //   let windowHeight = window.innerHeight;

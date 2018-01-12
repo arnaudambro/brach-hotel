@@ -1,0 +1,60 @@
+
+@keyframes from-slideshow-to-firstVideo {
+  0% {
+  transform: translateY(0);
+  }
+  100% {
+  transform: translateY(-100vh);
+  }
+}
+
+@keyframes from-firstVideo-to-slideshow {
+  0% {
+  transform: translateY(-100vh);
+  }
+  100% {
+  transform: translateY(0);
+  }
+}
+
+@keyframes from-firstVideo-to-secondVideo {
+  0% {
+  transform: translateY(-100vh);
+  }
+  100% {
+  transform: translateY(-200vh);
+  }
+}
+
+@keyframes from-secondVideo-to-firstVideo {
+  0% {
+  transform: translateY(-200vh);
+  }
+  100% {
+  transform: translateY(-100vh);
+  }
+}
+
+.from_slideshow_to_first_video {
+  animation: from-slideshow-to-firstVideo 1s ease-in-out;
+  animation-fill-mode: forwards;
+  animation-direction: normal;
+}
+
+.from_first_video_to_slideshow {
+ animation: from-firstVideo-to-slideshow 1s ease-in-out;
+ animation-fill-mode: forwards;
+ animation-direction: normal;
+}
+
+.from_first_video_to_second_video {
+  animation: from-firstVideo-to-secondVideo 1s ease-in-out;
+  animation-fill-mode: forwards;
+  animation-direction: normal;
+}
+
+.from_second_video_to_first_video {
+  animation: from-secondVideo-to-firstVideo 1s ease-in-out;
+  animation-fill-mode: forwards;
+  animation-direction: normal;
+}

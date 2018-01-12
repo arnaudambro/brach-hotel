@@ -7,6 +7,9 @@
 // import './Chap5BisCarousel';
 
 
+// import './lottie';
+// import './loadingAnimation';
+
 /*------------------------------------*\
     utilities
 \*------------------------------------*/
@@ -16,8 +19,8 @@ import './_measureFont';
 /*------------------------------------*\
     modules
 \*------------------------------------*/
-import './_video1';
+// import './_video1';
+import './DOMStyling';
 import './slideshow/slideshow';
 import './slideshow/slideshowPortrait';
-import './DOMStyling';
 

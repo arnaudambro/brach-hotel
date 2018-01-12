@@ -9,12 +9,20 @@ $white: rgba(250,250,250,1.00);
     LENGTHS
 \*------------------------------------*/
 
+$letterOffsetForTransition: 20px;
 
 /*------------------------------------*\
     DURATION
 \*------------------------------------*/
 
-$transitionDuration: 1200ms; //150 ms lower than the one in JS, for totem smooth transition
+$transitionDuration: 1500ms; //150 ms lower than the one in JS, for totem smooth transition
+$transitionDurationOldTotem: $transitionDuration / 2;
+$maxTransitionDuration: 1800ms;
+$letterTimeOut: 20ms;
+$biggestWordNumberOfLetters: 13;
+//target: timeout of the last letter + transition of the last letter = 1/2 transition
+$letterTransitionDuration: $transitionDuration / 2 - $letterTimeOut * $biggestWordNumberOfLetters;
+
 
 /*------------------------------------*\
     HOTEL FONT RESIZE
@@ -34,8 +42,7 @@ $CrimsonLinegap: 0;
 //Portrait
 @font-face {
     font-family: 'Portrait';
-    src: url('../fonts/PORTRAIT/DESKTOP/Portrait-Light.otf') format('otf'),
-         url('../fonts/PORTRAIT/WEB/Portrait-Light-Web.eot') format('eot'),
+    src: url('../fonts/PORTRAIT/WEB/Portrait-Light-Web.eot') format('eot'),
          url('../fonts/PORTRAIT/WEB/Portrait-Light-Web.woff') format('woff'),
          url('../fonts/PORTRAIT/WEB/Portrait-Light-Web.woff2') format('woff2');
     font-weight: 300;
@@ -43,8 +50,7 @@ $CrimsonLinegap: 0;
 }
 @font-face {
     font-family: 'Portrait';
-    src: url('../fonts/PORTRAIT/DESKTOP/Portrait-Medium.otf') format('otf'),
-         url('../fonts/PORTRAIT/WEB/Portrait-Medium-Web.eot') format('eot'),
+    src: url('../fonts/PORTRAIT/WEB/Portrait-Medium-Web.eot') format('eot'),
          url('../fonts/PORTRAIT/WEB/Portrait-Medium-Web.woff') format('woff'),
          url('../fonts/PORTRAIT/WEB/Portrait-Medium-Web.woff2') format('woff2');
     font-weight: 500;
@@ -52,8 +58,7 @@ $CrimsonLinegap: 0;
 }
 @font-face {
     font-family: 'Portrait';
-    src: url('../fonts/PORTRAIT/DESKTOP/Portrait-MediumItalic.otf') format('otf'),
-         url('../fonts/PORTRAIT/WEB/Portrait-MediumItalic-Web.eot') format('eot'),
+    src: url('../fonts/PORTRAIT/WEB/Portrait-MediumItalic-Web.eot') format('eot'),
          url('../fonts/PORTRAIT/WEB/Portrait-MediumItalic-Web.woff') format('woff'),
          url('../fonts/PORTRAIT/WEB/Portrait-MediumItalic-Web.woff2') format('woff2');
     font-weight: 500i;
@@ -63,16 +68,14 @@ $CrimsonLinegap: 0;
 //Cogito
 @font-face {
     font-family: 'Cogito';
-    src: url('../fonts/COGITO/Desktop + web license/Cogito/Cogito-Regular.otf') format('otf'),
-         url('../fonts/COGITO/Desktop + web license/Cogito/web/CogitoWeb-Regular.eot') format('eot'),
+    src: url('../fonts/COGITO/Desktop + web license/Cogito/web/CogitoWeb-Regular.eot') format('eot'),
          url('../fonts/COGITO/Desktop + web license/Cogito/web/CogitoWeb-Regular.woff') format('woff');
     font-weight: 400;
     font-style: regular;
 }
 @font-face {
     font-family: 'Cogito';
-    src: url('../fonts/COGITO/Desktop + web license/Cogito/Cogito-Bold.otf') format('otf'),
-         url('../fonts/COGITO/Desktop + web license/Cogito/web/CogitoWeb-Bold.eot') format('eot'),
+    src: url('../fonts/COGITO/Desktop + web license/Cogito/web/CogitoWeb-Bold.eot') format('eot'),
          url('../fonts/COGITO/Desktop + web license/Cogito/web/CogitoWeb-Bold.woff') format('woff');
     font-weight: 600;
     font-style: bold;

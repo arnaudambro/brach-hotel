@@ -6,24 +6,19 @@
 
   .slideshow {
 
-    position: relative;
-    height: 100vh;
-    width: 100vw;
-    @include resetMarginPadding;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  @include resetMarginPadding;
+  &.inTransition {
+    transition: background-color $transitionDuration ease-in-out; 
+  }
 
-    &__background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 100vw;
+    &__content {
       @include size(100%);
-      &.inTransition {
-        transition: background-color $transitionDuration ease-in-out; 
-      }
+      position: relative;
+  
+      flex-shrink: 1;
     }
 
     &__totem {
@@ -38,9 +33,9 @@
       background-size: auto 100%;
       background-position-y: bottom;
       // animation: perpetual-rotation 10s linear infinite;
-      &.perpetual-translation {
-        animation: perpetual-translation 10s linear infinite;
-      }
+      animation: perpetual-translation 10s linear infinite;
+
+
       &.totemOnTransitionUp {
         will-change: transform;
         animation: oldTotemToUp $transitionDurationOldTotem ease-in-out;
@@ -63,7 +58,7 @@
       position: absolute;
       bottom: 50%;
       // bottom: 35%;
-      right: 90px;
+      right: 0;
       width: 65%;
       // height: 30%;
 
@@ -71,10 +66,9 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      &.perpetual-translation {
-        animation: perpetual-translation 10s linear infinite;
-        animation-direction: reverse;
-      }
+
+      animation: perpetual-translation 10s linear infinite;
+      animation-direction: reverse;
       &.inTransition {
         transition: color $transitionDuration ease-in-out; 
       }
@@ -89,8 +83,8 @@
 
         font-weight: 500;
         text-transform: uppercase; 
-        > div {
-          display: flex;
+        > p {
+         margin: 0 3px;
         }
       }
 
@@ -107,16 +101,12 @@
         display: block;
         position: relative;
         width: 750px;
-
-
       }
 
       &--options {
         display: none;
         position: absolute;
-        bottom: 50%;
-        right: 90px;
-        width: 65%;
+        width: 100%;
         &.showOption { 
           display: flex !important 
         }
@@ -131,7 +121,6 @@
         font-weight: 400;
         letter-spacing: 4px;
         text-transform: uppercase; 
-        display: flex;
       }
     }
 
@@ -139,21 +128,25 @@
       @media all and (max-width: 1024px) {
         display: none;
       }
+      position: relative;
+      flex-basis: 90px;
+      // flex-shrink: 0;
+
 
       &--fixed {
         z-index: 100;
         position: absolute;
-        top: calc(50% - 2px);
+        top: 0;
         right: 0;
-        width: 90px;
-        border: 2px solid rgba(151,105,78,1.00);   //IMPORTANT   
+        width: 100%;
+          border: 2px solid rgba(151,105,78,1.00);   //IMPORTANT   
         }
 
       &--moving {
         z-index: 10;
         position: absolute;
-        top: calc(50% - 1px);
-        right: 13.5px;
+        top: 1px;
+        right: 15%;
         width: 25px;
         border: 1px solid;   //IMPORTANT  
         &.inTransition {

@@ -68,6 +68,231 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return exactCapitalLetterSize; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_measure_font__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_measure_font___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_measure_font__);
+
+
+
+
+//pseudostyle
+// http://mcgivery.com/htmlelement-pseudostyle-settingmodifying-before-and-after-in-javascript/
+// var a={_b:0,c:function(){this._b++;return this.b;}};HTMLElement.prototype.pseudoStyle=function(d,e,f){var g="pseudoStyles";var h=document.head||document.getElementsByTagName('head')[0];var i=document.getElementById(g)||document.createElement('style');i.id=g;var j="pseudoStyle"+a.c();this.className+=" "+j;i.innerHTML+=" ."+j+":"+d+"{"+e+":"+f+"}";h.appendChild(i);return this;}
+
+function exactCapitalLetterSize (element, fontFamily, size, lineHeight) {
+  const fontMeasurements = __WEBPACK_IMPORTED_MODULE_0_measure_font___default()(fontFamily, {
+      fontSize: 50,
+      tolerance: 6
+  });  
+
+  // https://iamvdo.me/en/blog/css-font-metrics-line-height-and-vertical-align
+  //BUG : even with constant parameters, results are not the same... sadness
+  const fmCapitalHeight = ((fontFamily === 'Portrait') || (fontFamily === 'Portrait-light')) ? 0.68 : -fontMeasurements.capHeight;
+  const fmDescender = ((fontFamily === 'Portrait') || (fontFamily === 'Portrait-light')) ? 0.2 : fontMeasurements.descender;
+  const fmAscender = ((fontFamily === 'Portrait') || (fontFamily === 'Portrait-light')) ? 0.7 : -fontMeasurements.topBounding;
+  const fmEmSquare = (fmDescender - fmAscender);
+  const fmLinegap = 0;
+
+  /* compute needed values */
+  const lineheightNormal = ((element.firstChild.offsetHeight) + (fmLinegap)) / size;
+  const distanceBottom = ((fmDescender) + (lineheightNormal - fmEmSquare) / 2);
+  const distanceTop = ((-fmAscender + fmCapitalHeight) + (lineheightNormal - fmEmSquare) / 2);
+  const computedFontSize = ((size) / (fmCapitalHeight)); 
+  const contentArea = ((lineheightNormal) * (computedFontSize));
+  const valign = (((distanceBottom) - (distanceTop)) * (computedFontSize));  
+  const computedLineheight = (((lineHeight) * (size)) - (valign));
+
+  /* FOR DEBUGGING
+  const parameters = {
+    element,
+    elementFirstChild: element.firstChild,
+    fontFamily,
+    size,
+    lineHeight,
+    fmEmSquare,
+    fmCapitalHeight,
+    fmDescender,
+    fmAscender,
+    fmLinegap,
+    valign,
+    computedLineheight,
+    computedFontSize
+  }
+  console.log(parameters) */
+
+  /* set font family */
+  element.style.fontFamily = fontFamily;
+
+  /* set capital height to equal font-size */
+  element.style.fontSize = `${computedFontSize}px`;
+
+  /* set computed line-height */
+  element.style.lineHeight = `${computedLineheight}px`;
+
+  // element.firstChild.style.height = `${size}px`;
+  element.firstChild.style.verticalAlign = `${-valign}px`;
+  // element.style.height = `${size}px`;
+  // element.firstChild
+  //   .pseudoStyle('before', 'content', '')
+  //   .pseudoStyle('before', 'dispaly', 'inline-block')
+  //   .pseudoStyle('before', 'height', `${size}px`);
+}
+
+
+
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export alSize */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__measureFont_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__slideshow_populateLetters__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_perfect_scrollbar__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__slideshow_params__ = __webpack_require__(6);
+
+
+ 
+
+
+
+
+
+const wholeContentDiv = document.querySelector('#wholeContent')
+const slideshowDiv = document.querySelector(".slideshow");
+const slideshowDescription = document.querySelector('.slideshow__description');
+const hotelOptionsContainer = document.querySelector('.slideshow__description--optionsContainer');
+const hotelOptionHotel = document.querySelector('.option_hotel');
+const hotelOptionsContent = [...document.querySelectorAll('.slideshow__description--options')];
+const videoSubcontainers = [...document.querySelectorAll('.video__subcontainer')];
+
+const white = 'rgba(250,250,250,1.00)';
+const hotelFixedCharacters = {
+  brachFirstLast: {
+    position: 0,
+    frenchName: 'b', 
+    optionsLetterSpacing: 3,
+    textColor: white,
+  },
+  brachLast: {
+    position: 1,
+    frenchName: 'h', 
+    optionsLetterSpacing: 3,
+    textColor: white,
+  },
+  brachMiddle: {
+    position: 2,
+    frenchName: 'rac', 
+    optionsLetterSpacing: 3,
+    textColor: white,
+  },
+  slogan: {
+    position: 3,
+    frenchName: 'un style de vie à paris', 
+    optionsLetterSpacing: 3,
+    textColor: white, 
+  }
+}
+
+
+/*------------------------------------*\
+    SLIDESHOW LANDSCAPE OR PORTRAIT
+\*------------------------------------*/
+
+
+function landscapeOrPortrait() {
+  let landscapeOrientation = window.innerHeight <= window.innerWidth;
+  if ((window.innerWidth > 1024) && landscapeOrientation) {
+    wholeContentDiv.classList.add('slideshow__landscape');
+    wholeContentDiv.classList.remove('slideshow__portrait');
+  } else {
+    wholeContentDiv.classList.remove('slideshow__landscape');
+    wholeContentDiv.classList.add('slideshow__portrait');
+  };
+
+  if (1.28 * window.innerHeight < window.innerWidth * 0.5625) {
+    document.querySelector('.video1').querySelector('.video__subcontainer').classList.add('landscape-max');
+    document.querySelector('.video1').querySelector('.video__subcontainer').classList.remove('portrait');
+    document.querySelector('.video2').querySelector('.video__subcontainer').classList.add('landscape-max');
+    document.querySelector('.video2').querySelector('.video__subcontainer').classList.remove('portrait');
+
+  } else {
+    document.querySelector('.video1').querySelector('.video__subcontainer').classList.remove('landscape-max');
+    document.querySelector('.video1').querySelector('.video__subcontainer').classList.add('portrait');
+    document.querySelector('.video2').querySelector('.video__subcontainer').classList.remove('landscape-max');
+    document.querySelector('.video2').querySelector('.video__subcontainer').classList.add('portrait');
+  }
+};
+
+landscapeOrPortrait()
+window.addEventListener('resize', landscapeOrPortrait);
+window.addEventListener('load', landscapeOrPortrait);
+/*------------------------------------*\
+    BRACH LETTERS
+\*------------------------------------*/
+
+const firstAndLastHotelLetter = document.querySelectorAll('.first-last-letter');
+const middleHotelLetters = document.querySelector('.middle-letters');
+const flSize = 26.750;
+const mlSize = 23;
+
+for (let i = 0; i < firstAndLastHotelLetter.length; i++) {
+   const letter = firstAndLastHotelLetter[i]
+  Object(__WEBPACK_IMPORTED_MODULE_1__slideshow_populateLetters__["a" /* populateHotelOptions */])(letter, i, hotelFixedCharacters, flSize, 'Portrait');
+};
+Object(__WEBPACK_IMPORTED_MODULE_1__slideshow_populateLetters__["a" /* populateHotelOptions */])(middleHotelLetters, 2, hotelFixedCharacters, mlSize, 'Portrait');
+
+/*------------------------------------*\
+    HÔTEL OPTIONS
+\*------------------------------------*/
+
+//SIZE for population in slideshow.js
+const alSize = 2 * flSize;
+hotelOptionsContent.forEach(hotelOption => {
+  Object(__WEBPACK_IMPORTED_MODULE_1__slideshow_populateLetters__["a" /* populateHotelOptions */])(hotelOption, hotelOption.dataset['slideposition'], __WEBPACK_IMPORTED_MODULE_3__slideshow_params__["a" /* slideshowParams */], alSize, 'Portrait');
+});
+
+
+/*------------------------------------*\
+    DESCRIPTION POSITION
+\*------------------------------------*/
+
+hotelOptionsContainer.style.height = `${hotelOptionHotel.getBoundingClientRect().height}px`
+
+function alignDescriptionWithCursorOnMiddle () {
+  const hotelOptionsBottom = hotelOptionsContainer.getBoundingClientRect().bottom;
+  const hotelDescriptionBottom = slideshowDescription.getBoundingClientRect().bottom;
+  const differenceWithMiddle = hotelDescriptionBottom - hotelOptionsBottom;
+  slideshowDescription.style.marginBottom = `${-differenceWithMiddle}px`;
+}
+
+alignDescriptionWithCursorOnMiddle();
+
+/*------------------------------------*\
+    SLOGAN LETTERS
+\*------------------------------------*/
+
+const hotelSlogan = document.querySelector('.slideshow__description--slogan');
+const sloganAlSize = 0.35 * flSize;
+Object(__WEBPACK_IMPORTED_MODULE_1__slideshow_populateLetters__["a" /* populateHotelOptions */])(hotelSlogan, 3, hotelFixedCharacters, sloganAlSize, 'Cogito');
+
+
+
+
+/*------------------------------------*\
+    HIDE SCROLLBAR
+\*------------------------------------*/
+
+
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /*!
  * perfect-scrollbar v1.3.0
  * (c) 2017 Hyunje Jun
@@ -1371,540 +1596,7 @@ PerfectScrollbar.prototype.removePsClasses = function removePsClasses () {
     .join(' ');
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (PerfectScrollbar);
-
-
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return exactCapitalLetterSize; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_measure_font__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_measure_font___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_measure_font__);
-
-
-
-
-//pseudostyle
-// http://mcgivery.com/htmlelement-pseudostyle-settingmodifying-before-and-after-in-javascript/
-// var a={_b:0,c:function(){this._b++;return this.b;}};HTMLElement.prototype.pseudoStyle=function(d,e,f){var g="pseudoStyles";var h=document.head||document.getElementsByTagName('head')[0];var i=document.getElementById(g)||document.createElement('style');i.id=g;var j="pseudoStyle"+a.c();this.className+=" "+j;i.innerHTML+=" ."+j+":"+d+"{"+e+":"+f+"}";h.appendChild(i);return this;}
-
-function exactCapitalLetterSize (element, fontFamily, size, lineHeight) {
-  const fontMeasurements = __WEBPACK_IMPORTED_MODULE_0_measure_font___default()(fontFamily, {
-      fontSize: 50,
-      tolerance: 6
-  });  
-
-  // https://iamvdo.me/en/blog/css-font-metrics-line-height-and-vertical-align
-  //BUG : even with constant parameters, results are not the same... sadness
-  const fmCapitalHeight = ((fontFamily === 'Portrait') || (fontFamily === 'Portrait-light')) ? 0.68 : -fontMeasurements.capHeight;
-  const fmDescender = ((fontFamily === 'Portrait') || (fontFamily === 'Portrait-light')) ? 0.2 : fontMeasurements.descender;
-  const fmAscender = ((fontFamily === 'Portrait') || (fontFamily === 'Portrait-light')) ? 0.7 : -fontMeasurements.topBounding;
-  const fmEmSquare = (fmDescender - fmAscender);
-  const fmLinegap = 0;
-
-  /* compute needed values */
-  const lineheightNormal = ((element.firstChild.offsetHeight) + (fmLinegap)) / size;
-  const distanceBottom = ((fmDescender) + (lineheightNormal - fmEmSquare) / 2);
-  const distanceTop = ((-fmAscender + fmCapitalHeight) + (lineheightNormal - fmEmSquare) / 2);
-  const computedFontSize = ((size) / (fmCapitalHeight)); 
-  const contentArea = ((lineheightNormal) * (computedFontSize));
-  const valign = (((distanceBottom) - (distanceTop)) * (computedFontSize));  
-  const computedLineheight = (((lineHeight) * (size)) - (valign));
-
-  /* FOR DEBUGGING
-  const parameters = {
-    element,
-    elementFirstChild: element.firstChild,
-    fontFamily,
-    size,
-    lineHeight,
-    fmEmSquare,
-    fmCapitalHeight,
-    fmDescender,
-    fmAscender,
-    fmLinegap,
-    valign,
-    computedLineheight,
-    computedFontSize
-  }
-  console.log(parameters) */
-
-  /* set font family */
-  element.style.fontFamily = fontFamily;
-
-  /* set capital height to equal font-size */
-  element.style.fontSize = `${computedFontSize}px`;
-
-  /* set computed line-height */
-  element.style.lineHeight = `${computedLineheight}px`;
-
-  // element.firstChild.style.height = `${size}px`;
-  element.firstChild.style.verticalAlign = `${-valign}px`;
-  // element.style.height = `${size}px`;
-  // element.firstChild
-  //   .pseudoStyle('before', 'content', '')
-  //   .pseudoStyle('before', 'dispaly', 'inline-block')
-  //   .pseudoStyle('before', 'height', `${size}px`);
-}
-
-
-
-
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* smoothscroll v0.4.0 - 2017 - Dustan Kasten, Jeremias Menichelli - MIT License */
-(function () {
-  'use strict';
-
-  /*
-   * aliases
-   * w: window global object
-   * d: document
-   */
-  var w = window;
-  var d = document;
-
-  /**
-   * indicates if a the current browser is made by Microsoft
-   * @method isMicrosoftBrowser
-   * @param {String} userAgent
-   * @returns {Boolean}
-   */
-  function isMicrosoftBrowser(userAgent) {
-    var userAgentPatterns = ['MSIE ', 'Trident/', 'Edge/'];
-
-    return new RegExp(userAgentPatterns.join('|')).test(userAgent);
-  }
-
-   // polyfill
-  function polyfill() {
-    // return if scroll behavior is supported and polyfill is not forced
-    if ('scrollBehavior' in d.documentElement.style
-      && w.__forceSmoothScrollPolyfill__ !== true) {
-      return;
-    }
-
-    // globals
-    var Element = w.HTMLElement || w.Element;
-    var SCROLL_TIME = 468;
-
-    /*
-     * IE has rounding bug rounding down clientHeight and clientWidth and
-     * rounding up scrollHeight and scrollWidth causing false positives
-     * on hasScrollableSpace
-     */
-    var ROUNDING_TOLERANCE = isMicrosoftBrowser(w.navigator.userAgent) ? 1 : 0;
-
-    // object gathering original scroll methods
-    var original = {
-      scroll: w.scroll || w.scrollTo,
-      scrollBy: w.scrollBy,
-      elementScroll: Element.prototype.scroll || scrollElement,
-      scrollIntoView: Element.prototype.scrollIntoView
-    };
-
-    // define timing method
-    var now = w.performance && w.performance.now
-      ? w.performance.now.bind(w.performance)
-      : Date.now;
-
-    /**
-     * changes scroll position inside an element
-     * @method scrollElement
-     * @param {Number} x
-     * @param {Number} y
-     * @returns {undefined}
-     */
-    function scrollElement(x, y) {
-      this.scrollLeft = x;
-      this.scrollTop = y;
-    }
-
-    /**
-     * returns result of applying ease math function to a number
-     * @method ease
-     * @param {Number} k
-     * @returns {Number}
-     */
-    function ease(k) {
-      return 0.5 * (1 - Math.cos(Math.PI * k));
-    }
-
-    /**
-     * indicates if a smooth behavior should be applied
-     * @method shouldBailOut
-     * @param {Number|Object} firstArg
-     * @returns {Boolean}
-     */
-    function shouldBailOut(firstArg) {
-      if (firstArg === null
-        || typeof firstArg !== 'object'
-        || firstArg.behavior === undefined
-        || firstArg.behavior === 'auto'
-        || firstArg.behavior === 'instant') {
-        // first argument is not an object/null
-        // or behavior is auto, instant or undefined
-        return true;
-      }
-
-      if (typeof firstArg === 'object' && firstArg.behavior === 'smooth') {
-        // first argument is an object and behavior is smooth
-        return false;
-      }
-
-      // throw error when behavior is not supported
-      throw new TypeError(
-        'behavior member of ScrollOptions '
-        + firstArg.behavior
-        + ' is not a valid value for enumeration ScrollBehavior.'
-      );
-    }
-
-    /**
-     * indicates if an element has scrollable space in the provided axis
-     * @method hasScrollableSpace
-     * @param {Node} el
-     * @param {String} axis
-     * @returns {Boolean}
-     */
-    function hasScrollableSpace(el, axis) {
-      if (axis === 'Y') {
-        return (el.clientHeight + ROUNDING_TOLERANCE) < el.scrollHeight;
-      }
-
-      if (axis === 'X') {
-        return (el.clientWidth + ROUNDING_TOLERANCE) < el.scrollWidth;
-      }
-    }
-
-    /**
-     * indicates if an element has a scrollable overflow property in the axis
-     * @method canOverflow
-     * @param {Node} el
-     * @param {String} axis
-     * @returns {Boolean}
-     */
-    function canOverflow(el, axis) {
-      var overflowValue = w.getComputedStyle(el, null)['overflow' + axis];
-
-      return overflowValue === 'auto' || overflowValue === 'scroll';
-    }
-
-    /**
-     * indicates if an element can be scrolled in either axis
-     * @method isScrollable
-     * @param {Node} el
-     * @param {String} axis
-     * @returns {Boolean}
-     */
-    function isScrollable(el) {
-      var isScrollableY = hasScrollableSpace(el, 'Y') && canOverflow(el, 'Y');
-      var isScrollableX = hasScrollableSpace(el, 'X') && canOverflow(el, 'X');
-
-      return isScrollableY || isScrollableX;
-    }
-
-    /**
-     * finds scrollable parent of an element
-     * @method findScrollableParent
-     * @param {Node} el
-     * @returns {Node} el
-     */
-    function findScrollableParent(el) {
-      var isBody;
-
-      do {
-        el = el.parentNode;
-
-        isBody = el === d.body;
-      } while (isBody === false && isScrollable(el) === false);
-
-      isBody = null;
-
-      return el;
-    }
-
-    /**
-     * self invoked function that, given a context, steps through scrolling
-     * @method step
-     * @param {Object} context
-     * @returns {undefined}
-     */
-    function step(context) {
-      var time = now();
-      var value;
-      var currentX;
-      var currentY;
-      var elapsed = (time - context.startTime) / SCROLL_TIME;
-
-      // avoid elapsed times higher than one
-      elapsed = elapsed > 1 ? 1 : elapsed;
-
-      // apply easing to elapsed time
-      value = ease(elapsed);
-
-      currentX = context.startX + (context.x - context.startX) * value;
-      currentY = context.startY + (context.y - context.startY) * value;
-
-      context.method.call(context.scrollable, currentX, currentY);
-
-      // scroll more if we have not reached our destination
-      if (currentX !== context.x || currentY !== context.y) {
-        w.requestAnimationFrame(step.bind(w, context));
-      }
-    }
-
-    /**
-     * scrolls window or element with a smooth behavior
-     * @method smoothScroll
-     * @param {Object|Node} el
-     * @param {Number} x
-     * @param {Number} y
-     * @returns {undefined}
-     */
-    function smoothScroll(el, x, y) {
-      var scrollable;
-      var startX;
-      var startY;
-      var method;
-      var startTime = now();
-
-      // define scroll context
-      if (el === d.body) {
-        scrollable = w;
-        startX = w.scrollX || w.pageXOffset;
-        startY = w.scrollY || w.pageYOffset;
-        method = original.scroll;
-      } else {
-        scrollable = el;
-        startX = el.scrollLeft;
-        startY = el.scrollTop;
-        method = scrollElement;
-      }
-
-      // scroll looping over a frame
-      step({
-        scrollable: scrollable,
-        method: method,
-        startTime: startTime,
-        startX: startX,
-        startY: startY,
-        x: x,
-        y: y
-      });
-    }
-
-    // ORIGINAL METHODS OVERRIDES
-    // w.scroll and w.scrollTo
-    w.scroll = w.scrollTo = function() {
-      // avoid action when no arguments are passed
-      if (arguments[0] === undefined) {
-        return;
-      }
-
-      // avoid smooth behavior if not required
-      if (shouldBailOut(arguments[0]) === true) {
-        original.scroll.call(
-          w,
-          arguments[0].left !== undefined
-            ? arguments[0].left
-            : typeof arguments[0] !== 'object'
-              ? arguments[0]
-              : (w.scrollX || w.pageXOffset),
-          // use top prop, second argument if present or fallback to scrollY
-          arguments[0].top !== undefined
-            ? arguments[0].top
-            : arguments[1] !== undefined
-              ? arguments[1]
-              : (w.scrollY || w.pageYOffset)
-        );
-
-        return;
-      }
-
-      // LET THE SMOOTHNESS BEGIN!
-      smoothScroll.call(
-        w,
-        d.body,
-        arguments[0].left !== undefined
-          ? ~~arguments[0].left
-          : (w.scrollX || w.pageXOffset),
-        arguments[0].top !== undefined
-          ? ~~arguments[0].top
-          : (w.scrollY || w.pageYOffset)
-      );
-    };
-
-    // w.scrollBy
-    w.scrollBy = function() {
-      // avoid action when no arguments are passed
-      if (arguments[0] === undefined) {
-        return;
-      }
-
-      // avoid smooth behavior if not required
-      if (shouldBailOut(arguments[0])) {
-        original.scrollBy.call(
-          w,
-          arguments[0].left !== undefined
-            ? arguments[0].left
-            : typeof arguments[0] !== 'object'
-              ? arguments[0]
-              : 0,
-          arguments[0].top !== undefined
-            ? arguments[0].top
-            : arguments[1] !== undefined
-             ? arguments[1]
-             : 0
-        );
-
-        return;
-      }
-
-      // LET THE SMOOTHNESS BEGIN!
-      smoothScroll.call(
-        w,
-        d.body,
-        ~~arguments[0].left + (w.scrollX || w.pageXOffset),
-        ~~arguments[0].top + (w.scrollY || w.pageYOffset)
-      );
-    };
-
-    // Element.prototype.scroll and Element.prototype.scrollTo
-    Element.prototype.scroll = Element.prototype.scrollTo = function() {
-      // avoid action when no arguments are passed
-      if (arguments[0] === undefined) {
-        return;
-      }
-
-      // avoid smooth behavior if not required
-      if (shouldBailOut(arguments[0]) === true) {
-        // if one number is passed, throw error to match Firefox implementation
-        if (typeof arguments[0] === 'number' && arguments[1] === undefined) {
-          throw new SyntaxError('Value couldn\'t be converted');
-        }
-
-        original.elementScroll.call(
-          this,
-          // use left prop, first number argument or fallback to scrollLeft
-          arguments[0].left !== undefined
-            ? ~~arguments[0].left
-            : typeof arguments[0] !== 'object'
-              ? ~~arguments[0]
-              : this.scrollLeft,
-          // use top prop, second argument or fallback to scrollTop
-          arguments[0].top !== undefined
-            ? ~~arguments[0].top
-            : arguments[1] !== undefined
-              ? ~~arguments[1]
-              : this.scrollTop
-        );
-
-        return;
-      }
-
-      var left = arguments[0].left;
-      var top = arguments[0].top;
-
-      // LET THE SMOOTHNESS BEGIN!
-      smoothScroll.call(
-        this,
-        this,
-        typeof left === 'undefined' ? this.scrollLeft : ~~left,
-        typeof top === 'undefined' ? this.scrollTop : ~~top
-      );
-    };
-
-    // Element.prototype.scrollBy
-    Element.prototype.scrollBy = function() {
-      // avoid action when no arguments are passed
-      if (arguments[0] === undefined) {
-        return;
-      }
-
-      // avoid smooth behavior if not required
-      if (shouldBailOut(arguments[0]) === true) {
-        original.elementScroll.call(
-          this,
-          arguments[0].left !== undefined
-            ? ~~arguments[0].left + this.scrollLeft
-            : ~~arguments[0] + this.scrollLeft,
-          arguments[0].top !== undefined
-            ? ~~arguments[0].top + this.scrollTop
-            : ~~arguments[1] + this.scrollTop
-        );
-
-        return;
-      }
-
-      this.scroll({
-        left: ~~arguments[0].left + this.scrollLeft,
-        top: ~~arguments[0].top + this.scrollTop,
-        behavior: arguments[0].behavior
-      });
-    };
-
-    // Element.prototype.scrollIntoView
-    Element.prototype.scrollIntoView = function() {
-      // avoid smooth behavior if not required
-      if (shouldBailOut(arguments[0]) === true) {
-        original.scrollIntoView.call(
-          this,
-          arguments[0] === undefined
-            ? true
-            : arguments[0]
-        );
-
-        return;
-      }
-
-      // LET THE SMOOTHNESS BEGIN!
-      var scrollableParent = findScrollableParent(this);
-      var parentRects = scrollableParent.getBoundingClientRect();
-      var clientRects = this.getBoundingClientRect();
-
-      if (scrollableParent !== d.body) {
-        // reveal element inside parent
-        smoothScroll.call(
-          this,
-          scrollableParent,
-          scrollableParent.scrollLeft + clientRects.left - parentRects.left,
-          scrollableParent.scrollTop + clientRects.top - parentRects.top
-        );
-
-        // reveal parent in viewport unless is fixed
-        if (w.getComputedStyle(scrollableParent).position !== 'fixed') {
-          w.scrollBy({
-            left: parentRects.left,
-            top: parentRects.top,
-            behavior: 'smooth'
-          });
-        }
-      } else {
-        // reveal element in viewport
-        w.scrollBy({
-          left: clientRects.left,
-          top: clientRects.top,
-          behavior: 'smooth'
-        });
-      }
-    };
-  }
-
-  if (true) {
-    // commonjs
-    module.exports = { polyfill: polyfill };
-  } else {
-    // global
-    polyfill();
-  }
-
-}());
+/* unused harmony default export */ var _unused_webpack_default_export = (PerfectScrollbar);
 
 
 /***/ }),
@@ -1912,85 +1604,260 @@ function exactCapitalLetterSize (element, fontFamily, size, lineHeight) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return alSize; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__measureFont_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_perfect_scrollbar__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return playerLoad; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return playerPlay; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return playerPause; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return player1; });
+/* unused harmony export player1firstStart */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return player2; });
+/* unused harmony export player2firstStart */
+/* unused harmony export player2ResetOnFirstLoad */
+/* unused harmony export player1ResetOnFirstLoad */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_yt_player__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_yt_player___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_yt_player__);
+   //https://github.com/feross/yt-player
 
-
- 
-
-
-
-const wholeContentDiv = document.querySelector('#wholeContent')
-const slideshowDiv = document.querySelector(".slideshow");
-const slideshowDescription = document.querySelector('.slideshow__description');
-const hotelOptions = document.querySelector('.slideshow__description--options');
-const hotelOptionsLetters = [...hotelOptions.children];
 /*------------------------------------*\
-    SLIDESHOW LANDSCAPE OR PORTRAIT
+    PLAYER 1
 \*------------------------------------*/
 
 
-function landscapeOrPortrait() {
-  let landscapeOrientation = window.innerHeight <= window.innerWidth;
-  if ((window.innerWidth > 1024) && landscapeOrientation) {
-    wholeContentDiv.classList.add('slideshow__landscape');
-    wholeContentDiv.classList.remove('slideshow__portrait');
-  } else {
-    wholeContentDiv.classList.remove('slideshow__landscape');
-    wholeContentDiv.classList.add('slideshow__portrait');  
-  };
-};
+let player1start = 0;
+let player1autoplay = false;
+let player1loaded = false;
+let player1firstStart = false;
+let player1;
+let videoRatio = 0.5625;  //width * 0.5625 = height 
 
-landscapeOrPortrait()
-window.addEventListener('resize', landscapeOrPortrait);
-/*------------------------------------*\
-    BRACH LETTERS
-\*------------------------------------*/
-
-const firstAndLastHotelLetter = document.querySelectorAll('.first-last-letter');
-const middleHotelLetters = document.querySelectorAll('.middle-letters');
-const flSize = 26.750;
-const mlSize = 23;
-
-firstAndLastHotelLetter.forEach(letter => Object(__WEBPACK_IMPORTED_MODULE_0__measureFont_js__["a" /* exactCapitalLetterSize */])(letter, 'Portrait-light', flSize, 1));
-middleHotelLetters.forEach(letter => Object(__WEBPACK_IMPORTED_MODULE_0__measureFont_js__["a" /* exactCapitalLetterSize */])(letter, 'Portrait-light', mlSize, 1));
-
-/*------------------------------------*\
-    HÔTEL OPTIONS LETTERS
-\*------------------------------------*/
-
-const alSize = 2 * flSize;
-hotelOptionsLetters.forEach(letter => {
-  Object(__WEBPACK_IMPORTED_MODULE_0__measureFont_js__["a" /* exactCapitalLetterSize */])(letter, 'Portrait', alSize, 1);
-});
-
-
-/*------------------------------------*\
-    SLOGAN LETTERS
-\*------------------------------------*/
-
-const hotelSlogan = document.querySelector('.slideshow__description--slogan');
-const sloganAlSize = 0.35 * flSize;
-Object(__WEBPACK_IMPORTED_MODULE_0__measureFont_js__["a" /* exactCapitalLetterSize */])(hotelSlogan, 'Cogito', sloganAlSize, 1)
-
-
-/*------------------------------------*\
-    DESCRIPTION POSITION
-\*------------------------------------*/
-
-function alignDescriptionWithCursorOnMiddle () {
-  const hotelOptionsBottom = hotelOptions.offsetTop + hotelOptions.offsetHeight;
-  const windowHeight = window.innerHeight;
-  const differenceWithMiddle = hotelOptionsBottom - windowHeight / 2;
-  slideshowDescription.style.marginBottom = `${differenceWithMiddle * 2 - 4}px`;
+const player1options = {
+    height: '100%',
+    width: '100%',
+    autoplay: player1autoplay,
+    captions: false,
+    controls: true,
+    keyboard: false,
+    fullscreen: true,
+    annotations: false,
+    modestBranding: true,
+    related: false,
+    info: false,
+    timeupdateFrequency: 1000,  // default: 1000
 }
 
-alignDescriptionWithCursorOnMiddle();
+player1 = new __WEBPACK_IMPORTED_MODULE_0_yt_player___default.a('#video__video1', player1options);
+// player1.load('M6kQi1_Btqg');  
+
 
 /*------------------------------------*\
-    HIDE SCROLLBAR
+    PLAYER 2
 \*------------------------------------*/
+
+
+let player2start = 0;
+let player2autoplay = false;
+let player2loaded = false;
+let player2firstStart = false;
+let player2;
+
+const player2options = {
+    height: '100%',
+    width: '100%',
+    autoplay: player2autoplay,
+    captions: false,
+    controls: true,
+    keyboard: false,
+    fullscreen: true,
+    annotations: false,
+    modestBranding: true,
+    related: false,
+    info: false,
+    timeupdateFrequency: 1000,  // default: 1000
+}
+
+player2 = new __WEBPACK_IMPORTED_MODULE_0_yt_player___default.a('#video__video2', player2options);
+// player2.load('M6kQi1_Btqg');  
+
+
+/*------------------------------------*\
+    FUNCTIONS
+\*------------------------------------*/
+
+let player1StartLoad = 0;
+let player2StartLoad = 0;
+
+function playerLoad(player) {
+  if (player === player1) {
+    console.log('loading player 1')
+    player1StartLoad = Date.now();
+    player1.load('M6kQi1_Btqg');  
+  } else if (player === player2) {
+    console.log('loading player 2')
+    player2StartLoad = Date.now();
+    player2.load('M6kQi1_Btqg');  
+  }
+}
+
+// function playerPlay(player, playerFirstStart) {
+//   if (playerFirstStart && player.getCurrentTime() > 0) {
+//     player.seek(0);
+//     playerFirstStart = false;
+//     player.play();
+//   } else if (playerFirstStart && player.getCurrentTime() === 0) {
+//     playerFirstStart = false;
+//     player.play();
+//   } else {
+//     player.play();
+//   }
+// };
+
+function playerPlay(player) {
+  console.log('play', player)
+  player.play();
+}
+
+function playerPause(player) {
+  player.pause();
+}
+
+// function player1ResetOnFirstLoad(seconds, player) {
+//   if (player1loaded === false) {
+//     player1loaded = true;
+//     player.pause();
+//     player.seek(0);
+//     console.log(`player 1 loaded in ${Date.now() - player1StartLoad}ms`, player1);
+//   } else {
+//     return
+//   }
+// }
+
+// player1._onReady = console.log(`player 1 loaded in ${Date.now() - player1StartLoad}ms`, player1);
+
+// function player2ResetOnFirstLoad(seconds, player) {
+//   if (player2loaded === false) {
+//     player2loaded = true;
+//     player.pause();
+//     player.seek(0);
+//     console.log(`player 2 loaded in ${Date.now() - player2StartLoad}ms`);
+//   } else {
+//     return
+//   }
+// }
+
+/*------------------------------------*\
+    EVENTLISTENERS
+\*------------------------------------*/
+
+if (player1) {
+  // console.log('player 1')
+  // player1.on('timeupdate', (seconds) => {
+  //   player1ResetOnFirstLoad(seconds, player1);
+  // })
+
+  player1.on('ended', () => {
+    player1.seek(0);
+  })
+}
+
+if (player2) {
+  // console.log('player 2')
+  // player2.on('timeupdate', (seconds) => {
+  //   player2ResetOnFirstLoad(seconds, player2);
+  // })
+
+  player2.on('ended', () => {
+    player2.seek(0);
+  })
+}
+
+/*------------------------------------*\
+    RESIZE VIDEO - ALWAYS FULL WINDOW - cf CSS
+\*------------------------------------*/
+const video1iFrameContainer = document.querySelector('.video__subcontainer');
+const wholeContentDiv = document.querySelector('#wholeContent');
+
+
+
+
+// function resizeVideo(e, div) {
+//   let windowHeight = window.innerHeight;
+//   let windowWidth = window.innerWidth;
+//   console.log(`windowHeight: ${windowHeight}`);
+//   console.log(`windowWidth: ${windowWidth}`);
+//   console.log(`windowWidth * videoRatio: ${windowWidth * videoRatio}`);
+//   const minHeightMaxWidth = (windowHeight < windowWidth * videoRatio);
+//   const minWidthMaxHeight = (windowHeight > windowWidth * videoRatio);
+
+//   if (windowHeight < windowWidth * videoRatio) {
+//     console.log('cas extrême: mini-hauteur, maxi-largeur');
+//     const newHeight = 128;
+//     div.style.width = `${newHeight / videoRatio}vh`;
+//     div.style.height = `${newHeight}vh`;
+//   } else if (windowHeight > windowWidth * videoRatio) {
+//     console.log('cas extrême: mini-largeur, maxi-hauteur');
+//     const newHeight = 128;
+//     div.style.width = `${newHeight / videoRatio}vh`;
+//     div.style.height = `${newHeight}vh`;
+//   } else if ((windowHeight < windowWidth * (videoRatio + 0.01)) && (windowHeight > windowWidth * (videoRatio - 0.01)))  {
+//     console.log('cas extrême: perfet ratio');
+//     div.style.height = `128%`;
+//     div.style.width = `128%`;
+//   }
+// };
+
+// // window.addEventListener('load', function(e) { resizeVideo(e, video1iFrameContainer) });
+// // window.addEventListener('load', function(e) { resizeVideo(e, video1Div) });
+
+// player.play()
+// player.pause()
+// player.stop()
+// player.seek(seconds)
+// player.setVolume(volume) ////between 0 and 100
+// player.setPlaybackRate(rate)
+// player.getVolume() //between 0 and 100
+// player.getPlaybackRate()
+// player.getDuration() //seconds
+// player.getProgress() //Percentage
+// player.getState() // Possible values are: 'unstarted', 'ended', 'playing', 'paused', 'buffering', or 'cued'.
+// player.getCurrentTime()
+// player.destroy()
+// player.destroyed (boolean)
+// player.videoId (string)
+// player.on('error', (err) => {})
+// player.on('unplayable', (videoId) => {})
+// player.on('timeupdate', (seconds) => {})
+// player.on('unstarted', () => {})
+// player.on('ended', () => {})
+// player.on('playing', () => {})
+// player.on('paused', () => {})
+// player.on('buffering', () => {})
+// player.on('cued', () => {})
+// player.on('playbackQualityChange', (quality) => {})
+// player.on('playbackRateChange', (playbackRate) => {})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2000,8 +1867,8 @@ alignDescriptionWithCursorOnMiddle();
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return buildFakeTotem; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return buildFakeHotelOptionLetters; });
+/* unused harmony export buildFakeTotem */
+/* unused harmony export buildFakeHotelOptionLetters */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__populateLetters__ = __webpack_require__(5);
 
 
@@ -2056,16 +1923,12 @@ function buildFakeHotelOptionLetters (motherDiv, data, index, offset, size) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return populateHotelOptions; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__measureFont__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__measureFont__ = __webpack_require__(0);
 
 
  
 
-function populateHotelOptions (motherDiv, index, data, size) {
-  while (motherDiv.firstChild) {
-      motherDiv.removeChild(motherDiv.firstChild);
-  };
-  
+function populateHotelOptions (motherDiv, index, data, size, ffamily) {
   const theme = Object.keys(data)[index];
   
   // we do <p><span>'letter'</span></p> for each letter, in order to create an animation on each letter
@@ -2078,7 +1941,7 @@ function populateHotelOptions (motherDiv, index, data, size) {
   }
   //then letter spacing with margin
   [...motherDiv.children].forEach(letter => {
-    Object(__WEBPACK_IMPORTED_MODULE_0__measureFont__["a" /* exactCapitalLetterSize */])(letter, 'Portrait', size, 1);
+    Object(__WEBPACK_IMPORTED_MODULE_0__measureFont__["a" /* exactCapitalLetterSize */])(letter, ffamily, size, 1);
     //If the character is a space, make it clear to the eye by enlarging it 
     if (letter.firstChild.textContent.charCodeAt(0) === 32) {
       letter.style.marginRight = `${5 * data[theme].optionsLetterSpacing}px`;
@@ -2115,7 +1978,7 @@ const slideshowParams = {
     textColor: white,
     totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
     backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    fakeTotem: function() { return Object(__WEBPACK_IMPORTED_MODULE_0__fakeDom__["b" /* buildFakeTotem */])(totemDiv, slideshowParams, this.position) },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
   },
   clubDeSport: {
     position: 1,
@@ -2126,7 +1989,7 @@ const slideshowParams = {
     textColor: white,
     totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
     backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    fakeTotem: function() { return Object(__WEBPACK_IMPORTED_MODULE_0__fakeDom__["b" /* buildFakeTotem */])(totemDiv, slideshowParams, this.position) },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
   },
   restaurant: {
     position: 2,
@@ -2137,7 +2000,7 @@ const slideshowParams = {
     textColor: white,
     totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
     backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    fakeTotem: function() { return Object(__WEBPACK_IMPORTED_MODULE_0__fakeDom__["b" /* buildFakeTotem */])(totemDiv, slideshowParams, this.position) },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
   },
   bar: {
     position: 3,
@@ -2148,7 +2011,7 @@ const slideshowParams = {
     textColor: white,
     totemPictureUrl: function() { return `./src/img/totems/totem_hotel.png` },
     backupPictureUrl: function() { return `./src/img/responsive_pictures/hotel.png` },
-    fakeTotem: function() { return Object(__WEBPACK_IMPORTED_MODULE_0__fakeDom__["b" /* buildFakeTotem */])(totemDiv, slideshowParams, this.position) },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
   },
   patisserie: {
     position: 4,
@@ -2159,7 +2022,7 @@ const slideshowParams = {
     textColor: 'rgba(151,105,80,1.00)',
     totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
     backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    fakeTotem: function() { return Object(__WEBPACK_IMPORTED_MODULE_0__fakeDom__["b" /* buildFakeTotem */])(totemDiv, slideshowParams, this.position) },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
   },
   evenementiel: {
     position: 5,
@@ -2170,7 +2033,7 @@ const slideshowParams = {
     textColor: 'rgba(151,105,80,1.00)',
     totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
     backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    fakeTotem: function() { return Object(__WEBPACK_IMPORTED_MODULE_0__fakeDom__["b" /* buildFakeTotem */])(totemDiv, slideshowParams, this.position) },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
   },
   potager: {
     position: 6,
@@ -2181,7 +2044,7 @@ const slideshowParams = {
     textColor: white,
     totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
     backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    fakeTotem: function() { return Object(__WEBPACK_IMPORTED_MODULE_0__fakeDom__["b" /* buildFakeTotem */])(totemDiv, slideshowParams, this.position) },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
   },
 }
 
@@ -2203,12 +2066,11 @@ module.exports = __webpack_require__(28);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bling__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__measureFont__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__video1__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__slideshow_slideshow__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bling__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__measureFont__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__DOMStyling__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__slideshow_slideshow__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__slideshow_slideshowPortrait__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DOMStyling__ = __webpack_require__(3);
 // import { uniq } from 'lodash';
 // import jsonp from 'jsonp';
 // import insane from 'insane';
@@ -2217,6 +2079,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // import './Chap5Carousel';
 // import './Chap5BisCarousel';
 
+
+// import './lottie';
+// import './loadingAnimation';
 
 /*------------------------------------*\
     utilities
@@ -2227,7 +2092,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /*------------------------------------*\
     modules
 \*------------------------------------*/
-
+// import './_video1';
 
 
 
@@ -2235,12 +2100,318 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 9 */,
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export $ */
+/* unused harmony export $$ */
+// based on https://gist.github.com/paulirish/12fb951a8b893a454b32
+
+const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
+
+Node.prototype.on = window.on = function (name, fn) {
+  this.addEventListener(name, fn);
+};
+
+NodeList.prototype.__proto__ = Array.prototype; // eslint-disable-line
+
+NodeList.prototype.on = NodeList.prototype.addEventListener = function (name, fn) {
+  this.forEach((elem) => {
+    elem.on(name, fn);
+  });
+};
+
+
+
+
+/***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const EventEmitter = __webpack_require__(11).EventEmitter
-const loadScript = __webpack_require__(12)
+"use strict";
+
+
+module.exports = __webpack_require__(11);
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var defaultValue = __webpack_require__(12);
+
+var findEdge = __webpack_require__(16);
+var drawCharacter = __webpack_require__(19);
+var resetCanvas = __webpack_require__(20);
+var createCanvas = __webpack_require__(21);
+
+module.exports = function measureFont(fontFamily) {
+	var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+	var fontSize = defaultValue(options.fontSize, 20);
+	var canvasSize = defaultValue(options.tolerance, 6) * fontSize;
+
+	var descenderCharacters = ["g", "j", "p", "q", "y"];
+	var ascenderCharacters = ["h", "d", "t", "l"];
+	var capHeightCharacters = ["H", "I", "T"];
+	var medianCharacters = ["x", "v", "w", "z"];
+	var topBoundingCharacters = ["O", "A", "8", "#", "%", "^", "!", "/", "|", "]"];
+
+	var testingCanvas = createCanvas(canvasSize);
+
+	function getLowest(characters) {
+		resetCanvas(testingCanvas);
+
+		characters.forEach(function (character) {
+			drawCharacter(testingCanvas, character, fontFamily, fontSize);
+		});
+
+		return findEdge.lowest(testingCanvas);
+	}
+
+	function getHighest(characters) {
+		resetCanvas(testingCanvas);
+
+		characters.forEach(function (character) {
+			drawCharacter(testingCanvas, character, fontFamily, fontSize);
+		});
+
+		return findEdge.highest(testingCanvas);
+	}
+
+	var lowestDescenderPoint = getLowest(descenderCharacters) - testingCanvas.height / 2;
+	var highestAscenderPoint = testingCanvas.height / 2 - getHighest(ascenderCharacters);
+	var highestCapHeightPoint = testingCanvas.height / 2 - getHighest(capHeightCharacters);
+	var highestMedianPoint = testingCanvas.height / 2 - getHighest(medianCharacters);
+	var highestTopBoundingPoint = testingCanvas.height / 2 - getHighest(topBoundingCharacters);
+
+	return {
+		descender: lowestDescenderPoint / fontSize,
+		ascender: -highestAscenderPoint / fontSize,
+		capHeight: -highestCapHeightPoint / fontSize,
+		median: -highestMedianPoint / fontSize,
+		topBounding: -highestTopBoundingPoint / fontSize
+	};
+};
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = __webpack_require__(13);
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var promiseTry = __webpack_require__(14);
+
+function evaluateValue(value) {
+	if (typeof value === "function") {
+		return value();
+	} else {
+		return value;
+	}
+}
+
+function maybeEvaluateValue(value, evaluate) {
+	if (evaluate === true) {
+		return evaluateValue(value);
+	} else {
+		return value;
+	}
+}
+
+function defaultValue(value, fallbackValue) {
+	var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+
+	value = maybeEvaluateValue(value, options.evaluate);
+
+	if (value != null) {
+		return value;
+	} else {
+		return maybeEvaluateValue(fallbackValue, options.evaluate);
+	}
+}
+
+defaultValue.async = function defaultAsyncValue(value, fallbackValue) {
+	var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+
+	return promiseTry(function () {
+		return maybeEvaluateValue(value, options.evaluate);
+	}).then(function (resultValue) {
+		if (resultValue != null) {
+			return resultValue;
+		} else {
+			return maybeEvaluateValue(fallbackValue, options.evaluate);
+		}
+	});
+};
+
+module.exports = defaultValue;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = __webpack_require__(15);
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function promiseTry(func) {
+	return new Promise(function (resolve, reject) {
+		resolve(func());
+	});
+};
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getImageData = __webpack_require__(17);
+var scanRow = __webpack_require__(18);
+
+function findEdge(canvas, firstRow, lastRow, step) {
+	var imageData = getImageData(canvas).data;
+	var valuesPerRow = canvas.width * 4;
+	var hitEnd = false;
+
+	if (step === 0) {
+		throw new Error("Step cannot be 0");
+	}
+
+	var row = firstRow;
+
+	while (!hitEnd) {
+		var highestValue = scanRow(imageData, row * valuesPerRow, canvas.width);
+
+		/* 240 is a somewhat randomly picked value to deal with anti-aliasing. */
+		if (highestValue > 240) {
+			return row;
+		}
+
+		row += step;
+
+		if (step > 0) {
+			hitEnd = row > lastRow;
+		} else if (step < 0) {
+			hitEnd = row < lastRow;
+		}
+	}
+}
+
+module.exports = {
+	lowest: function findLowestEdge(canvas) {
+		return findEdge(canvas, canvas.height - 1, 0, -1);
+	},
+	highest: function findHighestEdge(canvas) {
+		return findEdge(canvas, 0, canvas.height - 1, 1);
+	}
+};
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function getImageData(canvas) {
+	var context = canvas.getContext("2d");
+	return context.getImageData(0, 0, canvas.width, canvas.height);
+};
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function scanRow(imageData, offset, length) {
+	var highestValue = 0;
+
+	for (var column = 0; column < length; column += 1) {
+		var pixelValue = imageData[offset + column * 4];
+
+		if (pixelValue > highestValue) {
+			highestValue = pixelValue;
+		}
+	}
+
+	return highestValue;
+};
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function drawCharacter(canvas, character, fontFamily, fontSize) {
+	var context = canvas.getContext("2d");
+	context.textAlign = "center";
+	context.textBaseline = "alphabetic";
+	context.font = fontSize + "px '" + fontFamily + "'";
+	context.fillStyle = "white";
+	context.fillText(character, canvas.width / 2, canvas.height / 2);
+};
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function resetCanvas(canvas) {
+	var context = canvas.getContext("2d");
+	context.fillStyle = "black";
+	context.fillRect(0, 0, canvas.width, canvas.height);
+};
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function createCanvas(size) {
+	var canvas = document.createElement("canvas");
+	canvas.width = size;
+	canvas.height = size;
+	return canvas;
+};
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const EventEmitter = __webpack_require__(23).EventEmitter
+const loadScript = __webpack_require__(24)
 
 const YOUTUBE_IFRAME_API_SRC = 'https://www.youtube.com/iframe_api'
 
@@ -2724,7 +2895,7 @@ module.exports = YouTubePlayer
 
 
 /***/ }),
-/* 11 */
+/* 23 */
 /***/ (function(module, exports) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -3032,7 +3203,7 @@ function isUndefined(arg) {
 
 
 /***/ }),
-/* 12 */
+/* 24 */
 /***/ (function(module, exports) {
 
 module.exports = load
@@ -3061,324 +3232,13 @@ function load (src, cb) {
 
 
 /***/ }),
-/* 13 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export $ */
-/* unused harmony export $$ */
-// based on https://gist.github.com/paulirish/12fb951a8b893a454b32
-
-const $ = document.querySelector.bind(document);
-const $$ = document.querySelectorAll.bind(document);
-
-Node.prototype.on = window.on = function (name, fn) {
-  this.addEventListener(name, fn);
-};
-
-NodeList.prototype.__proto__ = Array.prototype; // eslint-disable-line
-
-NodeList.prototype.on = NodeList.prototype.addEventListener = function (name, fn) {
-  this.forEach((elem) => {
-    elem.on(name, fn);
-  });
-};
-
-
-
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(15);
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var defaultValue = __webpack_require__(16);
-
-var findEdge = __webpack_require__(20);
-var drawCharacter = __webpack_require__(23);
-var resetCanvas = __webpack_require__(24);
-var createCanvas = __webpack_require__(25);
-
-module.exports = function measureFont(fontFamily) {
-	var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-	var fontSize = defaultValue(options.fontSize, 20);
-	var canvasSize = defaultValue(options.tolerance, 6) * fontSize;
-
-	var descenderCharacters = ["g", "j", "p", "q", "y"];
-	var ascenderCharacters = ["h", "d", "t", "l"];
-	var capHeightCharacters = ["H", "I", "T"];
-	var medianCharacters = ["x", "v", "w", "z"];
-	var topBoundingCharacters = ["O", "A", "8", "#", "%", "^", "!", "/", "|", "]"];
-
-	var testingCanvas = createCanvas(canvasSize);
-
-	function getLowest(characters) {
-		resetCanvas(testingCanvas);
-
-		characters.forEach(function (character) {
-			drawCharacter(testingCanvas, character, fontFamily, fontSize);
-		});
-
-		return findEdge.lowest(testingCanvas);
-	}
-
-	function getHighest(characters) {
-		resetCanvas(testingCanvas);
-
-		characters.forEach(function (character) {
-			drawCharacter(testingCanvas, character, fontFamily, fontSize);
-		});
-
-		return findEdge.highest(testingCanvas);
-	}
-
-	var lowestDescenderPoint = getLowest(descenderCharacters) - testingCanvas.height / 2;
-	var highestAscenderPoint = testingCanvas.height / 2 - getHighest(ascenderCharacters);
-	var highestCapHeightPoint = testingCanvas.height / 2 - getHighest(capHeightCharacters);
-	var highestMedianPoint = testingCanvas.height / 2 - getHighest(medianCharacters);
-	var highestTopBoundingPoint = testingCanvas.height / 2 - getHighest(topBoundingCharacters);
-
-	return {
-		descender: lowestDescenderPoint / fontSize,
-		ascender: -highestAscenderPoint / fontSize,
-		capHeight: -highestCapHeightPoint / fontSize,
-		median: -highestMedianPoint / fontSize,
-		topBounding: -highestTopBoundingPoint / fontSize
-	};
-};
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(17);
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var promiseTry = __webpack_require__(18);
-
-function evaluateValue(value) {
-	if (typeof value === "function") {
-		return value();
-	} else {
-		return value;
-	}
-}
-
-function maybeEvaluateValue(value, evaluate) {
-	if (evaluate === true) {
-		return evaluateValue(value);
-	} else {
-		return value;
-	}
-}
-
-function defaultValue(value, fallbackValue) {
-	var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
-
-	value = maybeEvaluateValue(value, options.evaluate);
-
-	if (value != null) {
-		return value;
-	} else {
-		return maybeEvaluateValue(fallbackValue, options.evaluate);
-	}
-}
-
-defaultValue.async = function defaultAsyncValue(value, fallbackValue) {
-	var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
-
-	return promiseTry(function () {
-		return maybeEvaluateValue(value, options.evaluate);
-	}).then(function (resultValue) {
-		if (resultValue != null) {
-			return resultValue;
-		} else {
-			return maybeEvaluateValue(fallbackValue, options.evaluate);
-		}
-	});
-};
-
-module.exports = defaultValue;
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(19);
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function promiseTry(func) {
-	return new Promise(function (resolve, reject) {
-		resolve(func());
-	});
-};
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var getImageData = __webpack_require__(21);
-var scanRow = __webpack_require__(22);
-
-function findEdge(canvas, firstRow, lastRow, step) {
-	var imageData = getImageData(canvas).data;
-	var valuesPerRow = canvas.width * 4;
-	var hitEnd = false;
-
-	if (step === 0) {
-		throw new Error("Step cannot be 0");
-	}
-
-	var row = firstRow;
-
-	while (!hitEnd) {
-		var highestValue = scanRow(imageData, row * valuesPerRow, canvas.width);
-
-		/* 240 is a somewhat randomly picked value to deal with anti-aliasing. */
-		if (highestValue > 240) {
-			return row;
-		}
-
-		row += step;
-
-		if (step > 0) {
-			hitEnd = row > lastRow;
-		} else if (step < 0) {
-			hitEnd = row < lastRow;
-		}
-	}
-}
-
-module.exports = {
-	lowest: function findLowestEdge(canvas) {
-		return findEdge(canvas, canvas.height - 1, 0, -1);
-	},
-	highest: function findHighestEdge(canvas) {
-		return findEdge(canvas, 0, canvas.height - 1, 1);
-	}
-};
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function getImageData(canvas) {
-	var context = canvas.getContext("2d");
-	return context.getImageData(0, 0, canvas.width, canvas.height);
-};
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function scanRow(imageData, offset, length) {
-	var highestValue = 0;
-
-	for (var column = 0; column < length; column += 1) {
-		var pixelValue = imageData[offset + column * 4];
-
-		if (pixelValue > highestValue) {
-			highestValue = pixelValue;
-		}
-	}
-
-	return highestValue;
-};
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function drawCharacter(canvas, character, fontFamily, fontSize) {
-	var context = canvas.getContext("2d");
-	context.textAlign = "center";
-	context.textBaseline = "alphabetic";
-	context.font = fontSize + "px '" + fontFamily + "'";
-	context.fillStyle = "white";
-	context.fillText(character, canvas.width / 2, canvas.height / 2);
-};
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function resetCanvas(canvas) {
-	var context = canvas.getContext("2d");
-	context.fillStyle = "black";
-	context.fillRect(0, 0, canvas.width, canvas.height);
-};
-
-/***/ }),
 /* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function createCanvas(size) {
-	var canvas = document.createElement("canvas");
-	canvas.width = size;
-	canvas.height = size;
-	return canvas;
-};
-
-/***/ }),
-/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* unused harmony export totemDiv */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__fakeDom__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__populateLetters__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__DOMStyling__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_perfect_scrollbar__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__video1__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__params__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__video1__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__params__ = __webpack_require__(6);
 
 
 /* ADVICE FOR SLIDESHOWS :
@@ -3390,12 +3250,8 @@ module.exports = function createCanvas(size) {
 -> good advices hear : https://medium.com/outsystems-experts/how-to-achieve-60-fps-animations-with-css3-db7b98610108
 */
 
-// import { wholeContentDiv, slideshowDiv, slideshowContentDiv, slideshowBackupDiv, numberOfSlides, CURRENT_INDEX } from '../animationsController';
-
-
-
-__webpack_require__(2).polyfill();   //https://github.com/iamdustan/smoothscroll
-
+// require('smoothscroll-polyfill').polyfill();   //https://github.com/iamdustan/smoothscroll for behavior: smooth when scrolling. But we never scroll here.
+// import PerfectScrollbar from 'perfect-scrollbar';
 
 
 /*------------------------------------*\
@@ -3408,41 +3264,45 @@ __webpack_require__(2).polyfill();   //https://github.com/iamdustan/smoothscroll
 //DOM
 const wholeContentDiv = document.querySelector('#wholeContent')
 const slideshowDiv = document.querySelector(".slideshow");
+const slideshowDivBackground = document.querySelector(".slideshow__background");
 const slideshowContentDiv = document.querySelector(".slideshow__content");
 const slideshowBackupDiv = document.querySelector(".slideshow__backup--container");
-const totemDivs = Object.keys(__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */]).map(name => __WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */][name].totemDiv());
-console.log(totemDivs);
+// const totemDivs = Object.keys(slideshowParams).map(name => slideshowParams[name].totemDiv());
 const movingCursorDiv = document.querySelector('.slideshow__cursor--moving');
-const hotelOptions = document.querySelector('.slideshow__description--options');
+const hotelOptions = [...document.querySelectorAll('.slideshow__description--options')];
 const hotelSlogan = document.querySelector('.slideshow__description--slogan');
-const hotelName = slideshowDiv.querySelector('.slideshow__description');
+const slideshowDescription = slideshowDiv.querySelector('.slideshow__description');
 const dividerInDescription = slideshowDiv.querySelector('.slideshow__description--divider');
-const video1 = document.querySelector('.video__video1');
-
+const video1Div = document.querySelector('#video1');
+const video2Div = document.querySelector('#video2');
+const video1iFrame = document.querySelector('.video__video1');
+const video2iFrame = document.querySelector('.video__video2');
+const hotelOptionsContainer = document.querySelector('.slideshow__description--optionsContainer');
+const controlVideo1PointerEvents = document.querySelector('.video1').querySelector('.transparent_filter-for-allow-scrolling');
+const controlVideo2PointerEvents = document.querySelector('.video2').querySelector('.transparent_filter-for-allow-scrolling');
 //CSS
-const totemDivHeight = 90;
 const cursorVerticalSpacing = 20;
 const transitionDuration = 1600;  //A bit higher than the one in CSS for a proper totem transition
+const transitionDurationBetweenVIdeos = 1000;  //A bit higher than the one in CSS for a proper totem transition
 
     /*  CURSOR  */
 movingCursorDiv.style.boxShadow = `0px ${(cursorVerticalSpacing * 0)}px, 0px ${(cursorVerticalSpacing * 1)}px, 0px ${(cursorVerticalSpacing * 2)}px, 0px ${(cursorVerticalSpacing * 3)}px, 0px ${(cursorVerticalSpacing * 4)}px, 0px ${(cursorVerticalSpacing * 5)}px, 0px ${(cursorVerticalSpacing * 6)}px`;
 
 
 //SLIDESHOW PARAMS
-const numberOfSlides = Object.keys(__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */]).length;
+const numberOfSlides = Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */]).length;
 let biggestWordLength = 0;
 let biggestWordParam = 0;
-Object.keys(__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */]).map(param => {
-  if (__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */][param].frenchName.length > biggestWordLength) {
-    biggestWordLength = __WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */][param].frenchName.length; 
-    biggestWordParam = __WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */][param].position;
+Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */]).map(param => {
+  if (__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][param].frenchName.length > biggestWordLength) {
+    biggestWordLength = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][param].frenchName.length; 
+    biggestWordParam = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][param].position;
   }; 
 });
 
 /*------------------------------------*/  
 let CURRENT_INDEX = 0 ;
 /*------------------------------------*/
-hotelOptions.style.width = `750px`
 
 
 /*------------------------------------*\
@@ -3451,71 +3311,105 @@ hotelOptions.style.width = `750px`
 
 //function to use also on transition and init
 function colorsChange(index) {
-  const theme = Object.keys(__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */])[index];
+  const theme = Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */])[index];
 
   /*  TEXTS COLOR  */
-  hotelName.style.color = __WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */][theme].textColor;
-  dividerInDescription.style.borderColor = __WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */][theme].textColor;
+  slideshowDescription.style.color = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].textColor;
+  dividerInDescription.style.borderColor = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].textColor;
+  hotelOptions[index].style.color = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].textColor;
 
   /* BACKGROUND */
-  slideshowDiv.style.backgroundColor = __WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */][theme].backgroundColor;
-  movingCursorDiv.style.color = __WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */][theme].textColor;
-  movingCursorDiv.style.borderColor = __WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */][theme].textColor;
+  slideshowDivBackground.style.backgroundColor = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].backgroundColor;
+  movingCursorDiv.style.color = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].textColor;
+  movingCursorDiv.style.borderColor = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].textColor;
 }
 
 //function to use also on transition and init
 function cursorMove(index) {
   movingCursorDiv.style.transform = `translateY(${-cursorVerticalSpacing * index}px)`;
-  window.setTimeout(() => {
-  }, transitionDuration);
+  movingCursorDiv.addEventListener('transitionend', endTransition, false);
+}
+
+function endTransition(e) {
+  if (CURRENT_INDEX === (numberOfSlides - 1)) {
+    Object(__WEBPACK_IMPORTED_MODULE_0__video1__["c" /* playerLoad */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
+    Object(__WEBPACK_IMPORTED_MODULE_0__video1__["c" /* playerLoad */])(__WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */]);
+  }
+  [slideshowDivBackground, movingCursorDiv, dividerInDescription, slideshowDescription].forEach(item => {
+    item.classList.remove('inTransition');
+  });
+  resetHotelOptions(CURRENT_INDEX);
+  movingCursorDiv.removeEventListener('transitionend', endTransition, false);
 }
 
 const init = (index) => {
 
-  const adjustedIndex = /*index - 1*/ index //if we use animationsController, we use index - 1;
-  const theme = Object.keys(__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */])[adjustedIndex];
-  console.log(theme)
+  // const adjustedIndex = /*index - 1*/ index //if we use animationsController, we use index - 1;
+  const theme = Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */])[/*adjustedIndex*/index];
+  // console.log(theme)
 
-  /*    SCROLLBAR   */
-  const ps = new __WEBPACK_IMPORTED_MODULE_3_perfect_scrollbar__["a" /* default */](wholeContentDiv, {
-    handlers: ['click-rail', 'drag-thumb', 'keyboard', /*'wheel',*/ 'touch'],
-
-  });
+  // /*    SCROLLBAR   */
+  // const ps = new PerfectScrollbar(wholeContentDiv, {
+  //   handlers: ['click-rail', 'drag-thumb', 'keyboard', /*'wheel',*/ 'touch'],
+  // });
 
   /* BACKGROUND AND TEXT COLORS */
-  colorsChange(adjustedIndex);
+  colorsChange(/*adjustedIndex*/index);
 
   /*  CURSOR  */
-  cursorMove(adjustedIndex);
+  cursorMove(/*adjustedIndex*/index);
 
   /*   TOTEM   */
   document.querySelector(`.totem_${theme}`).classList.add('showTotem');
 
   /*  OPTIONS  */
-  Object(__WEBPACK_IMPORTED_MODULE_1__populateLetters__["a" /* populateHotelOptions */])(hotelOptions, adjustedIndex, __WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */], __WEBPACK_IMPORTED_MODULE_2__DOMStyling__["a" /* alSize */], true);
-
-  /* SLOGAN   */
-  hotelSlogan.firstChild.textContent = 'un style de vie à paris';
+  document.querySelector(`.option_${theme}`).classList.add('showOption');
 };
 init(CURRENT_INDEX);
 
 
 /*------------------------------------*\
-    SLIDESHOW
+    DOM STYLING
 \*------------------------------------*/
 
+/*------------------------------------*\
+    DESCRIPTION POSITION
+\*------------------------------------*/
 
-function startTransition(e) {
+hotelOptionsContainer.style.height = `${document.querySelector(`[data-hotel-option='${CURRENT_INDEX + 1}']`).getBoundingClientRect().height}px`
+
+function alignDescriptionWithCursorOnMiddle () {
+  const hotelOptionsContainerBottom = hotelOptionsContainer.getBoundingClientRect().bottom;
+  const hotelDescriptionBottom = slideshowDescription.getBoundingClientRect().bottom;
+  const differenceWithMiddle = hotelDescriptionBottom - hotelOptionsContainerBottom;
+  slideshowDescription.style.marginBottom = `${-differenceWithMiddle}px`;
+}
+
+alignDescriptionWithCursorOnMiddle();
+/*------------------------------------*\
+    SLIDESHOW & SCROLLING
+\*------------------------------------*/
+
+let transitionStarted = transitionDurationBetweenVIdeos + 1;
+
+function startTransitionSlideshow(e) {
+  __WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */] ? console.log(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */].getState()) : console.log('player1 not yet loaded')
+
   //Prevent pressing any other key
+  const minScroll = 100;
+  const wheelIsNotEnough = (e.type === 'wheel') && ((e.deltaY < minScroll) && (e.deltaY > -minScroll))
   const keyPressedIsNoGood = (e.type === 'keyup') && (e.keyCode != 38 && e.keyCode != 40 && e.keyCode != 32);
-  if (keyPressedIsNoGood) { 
+  if (keyPressedIsNoGood || wheelIsNotEnough) { 
+    console.log('scroll more !!!!!!!')
     return; 
-  };
+  } else {
+    console.log('let\'s do something')
+  }
 
   //EVENT CASES
   const eventCases = {
-    wheeledUp: (e.type === 'mousewheel' && e.deltaY < 0),
-    wheeledDown: (e.type === 'mousewheel' && e.deltaY > 0),
+    wheeledUp: (e.type === 'wheel' && e.deltaY < 0),
+    wheeledDown: (e.type === 'wheel' && e.deltaY > 0),
     keyDown: (e.type === 'keyup' && ((e.keyCode === 40) || (e.keyCode === 32))),
     keyUp: (e.type === 'keyup' && (e.keyCode === 38)),  //38 = arrow up
     clickedMouseForDown: (e.type === 'click' && e.srcElement.className === 'mouse'),
@@ -3526,206 +3420,282 @@ function startTransition(e) {
 
   //If portrait or mobile
   //Prevent transit while already transiting
-  if (slideshowDiv.classList.contains('inTransition')) {
+  if (slideshowDivBackground.classList.contains('inTransition')) {
+    console.log('case 1');
     return;
   } else if (eventGoUp && CURRENT_INDEX === 0) {
+    console.log('case 2');
     return;
+    /**** Transition in videos   ****/
+    //From slideshow to first video
   } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides - 1)) {
-        // wholeContentDiv.overflow = '';
-    scrollToFirstVideo();
+    console.log('case 3');
+    transitionStarted = Date.now();
+    slideshowDiv.removeEventListener('wheel', startTransitionSlideshow);
+    scrollFromSlideshowToFirstVideo();
+    return;
+    //From first video to slideshow
+  } else if (eventGoUp && CURRENT_INDEX === (numberOfSlides)) {
+    console.log('case 4');
+    if (Date.now() - transitionStarted < 1000) {
+      console.log('transition timing:', Date.now() - transitionStarted);
+      return;
+    } else {
+      console.log('transition timing:', Date.now() - transitionStarted);
+      transitionStarted = Date.now();
+      scrollFromFirstVideoToSlideshow();
+      slideshowDiv.addEventListener('wheel', startTransitionSlideshow);
+    }
+    return;
+    //From first video to second video
+  } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides)) {
+    console.log('case 5');
+    if (Date.now() - transitionStarted < 1000) {
+      console.log('transition timing:', Date.now() - transitionStarted)
+      return
+    } else {
+      transitionStarted = 0;
+      scrollFromFirstToSecondVideo();
+    }
+    return;
+    //From second video to first
+  } else if (eventGoUp && CURRENT_INDEX === (numberOfSlides + 1)) {
+    console.log('case 6');
+    transitionStarted = Date.now();
+    scrollFromSecondToFirstVideo();
+    return;
+    /**** Transition in slideshow   ****/
+  } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides + 1)) {
+    console.log('case 7');
     return;
   } else {
-    [slideshowDiv, movingCursorDiv, dividerInDescription, hotelName].forEach(item => {
-      item.classList.add('inTransition');
-    });
+    console.log('case 8');
+    if (Date.now() - transitionStarted < 1000) {
+      return; 
+    } else {
+      transitionStarted = transitionDurationBetweenVIdeos + 1;
+      [slideshowDivBackground, movingCursorDiv, dividerInDescription, slideshowDescription].forEach(item => {
+        item.classList.add('inTransition');
+      });
+    };
   }
 
-  const currentTotemDiv = totemDivs[CURRENT_INDEX];
-  console.log(currentTotemDiv)
-  let nextTotemDiv;
   if (!wholeContentDiv.classList.contains('slideshow__landscape')) {
     return
   }
-  console.log(CURRENT_INDEX)
+  // console.log(CURRENT_INDEX)
   const previousIndex = CURRENT_INDEX;
   let direction;
   if (eventGoUp && CURRENT_INDEX > 0 && CURRENT_INDEX < numberOfSlides) { 
     CURRENT_INDEX--;
     direction = 'down';
-    nextTotemDiv = totemDivs[CURRENT_INDEX];
-    console.log(nextTotemDiv)
   } else if (eventGoDown && CURRENT_INDEX < numberOfSlides)  {
     CURRENT_INDEX === numberOfSlides - 1 ? CURRENT_INDEX = 0 : CURRENT_INDEX++;
     direction = 'up';
-    nextTotemDiv = totemDivs[CURRENT_INDEX];
-    console.log(nextTotemDiv)
   }
+
   //Cursor move
-  // cursorMove(CURRENT_INDEX);
+  cursorMove(CURRENT_INDEX);
   
   //Totem move
-  totemMove(CURRENT_INDEX, direction, currentTotemDiv, nextTotemDiv);
+  totemMove(previousIndex, CURRENT_INDEX, direction);
 
   //Hotel Options change
-  // hotelOptionsTransit(e, CURRENT_INDEX, hotelOptions, direction);
+  hotelOptionsTransit(e, previousIndex, CURRENT_INDEX, hotelOptions, direction);
 
   //Background color change
-  // colorsChange(CURRENT_INDEX);
-
-  //Make the slideshow ready for new transition
-  window.setTimeout(() => {
-    [slideshowDiv, movingCursorDiv, dividerInDescription, hotelName].forEach(item => {
-      item.classList.remove('inTransition');
-    });
-  }, transitionDuration + 200);
+  colorsChange(CURRENT_INDEX);
 }
+
 
 /*----- TOTEM FUNCTIONS-----*/
-function totemMove(index, direction, div1, div2) {
+
+function totemMove(prevIndex, nextIndex, direction) {
   const up = direction === 'up' ? true : false;
-  const timeOffset = 100;
 
-  const nextTheme = Object.keys(__WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */])[index];
-  //Building the new totem
-  div2 = document.querySelector(`.totem_${nextTheme}`);
-  div2.classList.add(up ? 'fakeTotemUp' : 'fakeTotemDown');
-  div2.classList.add('showTotem');
-  div1.classList.add(up ? 'totemOnTransitionUp' : 'totemOnTransitionDown');
+  const prevTheme = Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */])[prevIndex];
+  const nextTheme = Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */])[nextIndex];
 
-  window.setTimeout(() => {
-    console.log('c\'est là que ça se passe')
-    div1.classList.remove('showTotem');
-  }, transitionDuration * 3 / 4);
+  const prevTotemDiv = document.querySelector(`.totem_${prevTheme}`);
+  const nextTotemDiv = document.querySelector(`.totem_${nextTheme}`);
 
-  window.setTimeout(() => {
-    console.log('ou bien c\'est là que ça se passe')
-    div1.addEventListener('transitionend', removeTotemClasses(up, index, div1, div2), false);
-    div2.addEventListener('transitionend', removeTotemClasses(up, index, div1, div2), false);
 
-    }, transitionDuration + timeOffset);
-}
+  nextTotemDiv.classList.add(up ? 'fakeTotemUp' : 'fakeTotemDown');
+  nextTotemDiv.classList.add('showTotem');
+  nextTotemDiv.classList.add('perpetual-translation');
+  prevTotemDiv.classList.add(up ? 'totemOnTransitionUp' : 'totemOnTransitionDown');
 
-let finishLine = 0;  //special var for totem transitionend only
-function removeTotemClasses(up, index, div1, div2) {
-  console.log('ou là ?')
+  prevTotemDiv.addEventListener('animationend', removeTotemClasses); 
+  nextTotemDiv.addEventListener('animationend', removeTotemClasses); 
+};
 
-  finishLine++;
-
-  if (finishLine === 2) {
-    console.log('ça marche toujours ?');
-    //IF NOT REMOVE THE EVENT LISTENER TRANSITIONEND, IT'S TRIGGERED EVERYTIME ONE MORE TIME
-    finishLine = 0;
-    div1.classList.remove(up ? 'totemOnTransitionUp' : 'totemOnTransitionDown');
-    div2.classList.remove(up ? 'fakeTotemUp' : 'fakeTotemDown');
-    // div1.removeEventListener('transitionend', removeTotemClasses(up, index, div1, div2), false);
-    // div2.removeEventListener('transitionend', removeTotemClasses(up, index, div1, div2), false);
-  } else {
-    return;
+function removeTotemClasses (e) {
+  console.log(this)
+  this.classList.remove('fakeTotemUp');
+  this.classList.remove('fakeTotemDown');
+  if (this.classList.contains('totemOnTransitionUp') || this.classList.contains('totemOnTransitionDown')) {
+    this.classList.remove('showTotem');
+    this.classList.remove('perpetual-translation');
+    this.classList.remove('totemOnTransitionUp');
+    this.classList.remove('totemOnTransitionDown');
   }
+  this.removeEventListener('animationend', removeTotemClasses); 
 }
+
 
 
 /*------ HOTEL OPTIONS FUNCTIONS ------*/
-function hotelOptionsTransit(e, index, anyHotelOptions, direction) {
-  /*    TRANSITION PARAMTERS    */
-  let i = 0;
-  const offset = direction === 'up' ? 10 : -10;
-  const letterTimeout = 20;
-  //target: timeout of the last letter + transition of the last letter = 1/2 transition
-  const letterTransitionDuration = transitionDuration * (1/2) - letterTimeout * biggestWordLength;
-  
-  /*    FAKE DOM     */
-  const newHotelOptions = Object(__WEBPACK_IMPORTED_MODULE_0__fakeDom__["a" /* buildFakeHotelOptionLetters */])(anyHotelOptions, __WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */], index, offset, __WEBPACK_IMPORTED_MODULE_2__DOMStyling__["a" /* alSize */]);
-  wholeContentDiv.append(newHotelOptions);
+function hotelOptionsTransit(e, prevIndex, nextIndex, anyHotelOptions, direction) {
 
-  //STEP 1: move up the existing letter and transit opacity from 1 to 0 during 1/2 transition
-  [...anyHotelOptions.children].forEach(letter => {
-    i++;
-    window.setTimeout(() => {
-    letterDisappear(letter, letterTransitionDuration, offset);
-    }, letterTimeout * i);
+  const up = direction === 'up' ? true : false;
+
+  const prevOptionLettersDiv = anyHotelOptions[prevIndex];
+  const prevOptionLetters = [...prevOptionLettersDiv.children];
+  for (let i = 0; i < prevOptionLetters.length; i++) {
+    const letter = prevOptionLetters[i];
+    up ? letter.classList.add(`fade-out-letter-up-${i + 1}`) : letter.classList.add(`fade-out-letter-down-${i + 1}`);
+  }
+
+  const nextOptionLettersDiv = anyHotelOptions[nextIndex];
+  nextOptionLettersDiv.classList.add('showOption');
+  nextOptionLettersDiv.classList.add('perpetual-translation');
+  const nextOptionLetters = [...nextOptionLettersDiv.children]
+
+  for (let j = 0; j < nextOptionLetters.length; j++) {
+    const letter = nextOptionLetters[j];
+    up ? letter.classList.add(`fade-in-letter-up-${j + 1}`) : letter.classList.add(`fade-in-letter-down-${j + 1}`);
+  }
+}
+
+
+function resetHotelOptions(index){
+  hotelOptions.forEach(option => {
+    const optionIsVisible = option.classList.contains('showOption');
+    const optionNeedToStayVisible = hotelOptions.indexOf(option) === index;
+    const letters = [...option.children];
+    if (optionIsVisible) {
+      for (let i = 0; i < letters.length; i++) {
+        const letter = letters[i];
+        letter.classList.remove(`fade-in-letter-up-${i + 1}`);
+        letter.classList.remove(`fade-in-letter-down-${i + 1}`);
+        letter.classList.remove(`fade-out-letter-up-${i + 1}`);
+        letter.classList.remove(`fade-out-letter-down-${i + 1}`);
+      }
+      if (!optionNeedToStayVisible) {
+        option.classList.remove('showOption');
+        option.classList.remove('perpetual-translation');
+      } else {
+        return;
+      }
+    } else {
+      return;
+    };
   });
-
-  //STEP 2: move up the new letter and transit opacity from 0 to 1 during 1/2 transition
-  window.setTimeout(() => {
-    newHotelOptions.style.opacity = 1;
-    [...newHotelOptions.children].forEach(letter => {
-      i++;
-      window.setTimeout(() => {
-      letterAppear(letter, letterTransitionDuration, offset);
-      }, letterTimeout * i);
-    });
-  }, transitionDuration * (1/2))
-
-  window.setTimeout(() => {
-    Object(__WEBPACK_IMPORTED_MODULE_1__populateLetters__["a" /* populateHotelOptions */])(anyHotelOptions, index, __WEBPACK_IMPORTED_MODULE_5__params__["a" /* slideshowParams */], __WEBPACK_IMPORTED_MODULE_2__DOMStyling__["a" /* alSize */]);
-    wholeContentDiv.removeChild(newHotelOptions);
-  }, transitionDuration)
-}
-
-function letterDisappear(letter, transition, offset) {
-
-  letter.style.transition = `all ${transition * 2 / 3}ms linear`;
-  //STEP 1: move it up
-  letter.style.transform = `translateY(${-offset}px)`;
-  //STEP 2: fade out
-  window.setTimeout(() => {
-    letter.style.opacity =  0;
-  }, transition / 3);
-
-  window.setTimeout(() => {
-    letter.style.transition = ``;
-  }, transition);
-}
-
-function letterAppear(letter, transition, offset) {
-
-  letter.style.transition = `transform ${transition * 2 / 3}ms cubic-bezier(0.64, 0.46, 0.4, 2.19), opacity ${transition * 2 / 3}ms linear`;
-  //STEP 1: move it up
-  letter.style.transform = `translateY(${-offset}px)`;
-  //STEP 2: fade out
-  letter.style.opacity =  1;
-
-  window.setTimeout(() => {
-    // letter.style.transition = ``;
-  }, transition);
-}
+};
 
 
-function scrollToFirstVideo() {
+/*------ SCROLLING FUNCTIONS ------*/
+function scrollFromSlideshowToFirstVideo() {
   CURRENT_INDEX++;
-  console.log('yo');
+  console.log('first video');
+  // [...wholeContent.children].forEach(child => child.classList.remove('perpetual-translation'));
+  wholeContent.classList.add('from_slideshow_to_first_video');
+  wholeContent.classList.remove('from_first_video_to_slideshow');
+  wholeContent.classList.remove('from_first_video_to_second_video');
+  wholeContent.classList.remove('from_second_video_to_first_video');
 
-  wholeContent.classList.add('slideshow__hide');
-  Object(__WEBPACK_IMPORTED_MODULE_4__video1__["b" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_4__video1__["a" /* player1 */]);
+
+  controlVideo1PointerEvents.addEventListener('wheel', startTransitionSlideshow);
+  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["e" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
 }
 
+// function allowScrolling(e) {
+//   if (e.animationName === 'from-slideshow-to-firstVideo') {
+//     console.log('on autorise le scrolling');
+//     wholeContent.style.animationPlayState = 'paused';
+//     wholeContent.removeEventListener('animationend', allowScrolling);
+//   } else {
+//     console.log(e)
+//     console.log(e.animationName)
+//     return;
+//   };
+
+// }
+
+function scrollFromFirstVideoToSlideshow() {
+  CURRENT_INDEX--;
+  console.log('first video');
+
+  wholeContent.classList.remove('from_slideshow_to_first_video');
+  wholeContent.classList.add('from_first_video_to_slideshow');
+  wholeContent.classList.remove('from_first_video_to_second_video');
+  wholeContent.classList.remove('from_second_video_to_first_video');
+
+  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["d" /* playerPause */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
+  wholeContent.addEventListener('animationend', getOutOfVideos);
+
+  controlVideo1PointerEvents.removeEventListener('wheel', startTransitionSlideshow);
+
+}
+
+function scrollFromFirstToSecondVideo() {
+  CURRENT_INDEX++;
+  console.log('second video');
+
+  wholeContent.classList.remove('from_slideshow_to_first_video');
+  wholeContent.classList.remove('from_first_video_to_slideshow');
+  wholeContent.classList.add('from_first_video_to_second_video');
+  wholeContent.classList.remove('from_second_video_to_first_video');
+  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["e" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */]);
+  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["d" /* playerPause */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
+}
+
+function scrollFromSecondToFirstVideo() {
+  CURRENT_INDEX--;
+  console.log('from second video to first');
+
+  wholeContent.classList.remove('from_slideshow_to_first_video');
+  wholeContent.classList.remove('from_first_video_to_slideshow');
+  wholeContent.classList.remove('from_first_video_to_second_video');
+  wholeContent.classList.add('from_second_video_to_first_video');
+  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["e" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
+  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["d" /* playerPause */])(__WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */]);
+}
+
+function getOutOfVideos() {
+  wholeContent.classList.remove('from_slideshow_to_first_video');
+  wholeContent.classList.remove('from_first_video_to_slideshow');
+  wholeContent.classList.remove('from_first_video_to_second_video');
+  wholeContent.classList.remove('from_second_video_to_first_video');
+  wholeContent.removeEventListener('animationend', getOutOfVideos);
+}
+
+
+function togglePlayPause() {
+  if (this.classList.contains('video1')) {
+    __WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */].getState() === 'playing' ? Object(__WEBPACK_IMPORTED_MODULE_0__video1__["d" /* playerPause */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]) : Object(__WEBPACK_IMPORTED_MODULE_0__video1__["e" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
+  } else if (this.classList.contains('video2')) {
+    __WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */].getState() === 'playing' ? Object(__WEBPACK_IMPORTED_MODULE_0__video1__["d" /* playerPause */])(__WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */]) : Object(__WEBPACK_IMPORTED_MODULE_0__video1__["e" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */]);
+  }
+}
 /*------------------------------------*\
     EVENT LISTENERS
 \*------------------------------------*/
 
-window.addEventListener('keyup', function(e) {
-    //Prevent scrolling when pressing space
-  e.preventDefault();
-  startTransition(e);
-})
+window.addEventListener('keyup', startTransitionSlideshow);
+slideshowDiv.addEventListener('wheel', startTransitionSlideshow);
+document.querySelector('.scroll-btn').addEventListener('click', startTransitionSlideshow);
+video1Div.addEventListener('wheel', startTransitionSlideshow);
+video2Div.addEventListener('wheel', startTransitionSlideshow);
 
-wholeContentDiv.addEventListener('mousewheel', function(e) {
-    e.preventDefault();
-
-  startTransition(e);
-})
-
-document.querySelector('.scroll-btn').addEventListener('click', function(e) {
-    e.preventDefault();
-
-  startTransition(e);
-})
+controlVideo1PointerEvents.addEventListener('click', togglePlayPause);
+controlVideo2PointerEvents.addEventListener('click', togglePlayPause);
 
 
 
 
 /***/ }),
+/* 26 */,
 /* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3765,176 +3735,6 @@ window.addEventListener('resize', statisSlidewhow);
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return player1; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return playerPlay; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_yt_player__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_yt_player___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_yt_player__);
-   //https://github.com/feross/yt-player
-
-let player1start = 0;
-let player1autoplay = true;
-let player1loaded = false;
-let player1firstStart = false;
-let player1;
-let videoRatio = 0.5625;  //width * 0.5625 = height 
-
-const player1options = {
-    height: '100%',
-    width: '100%',
-    autoplay: player1autoplay,
-    captions: false,
-    controls: true,
-    keyboard: false,
-    fullscreen: true,
-    annotations: false,
-    modestBranding: true,
-    related: false,
-    info: false,
-    timeupdateFrequency: 1000,  // default: 1000
-}
-
-
-player1 = new __WEBPACK_IMPORTED_MODULE_0_yt_player___default.a('#video__video1', player1options);
-player1.load('M6kQi1_Btqg');  
-
-// player1.style.left = {}
-
-function playerPlay(player) {
-  if (player1firstStart && player1.getCurrentTime() > 0) {
-    player1.seek(0);
-    player1firstStart = false;
-    player.play();
-  } else if (player1firstStart && player1.getCurrentTime() === 0) {
-    player1firstStart = false;
-    player.play();
-  } else {
-    player.play();
-  }
-};
-
-function playerResetOnFirstLoad(seconds, player) {
-  if (player1loaded === false) {
-    player1loaded = true;
-    player1.pause();
-    player1.seek(0);
-  } else {
-    return
-  }
-}
-
-if (player1) {
-  player1.on('timeupdate', (seconds) => {
-    playerResetOnFirstLoad(seconds, player1);
-  })
-
-  player1.on('ended', () => {
-    player1.seek(0);
-  })
-}
-
-/*------------------------------------*\
-    RESIZE VIDEO - ALWAYS FULL WINDOW
-\*------------------------------------*/
-const video1iFrameContainer = document.querySelector('.video__subcontainer');
-const wholeContentDiv = document.querySelector('#wholeContent');
-
-
-
-
-
-// function resizeVideo(e, div) {
-//   let windowHeight = window.innerHeight;
-//   let windowWidth = window.innerWidth;
-//   console.log(`windowHeight: ${windowHeight}`);
-//   console.log(`windowWidth: ${windowWidth}`);
-//   console.log(`windowWidth * videoRatio: ${windowWidth * videoRatio}`);
-//   const minHeightMaxWidth = (windowHeight < windowWidth * videoRatio);
-//   const minWidthMaxHeight = (windowHeight > windowWidth * videoRatio);
-
-//   if (windowHeight < windowWidth * videoRatio) {
-//     console.log('cas extrême: mini-hauteur, maxi-largeur');
-//     const newHeight = 128;
-//     div.style.width = `${newHeight / videoRatio}vh`;
-//     div.style.height = `${newHeight}vh`;
-//   } else if (windowHeight > windowWidth * videoRatio) {
-//     console.log('cas extrême: mini-largeur, maxi-hauteur');
-//     const newHeight = 128;
-//     div.style.width = `${newHeight / videoRatio}vh`;
-//     div.style.height = `${newHeight}vh`;
-//   } else if ((windowHeight < windowWidth * (videoRatio + 0.01)) && (windowHeight > windowWidth * (videoRatio - 0.01)))  {
-//     console.log('cas extrême: perfet ratio');
-//     div.style.height = `128%`;
-//     div.style.width = `128%`;
-//   }
-// };
-
-// // window.addEventListener('load', function(e) { resizeVideo(e, video1iFrameContainer) });
-// // window.addEventListener('load', function(e) { resizeVideo(e, video1Div) });
-
-// player.play()
-// player.pause()
-// player.stop()
-// player.seek(seconds)
-// player.setVolume(volume) ////between 0 and 100
-// player.setPlaybackRate(rate)
-// player.getVolume() //between 0 and 100
-// player.getPlaybackRate()
-// player.getDuration() //seconds
-// player.getProgress() //Percentage
-// player.getState() // Possible values are: 'unstarted', 'ended', 'playing', 'paused', 'buffering', or 'cued'.
-// player.getCurrentTime()
-// player.destroy()
-// player.destroyed (boolean)
-// player.videoId (string)
-// player.on('error', (err) => {})
-// player.on('unplayable', (videoId) => {})
-// player.on('timeupdate', (seconds) => {})
-// player.on('unstarted', () => {})
-// player.on('ended', () => {})
-// player.on('playing', () => {})
-// player.on('paused', () => {})
-// player.on('buffering', () => {})
-// player.on('cued', () => {})
-// player.on('playbackQualityChange', (quality) => {})
-// player.on('playbackRateChange', (playbackRate) => {})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /***/ })
 /******/ ]);

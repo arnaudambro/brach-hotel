@@ -14,7 +14,7 @@ const slideshowParams = {
     textColor: white,
     totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
     backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
   },
   clubDeSport: {
     position: 1,
@@ -25,7 +25,7 @@ const slideshowParams = {
     textColor: white,
     totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
     backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
   },
   restaurant: {
     position: 2,
@@ -36,7 +36,7 @@ const slideshowParams = {
     textColor: white,
     totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
     backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
   },
   bar: {
     position: 3,
@@ -47,7 +47,7 @@ const slideshowParams = {
     textColor: white,
     totemPictureUrl: function() { return `./src/img/totems/totem_hotel.png` },
     backupPictureUrl: function() { return `./src/img/responsive_pictures/hotel.png` },
-    fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
   },
   patisserie: {
     position: 4,
@@ -58,7 +58,7 @@ const slideshowParams = {
     textColor: 'rgba(151,105,80,1.00)',
     totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
     backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
   },
   evenementiel: {
     position: 5,
@@ -69,7 +69,7 @@ const slideshowParams = {
     textColor: 'rgba(151,105,80,1.00)',
     totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
     backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
   },
   potager: {
     position: 6,
@@ -80,7 +80,7 @@ const slideshowParams = {
     textColor: white,
     totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
     backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
   },
 }
 

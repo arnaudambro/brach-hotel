@@ -9,13 +9,9 @@
 -> good advices hear : https://medium.com/outsystems-experts/how-to-achieve-60-fps-animations-with-css3-db7b98610108
 */
 
-// import { wholeContentDiv, slideshowDiv, slideshowContentDiv, slideshowBackupDiv, numberOfSlides, CURRENT_INDEX } from '../animationsController';
-import { buildFakeHotelOptionLetters} from './_fakeDom';
-import { populateHotelOptions } from './_populateLetters';
-import { alSize } from '../DOMStyling';
-require('smoothscroll-polyfill').polyfill();   //https://github.com/iamdustan/smoothscroll
-import PerfectScrollbar from 'perfect-scrollbar';
-import { player1, playerPlay } from '../_video1';
+// require('smoothscroll-polyfill').polyfill();   //https://github.com/iamdustan/smoothscroll for behavior: smooth when scrolling. But we never scroll here.
+// import PerfectScrollbar from 'perfect-scrollbar';
+import { playerLoad, playerPlay, playerPause, player1, player1firstStart, player2, player2firstStart  } from '../_video1';
 
 /*------------------------------------*\
     VARIABLES & DATA
@@ -27,21 +23,26 @@ import { slideshowParams } from './_params';
 //DOM
 const wholeContentDiv = document.querySelector('#wholeContent')
 const slideshowDiv = document.querySelector(".slideshow");
+const slideshowDivBackground = document.querySelector(".slideshow__background");
 const slideshowContentDiv = document.querySelector(".slideshow__content");
 const slideshowBackupDiv = document.querySelector(".slideshow__backup--container");
-const totemDivs = Object.keys(slideshowParams).map(name => slideshowParams[name].totemDiv());
-console.log(totemDivs);
+// const totemDivs = Object.keys(slideshowParams).map(name => slideshowParams[name].totemDiv());
 const movingCursorDiv = document.querySelector('.slideshow__cursor--moving');
-const hotelOptions = document.querySelector('.slideshow__description--options');
+const hotelOptions = [...document.querySelectorAll('.slideshow__description--options')];
 const hotelSlogan = document.querySelector('.slideshow__description--slogan');
-const hotelName = slideshowDiv.querySelector('.slideshow__description');
+const slideshowDescription = slideshowDiv.querySelector('.slideshow__description');
 const dividerInDescription = slideshowDiv.querySelector('.slideshow__description--divider');
-const video1 = document.querySelector('.video__video1');
-
+const video1Div = document.querySelector('#video1');
+const video2Div = document.querySelector('#video2');
+const video1iFrame = document.querySelector('.video__video1');
+const video2iFrame = document.querySelector('.video__video2');
+const hotelOptionsContainer = document.querySelector('.slideshow__description--optionsContainer');
+const controlVideo1PointerEvents = document.querySelector('.video1').querySelector('.transparent_filter-for-allow-scrolling');
+const controlVideo2PointerEvents = document.querySelector('.video2').querySelector('.transparent_filter-for-allow-scrolling');
 //CSS
-const totemDivHeight = 90;
 const cursorVerticalSpacing = 20;
 const transitionDuration = 1600;  //A bit higher than the one in CSS for a proper totem transition
+const transitionDurationBetweenVIdeos = 1000;  //A bit higher than the one in CSS for a proper totem transition
 
     /*  CURSOR  */
 movingCursorDiv.style.boxShadow = `0px ${(cursorVerticalSpacing * 0)}px, 0px ${(cursorVerticalSpacing * 1)}px, 0px ${(cursorVerticalSpacing * 2)}px, 0px ${(cursorVerticalSpacing * 3)}px, 0px ${(cursorVerticalSpacing * 4)}px, 0px ${(cursorVerticalSpacing * 5)}px, 0px ${(cursorVerticalSpacing * 6)}px`;
@@ -61,7 +62,6 @@ Object.keys(slideshowParams).map(param => {
 /*------------------------------------*/  
 let CURRENT_INDEX = 0 ;
 /*------------------------------------*/
-hotelOptions.style.width = `750px`
 
 
 /*------------------------------------*\
@@ -73,11 +73,12 @@ function colorsChange(index) {
   const theme = Object.keys(slideshowParams)[index];
 
   /*  TEXTS COLOR  */
-  hotelName.style.color = slideshowParams[theme].textColor;
+  slideshowDescription.style.color = slideshowParams[theme].textColor;
   dividerInDescription.style.borderColor = slideshowParams[theme].textColor;
+  hotelOptions[index].style.color = slideshowParams[theme].textColor;
 
   /* BACKGROUND */
-  slideshowDiv.style.backgroundColor = slideshowParams[theme].backgroundColor;
+  slideshowDivBackground.style.backgroundColor = slideshowParams[theme].backgroundColor;
   movingCursorDiv.style.color = slideshowParams[theme].textColor;
   movingCursorDiv.style.borderColor = slideshowParams[theme].textColor;
 }
@@ -85,56 +86,89 @@ function colorsChange(index) {
 //function to use also on transition and init
 function cursorMove(index) {
   movingCursorDiv.style.transform = `translateY(${-cursorVerticalSpacing * index}px)`;
-  window.setTimeout(() => {
-  }, transitionDuration);
+  movingCursorDiv.addEventListener('transitionend', endTransition, false);
+}
+
+function endTransition(e) {
+  if (CURRENT_INDEX === (numberOfSlides - 1)) {
+    playerLoad(player1);
+    playerLoad(player2);
+  }
+  [slideshowDivBackground, movingCursorDiv, dividerInDescription, slideshowDescription].forEach(item => {
+    item.classList.remove('inTransition');
+  });
+  resetHotelOptions(CURRENT_INDEX);
+  movingCursorDiv.removeEventListener('transitionend', endTransition, false);
 }
 
 const init = (index) => {
 
-  const adjustedIndex = /*index - 1*/ index //if we use animationsController, we use index - 1;
-  const theme = Object.keys(slideshowParams)[adjustedIndex];
-  console.log(theme)
+  // const adjustedIndex = /*index - 1*/ index //if we use animationsController, we use index - 1;
+  const theme = Object.keys(slideshowParams)[/*adjustedIndex*/index];
+  // console.log(theme)
 
-  /*    SCROLLBAR   */
-  const ps = new PerfectScrollbar(wholeContentDiv, {
-    handlers: ['click-rail', 'drag-thumb', 'keyboard', /*'wheel',*/ 'touch'],
-
-  });
+  // /*    SCROLLBAR   */
+  // const ps = new PerfectScrollbar(wholeContentDiv, {
+  //   handlers: ['click-rail', 'drag-thumb', 'keyboard', /*'wheel',*/ 'touch'],
+  // });
 
   /* BACKGROUND AND TEXT COLORS */
-  colorsChange(adjustedIndex);
+  colorsChange(/*adjustedIndex*/index);
 
   /*  CURSOR  */
-  cursorMove(adjustedIndex);
+  cursorMove(/*adjustedIndex*/index);
 
   /*   TOTEM   */
   document.querySelector(`.totem_${theme}`).classList.add('showTotem');
 
   /*  OPTIONS  */
-  populateHotelOptions(hotelOptions, adjustedIndex, slideshowParams, alSize, true);
-
-  /* SLOGAN   */
-  hotelSlogan.firstChild.textContent = 'un style de vie à paris';
+  document.querySelector(`.option_${theme}`).classList.add('showOption');
 };
 init(CURRENT_INDEX);
 
 
 /*------------------------------------*\
-    SLIDESHOW
+    DOM STYLING
 \*------------------------------------*/
 
+/*------------------------------------*\
+    DESCRIPTION POSITION
+\*------------------------------------*/
 
-function startTransition(e) {
+hotelOptionsContainer.style.height = `${document.querySelector(`[data-hotel-option='${CURRENT_INDEX + 1}']`).getBoundingClientRect().height}px`
+
+function alignDescriptionWithCursorOnMiddle () {
+  const hotelOptionsContainerBottom = hotelOptionsContainer.getBoundingClientRect().bottom;
+  const hotelDescriptionBottom = slideshowDescription.getBoundingClientRect().bottom;
+  const differenceWithMiddle = hotelDescriptionBottom - hotelOptionsContainerBottom;
+  slideshowDescription.style.marginBottom = `${-differenceWithMiddle}px`;
+}
+
+alignDescriptionWithCursorOnMiddle();
+/*------------------------------------*\
+    SLIDESHOW & SCROLLING
+\*------------------------------------*/
+
+let transitionStarted = transitionDurationBetweenVIdeos + 1;
+
+function startTransitionSlideshow(e) {
+  player1 ? console.log(player1.getState()) : console.log('player1 not yet loaded')
+
   //Prevent pressing any other key
+  const minScroll = 100;
+  const wheelIsNotEnough = (e.type === 'wheel') && ((e.deltaY < minScroll) && (e.deltaY > -minScroll))
   const keyPressedIsNoGood = (e.type === 'keyup') && (e.keyCode != 38 && e.keyCode != 40 && e.keyCode != 32);
-  if (keyPressedIsNoGood) { 
+  if (keyPressedIsNoGood || wheelIsNotEnough) { 
+    console.log('scroll more !!!!!!!')
     return; 
-  };
+  } else {
+    console.log('let\'s do something')
+  }
 
   //EVENT CASES
   const eventCases = {
-    wheeledUp: (e.type === 'mousewheel' && e.deltaY < 0),
-    wheeledDown: (e.type === 'mousewheel' && e.deltaY > 0),
+    wheeledUp: (e.type === 'wheel' && e.deltaY < 0),
+    wheeledDown: (e.type === 'wheel' && e.deltaY > 0),
     keyDown: (e.type === 'keyup' && ((e.keyCode === 40) || (e.keyCode === 32))),
     keyUp: (e.type === 'keyup' && (e.keyCode === 38)),  //38 = arrow up
     clickedMouseForDown: (e.type === 'click' && e.srcElement.className === 'mouse'),
@@ -145,200 +179,275 @@ function startTransition(e) {
 
   //If portrait or mobile
   //Prevent transit while already transiting
-  if (slideshowDiv.classList.contains('inTransition')) {
+  if (slideshowDivBackground.classList.contains('inTransition')) {
+    console.log('case 1');
     return;
   } else if (eventGoUp && CURRENT_INDEX === 0) {
+    console.log('case 2');
     return;
+    /**** Transition in videos   ****/
+    //From slideshow to first video
   } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides - 1)) {
-        // wholeContentDiv.overflow = '';
-    scrollToFirstVideo();
+    console.log('case 3');
+    transitionStarted = Date.now();
+    slideshowDiv.removeEventListener('wheel', startTransitionSlideshow);
+    scrollFromSlideshowToFirstVideo();
+    return;
+    //From first video to slideshow
+  } else if (eventGoUp && CURRENT_INDEX === (numberOfSlides)) {
+    console.log('case 4');
+    if (Date.now() - transitionStarted < 1000) {
+      console.log('transition timing:', Date.now() - transitionStarted);
+      return;
+    } else {
+      console.log('transition timing:', Date.now() - transitionStarted);
+      transitionStarted = Date.now();
+      scrollFromFirstVideoToSlideshow();
+      slideshowDiv.addEventListener('wheel', startTransitionSlideshow);
+    }
+    return;
+    //From first video to second video
+  } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides)) {
+    console.log('case 5');
+    if (Date.now() - transitionStarted < 1000) {
+      console.log('transition timing:', Date.now() - transitionStarted)
+      return
+    } else {
+      transitionStarted = 0;
+      scrollFromFirstToSecondVideo();
+    }
+    return;
+    //From second video to first
+  } else if (eventGoUp && CURRENT_INDEX === (numberOfSlides + 1)) {
+    console.log('case 6');
+    transitionStarted = Date.now();
+    scrollFromSecondToFirstVideo();
+    return;
+    /**** Transition in slideshow   ****/
+  } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides + 1)) {
+    console.log('case 7');
     return;
   } else {
-    [slideshowDiv, movingCursorDiv, dividerInDescription, hotelName].forEach(item => {
-      item.classList.add('inTransition');
-    });
+    console.log('case 8');
+    if (Date.now() - transitionStarted < 1000) {
+      return; 
+    } else {
+      transitionStarted = transitionDurationBetweenVIdeos + 1;
+      [slideshowDivBackground, movingCursorDiv, dividerInDescription, slideshowDescription].forEach(item => {
+        item.classList.add('inTransition');
+      });
+    };
   }
 
-  const currentTotemDiv = totemDivs[CURRENT_INDEX];
-  console.log(currentTotemDiv)
-  let nextTotemDiv;
   if (!wholeContentDiv.classList.contains('slideshow__landscape')) {
     return
   }
-  console.log(CURRENT_INDEX)
+  // console.log(CURRENT_INDEX)
   const previousIndex = CURRENT_INDEX;
   let direction;
   if (eventGoUp && CURRENT_INDEX > 0 && CURRENT_INDEX < numberOfSlides) { 
     CURRENT_INDEX--;
     direction = 'down';
-    nextTotemDiv = totemDivs[CURRENT_INDEX];
-    console.log(nextTotemDiv)
   } else if (eventGoDown && CURRENT_INDEX < numberOfSlides)  {
     CURRENT_INDEX === numberOfSlides - 1 ? CURRENT_INDEX = 0 : CURRENT_INDEX++;
     direction = 'up';
-    nextTotemDiv = totemDivs[CURRENT_INDEX];
-    console.log(nextTotemDiv)
   }
+
   //Cursor move
-  // cursorMove(CURRENT_INDEX);
+  cursorMove(CURRENT_INDEX);
   
   //Totem move
-  totemMove(CURRENT_INDEX, direction, currentTotemDiv, nextTotemDiv);
+  totemMove(previousIndex, CURRENT_INDEX, direction);
 
   //Hotel Options change
-  // hotelOptionsTransit(e, CURRENT_INDEX, hotelOptions, direction);
+  hotelOptionsTransit(e, previousIndex, CURRENT_INDEX, hotelOptions, direction);
 
   //Background color change
-  // colorsChange(CURRENT_INDEX);
-
-  //Make the slideshow ready for new transition
-  window.setTimeout(() => {
-    [slideshowDiv, movingCursorDiv, dividerInDescription, hotelName].forEach(item => {
-      item.classList.remove('inTransition');
-    });
-  }, transitionDuration + 200);
+  colorsChange(CURRENT_INDEX);
 }
+
 
 /*----- TOTEM FUNCTIONS-----*/
-function totemMove(index, direction, div1, div2) {
+
+function totemMove(prevIndex, nextIndex, direction) {
   const up = direction === 'up' ? true : false;
-  const timeOffset = 100;
 
-  const nextTheme = Object.keys(slideshowParams)[index];
-  //Building the new totem
-  div2 = document.querySelector(`.totem_${nextTheme}`);
-  div2.classList.add(up ? 'fakeTotemUp' : 'fakeTotemDown');
-  div2.classList.add('showTotem');
-  div1.classList.add(up ? 'totemOnTransitionUp' : 'totemOnTransitionDown');
+  const prevTheme = Object.keys(slideshowParams)[prevIndex];
+  const nextTheme = Object.keys(slideshowParams)[nextIndex];
 
-  window.setTimeout(() => {
-    console.log('c\'est là que ça se passe')
-    div1.classList.remove('showTotem');
-  }, transitionDuration * 3 / 4);
+  const prevTotemDiv = document.querySelector(`.totem_${prevTheme}`);
+  const nextTotemDiv = document.querySelector(`.totem_${nextTheme}`);
 
-  window.setTimeout(() => {
-    console.log('ou bien c\'est là que ça se passe')
-    div1.addEventListener('transitionend', removeTotemClasses(up, index, div1, div2), false);
-    div2.addEventListener('transitionend', removeTotemClasses(up, index, div1, div2), false);
 
-    }, transitionDuration + timeOffset);
-}
+  nextTotemDiv.classList.add(up ? 'fakeTotemUp' : 'fakeTotemDown');
+  nextTotemDiv.classList.add('showTotem');
+  nextTotemDiv.classList.add('perpetual-translation');
+  prevTotemDiv.classList.add(up ? 'totemOnTransitionUp' : 'totemOnTransitionDown');
 
-let finishLine = 0;  //special var for totem transitionend only
-function removeTotemClasses(up, index, div1, div2) {
-  console.log('ou là ?')
+  prevTotemDiv.addEventListener('animationend', removeTotemClasses); 
+  nextTotemDiv.addEventListener('animationend', removeTotemClasses); 
+};
 
-  finishLine++;
-
-  if (finishLine === 2) {
-    console.log('ça marche toujours ?');
-    //IF NOT REMOVE THE EVENT LISTENER TRANSITIONEND, IT'S TRIGGERED EVERYTIME ONE MORE TIME
-    finishLine = 0;
-    div1.classList.remove(up ? 'totemOnTransitionUp' : 'totemOnTransitionDown');
-    div2.classList.remove(up ? 'fakeTotemUp' : 'fakeTotemDown');
-    // div1.removeEventListener('transitionend', removeTotemClasses(up, index, div1, div2), false);
-    // div2.removeEventListener('transitionend', removeTotemClasses(up, index, div1, div2), false);
-  } else {
-    return;
+function removeTotemClasses (e) {
+  console.log(this)
+  this.classList.remove('fakeTotemUp');
+  this.classList.remove('fakeTotemDown');
+  if (this.classList.contains('totemOnTransitionUp') || this.classList.contains('totemOnTransitionDown')) {
+    this.classList.remove('showTotem');
+    this.classList.remove('perpetual-translation');
+    this.classList.remove('totemOnTransitionUp');
+    this.classList.remove('totemOnTransitionDown');
   }
+  this.removeEventListener('animationend', removeTotemClasses); 
 }
+
 
 
 /*------ HOTEL OPTIONS FUNCTIONS ------*/
-function hotelOptionsTransit(e, index, anyHotelOptions, direction) {
-  /*    TRANSITION PARAMTERS    */
-  let i = 0;
-  const offset = direction === 'up' ? 10 : -10;
-  const letterTimeout = 20;
-  //target: timeout of the last letter + transition of the last letter = 1/2 transition
-  const letterTransitionDuration = transitionDuration * (1/2) - letterTimeout * biggestWordLength;
-  
-  /*    FAKE DOM     */
-  const newHotelOptions = buildFakeHotelOptionLetters(anyHotelOptions, slideshowParams, index, offset, alSize);
-  wholeContentDiv.append(newHotelOptions);
+function hotelOptionsTransit(e, prevIndex, nextIndex, anyHotelOptions, direction) {
 
-  //STEP 1: move up the existing letter and transit opacity from 1 to 0 during 1/2 transition
-  [...anyHotelOptions.children].forEach(letter => {
-    i++;
-    window.setTimeout(() => {
-    letterDisappear(letter, letterTransitionDuration, offset);
-    }, letterTimeout * i);
+  const up = direction === 'up' ? true : false;
+
+  const prevOptionLettersDiv = anyHotelOptions[prevIndex];
+  const prevOptionLetters = [...prevOptionLettersDiv.children];
+  for (let i = 0; i < prevOptionLetters.length; i++) {
+    const letter = prevOptionLetters[i];
+    up ? letter.classList.add(`fade-out-letter-up-${i + 1}`) : letter.classList.add(`fade-out-letter-down-${i + 1}`);
+  }
+
+  const nextOptionLettersDiv = anyHotelOptions[nextIndex];
+  nextOptionLettersDiv.classList.add('showOption');
+  nextOptionLettersDiv.classList.add('perpetual-translation');
+  const nextOptionLetters = [...nextOptionLettersDiv.children]
+
+  for (let j = 0; j < nextOptionLetters.length; j++) {
+    const letter = nextOptionLetters[j];
+    up ? letter.classList.add(`fade-in-letter-up-${j + 1}`) : letter.classList.add(`fade-in-letter-down-${j + 1}`);
+  }
+}
+
+
+function resetHotelOptions(index){
+  hotelOptions.forEach(option => {
+    const optionIsVisible = option.classList.contains('showOption');
+    const optionNeedToStayVisible = hotelOptions.indexOf(option) === index;
+    const letters = [...option.children];
+    if (optionIsVisible) {
+      for (let i = 0; i < letters.length; i++) {
+        const letter = letters[i];
+        letter.classList.remove(`fade-in-letter-up-${i + 1}`);
+        letter.classList.remove(`fade-in-letter-down-${i + 1}`);
+        letter.classList.remove(`fade-out-letter-up-${i + 1}`);
+        letter.classList.remove(`fade-out-letter-down-${i + 1}`);
+      }
+      if (!optionNeedToStayVisible) {
+        option.classList.remove('showOption');
+        option.classList.remove('perpetual-translation');
+      } else {
+        return;
+      }
+    } else {
+      return;
+    };
   });
-
-  //STEP 2: move up the new letter and transit opacity from 0 to 1 during 1/2 transition
-  window.setTimeout(() => {
-    newHotelOptions.style.opacity = 1;
-    [...newHotelOptions.children].forEach(letter => {
-      i++;
-      window.setTimeout(() => {
-      letterAppear(letter, letterTransitionDuration, offset);
-      }, letterTimeout * i);
-    });
-  }, transitionDuration * (1/2))
-
-  window.setTimeout(() => {
-    populateHotelOptions(anyHotelOptions, index, slideshowParams, alSize);
-    wholeContentDiv.removeChild(newHotelOptions);
-  }, transitionDuration)
-}
-
-function letterDisappear(letter, transition, offset) {
-
-  letter.style.transition = `all ${transition * 2 / 3}ms linear`;
-  //STEP 1: move it up
-  letter.style.transform = `translateY(${-offset}px)`;
-  //STEP 2: fade out
-  window.setTimeout(() => {
-    letter.style.opacity =  0;
-  }, transition / 3);
-
-  window.setTimeout(() => {
-    letter.style.transition = ``;
-  }, transition);
-}
-
-function letterAppear(letter, transition, offset) {
-
-  letter.style.transition = `transform ${transition * 2 / 3}ms cubic-bezier(0.64, 0.46, 0.4, 2.19), opacity ${transition * 2 / 3}ms linear`;
-  //STEP 1: move it up
-  letter.style.transform = `translateY(${-offset}px)`;
-  //STEP 2: fade out
-  letter.style.opacity =  1;
-
-  window.setTimeout(() => {
-    // letter.style.transition = ``;
-  }, transition);
-}
+};
 
 
-function scrollToFirstVideo() {
+/*------ SCROLLING FUNCTIONS ------*/
+function scrollFromSlideshowToFirstVideo() {
   CURRENT_INDEX++;
-  console.log('yo');
+  console.log('first video');
+  // [...wholeContent.children].forEach(child => child.classList.remove('perpetual-translation'));
+  wholeContent.classList.add('from_slideshow_to_first_video');
+  wholeContent.classList.remove('from_first_video_to_slideshow');
+  wholeContent.classList.remove('from_first_video_to_second_video');
+  wholeContent.classList.remove('from_second_video_to_first_video');
 
-  wholeContent.classList.add('slideshow__hide');
+
+  controlVideo1PointerEvents.addEventListener('wheel', startTransitionSlideshow);
   playerPlay(player1);
 }
 
+// function allowScrolling(e) {
+//   if (e.animationName === 'from-slideshow-to-firstVideo') {
+//     console.log('on autorise le scrolling');
+//     wholeContent.style.animationPlayState = 'paused';
+//     wholeContent.removeEventListener('animationend', allowScrolling);
+//   } else {
+//     console.log(e)
+//     console.log(e.animationName)
+//     return;
+//   };
+
+// }
+
+function scrollFromFirstVideoToSlideshow() {
+  CURRENT_INDEX--;
+  console.log('first video');
+
+  wholeContent.classList.remove('from_slideshow_to_first_video');
+  wholeContent.classList.add('from_first_video_to_slideshow');
+  wholeContent.classList.remove('from_first_video_to_second_video');
+  wholeContent.classList.remove('from_second_video_to_first_video');
+
+  playerPause(player1);
+  wholeContent.addEventListener('animationend', getOutOfVideos);
+
+  controlVideo1PointerEvents.removeEventListener('wheel', startTransitionSlideshow);
+
+}
+
+function scrollFromFirstToSecondVideo() {
+  CURRENT_INDEX++;
+  console.log('second video');
+
+  wholeContent.classList.remove('from_slideshow_to_first_video');
+  wholeContent.classList.remove('from_first_video_to_slideshow');
+  wholeContent.classList.add('from_first_video_to_second_video');
+  wholeContent.classList.remove('from_second_video_to_first_video');
+  playerPlay(player2);
+  playerPause(player1);
+}
+
+function scrollFromSecondToFirstVideo() {
+  CURRENT_INDEX--;
+  console.log('from second video to first');
+
+  wholeContent.classList.remove('from_slideshow_to_first_video');
+  wholeContent.classList.remove('from_first_video_to_slideshow');
+  wholeContent.classList.remove('from_first_video_to_second_video');
+  wholeContent.classList.add('from_second_video_to_first_video');
+  playerPlay(player1);
+  playerPause(player2);
+}
+
+function getOutOfVideos() {
+  wholeContent.classList.remove('from_slideshow_to_first_video');
+  wholeContent.classList.remove('from_first_video_to_slideshow');
+  wholeContent.classList.remove('from_first_video_to_second_video');
+  wholeContent.classList.remove('from_second_video_to_first_video');
+  wholeContent.removeEventListener('animationend', getOutOfVideos);
+}
+
+
+function togglePlayPause() {
+  if (this.classList.contains('video1')) {
+    player1.getState() === 'playing' ? playerPause(player1) : playerPlay(player1);
+  } else if (this.classList.contains('video2')) {
+    player2.getState() === 'playing' ? playerPause(player2) : playerPlay(player2);
+  }
+}
 /*------------------------------------*\
     EVENT LISTENERS
 \*------------------------------------*/
 
-window.addEventListener('keyup', function(e) {
-    //Prevent scrolling when pressing space
-  e.preventDefault();
-  startTransition(e);
-})
+window.addEventListener('keyup', startTransitionSlideshow);
+slideshowDiv.addEventListener('wheel', startTransitionSlideshow);
+document.querySelector('.scroll-btn').addEventListener('click', startTransitionSlideshow);
+video1Div.addEventListener('wheel', startTransitionSlideshow);
+video2Div.addEventListener('wheel', startTransitionSlideshow);
 
-wholeContentDiv.addEventListener('mousewheel', function(e) {
-    e.preventDefault();
-
-  startTransition(e);
-})
-
-document.querySelector('.scroll-btn').addEventListener('click', function(e) {
-    e.preventDefault();
-
-  startTransition(e);
-})
+controlVideo1PointerEvents.addEventListener('click', togglePlayPause);
+controlVideo2PointerEvents.addEventListener('click', togglePlayPause);
 
 export { totemDiv };

@@ -10,6 +10,14 @@
 
   <link rel="stylesheet" href="./src/css/styles.css">
   <!-- PREFETCH ON BIG SCREENS -->
+<!--   <link rel="preload" href="./src/img/animation/img_0.svg" as="image" type="image/svg">
+  <link rel="preload" href="./src/img/animation/img_1.svg" as="image" type="image/svg">
+  <link rel="preload" href="./src/img/animation/img_2.svg" as="image" type="image/svg">
+  <link rel="preload" href="./src/img/animation/img_3.svg" as="image" type="image/svg">
+  <link rel="preload" href="./src/img/animation/img_4.svg" as="image" type="image/svg">
+  <link rel="preload" href="./src/img/animation/img_5.svg" as="image" type="image/svg">
+  <link rel="preload" href="./src/img/animation/img_6.svg" as="image" type="image/svg"> -->
+
   <link rel="preload" href="./src/img/totems/totem_hotel.png" as="image" type="image/png">
   <link rel="preload" href="./src/img/totems/totem_evenementiel.png" as="image" type="image/png">
   <link rel="preload" href="./src/img/totems/totem_clubDeSport.png" as="image" type="image/png">
@@ -24,62 +32,71 @@
   <link rel="preload" href="./src/img/totems/totem_potager.png" as="image" media="(max-width: 1024px)" type="image/png">
   <link rel="preload" href="./src/img/totems/totem_restaurant.png" as="image" media="(max-width: 1024px)" type="image/png">
   <title>Brach Hotel | Un style de vie à Paris  </title>
+
 </head>
 
 <body id="noscrollbar">
+
+  <div id="loadingAnim"></div>
+  <script src="./src/components/lottie.js" type="text/javascript"></script>
+  <script src="./src/components/loadingAnimation.js" type="text/javascript"></script>
   <div id="wholeContent">
     
 
     <!--                      SLIDESHOW                   -->
+      <div class="slideshow__background"></div>
 
     <div class="slideshow">
 
-      <!-- SLIDESHOW - CONTENT -->
-      <div class="slideshow__content">
-        <!-- SLIDESHOW - TOTEM -->
-        <div data-slidePosition='0' class="slideshow__totem totem_hotel"></div>
-        <div data-slidePosition='1' class="slideshow__totem totem_clubDeSport"></div>
-        <div data-slidePosition='2' class="slideshow__totem totem_restaurant"></div>
-        <div data-slidePosition='3' class="slideshow__totem totem_bar"></div>
-        <div data-slidePosition='4' class="slideshow__totem totem_patisserie"></div>
-        <div data-slidePosition='5' class="slideshow__totem totem_evenementiel"></div>
-        <div data-slidePosition='6' class="slideshow__totem totem_potager"></div>
+      <!-- SLIDESHOW - TOTEM -->
+      <div data-slidePosition='0' class="slideshow__totem totem_hotel"></div>
+      <div data-slidePosition='1' class="slideshow__totem totem_clubDeSport"></div>
+      <div data-slidePosition='2' class="slideshow__totem totem_restaurant"></div>
+      <div data-slidePosition='3' class="slideshow__totem totem_bar"></div>
+      <div data-slidePosition='4' class="slideshow__totem totem_patisserie"></div>
+      <div data-slidePosition='5' class="slideshow__totem totem_evenementiel"></div>
+      <div data-slidePosition='6' class="slideshow__totem totem_potager"></div>
 
-        <!-- SLIDESHOW - DESCRIPTION -->  
-        <div class="slideshow__description">
-          <div class="slideshow__description--establishment-name">
-            <p class="first-last-letter"><span>B</span></p>
-            <p class="middle-letters"><span>R</span></p>
-            <p class="middle-letters"><span>A</span></p>
-            <p class="middle-letters"><span>C</span></p>
-            <p class="first-last-letter"><span>H</span></p>
-          </div>
-          <div class="slideshow__description--divider"></div>
-          <div class="slideshow__description--options"></div>
-          <div class="slideshow__description--slogan"><span></span></div>
+      <!-- SLIDESHOW - DESCRIPTION -->  
+      <div class="slideshow__description perpetual-translation">
+        <div class="slideshow__description--establishment-name">
+          <div class="first-last-letter"></div>
+          <div class="middle-letters"></div>
+          <div class="first-last-letter"></div>
         </div>
+        <div class="slideshow__description--divider"></div>
+        <div class="slideshow__description--optionsContainer"></div>
+        <div class="slideshow__description--slogan"></div>
       </div>
+      <div data-slidePosition='0' data-hotel-option='1' class="slideshow__description--options option_hotel"></div>
+      <div data-slidePosition='1' data-hotel-option='2' class="slideshow__description--options option_clubDeSport"></div>
+      <div data-slidePosition='2' data-hotel-option='3' class="slideshow__description--options option_restaurant"></div>
+      <div data-slidePosition='3' data-hotel-option='4' class="slideshow__description--options option_bar"></div>
+      <div data-slidePosition='4' data-hotel-option='5' class="slideshow__description--options option_patisserie"></div>
+      <div data-slidePosition='5' data-hotel-option='6' class="slideshow__description--options option_evenementiel"></div>
+      <div data-slidePosition='6' data-hotel-option='7' class="slideshow__description--options option_potager"></div>
 
       <!-- SLIDESHOW - CURSOR -->
-      <div class="slideshow__cursor">
-        <div class="slideshow__cursor--fixed"></div>
-        <div class="slideshow__cursor--moving"></div>
-      </div>
+      <div class="slideshow__cursor slideshow__cursor--fixed"></div>
+      <div class="slideshow__cursor slideshow__cursor--moving"></div>
 
     </div>
+
 
     <div class="slideshow__backup--container">
       <div class="slideshow__backup--content"></div>
     </div>
 
 
-    <div class="video video1">
+    <div class="video video1" id="video1">
+      <div class="transparent_filter-for-allow-scrolling video1"></div>
       <div class="video__subcontainer">
         <div id="video__video1" ></div>
       </div>
     </div>
 
-    <div class="video video2">
+    <div class="video video2"  id="video2">
+      <div class="transparent_filter-for-allow-scrolling video2"></div>
       <div class="video__subcontainer">
         <div id="video__video2" ></div>
       </div>
@@ -88,6 +105,8 @@
 
 
     </div>
+
+    <div class="reservation"></div>
 
     <div class="slideshow__mouseScroll">
       <a class="scroll-btn" href="#">
@@ -100,8 +119,7 @@
     </div> 
 
     <script src='https://www.youtube.com/iframe_api' async></script>
-    <script src="./_build/bundle.js"></script>
-   
+    <script src="./_build/bundle.js"></script>  <!-- loaded after the animation -->
 
   </div>
 </body>

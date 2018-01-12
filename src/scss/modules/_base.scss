@@ -15,7 +15,6 @@ body {
 
 #wholeContent {
   position: relative;
-  // height: 100vh;
   width: 100vw;
   overflow: auto;
   display: flex;
@@ -26,10 +25,23 @@ body {
     flex-grow: 0;
     flex-shrink: 0;
   }
-  //align-content: center;
-  
 }
 
+#loadingAnim{
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: hsla(0,0%,100%,1.00);
+  transition: opacity 0.5s linear;
+  // transition: transform 1s linear;
+  &.hide {
+    opacity: 0;
+    // transform: translateY(-100vh);
+  }
+}
 
 
 a {
