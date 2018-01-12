@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -69,7 +69,7 @@
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return exactCapitalLetterSize; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_measure_font__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_measure_font__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_measure_font___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_measure_font__);
 
 
@@ -147,11 +147,503 @@ function exactCapitalLetterSize (element, fontFamily, size, lineHeight) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return slideshowParams; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__fakeDom__ = __webpack_require__(20);
+
+
+
+const totemDiv = document.querySelector('.slideshow__totem');
+const white = 'rgba(250,250,250,1.00)';
+
+const slideshowParams = {
+  hotel: {
+    position: 0,
+    frenchName: 'hôtel', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
+    backgroundColor: 'hsla(38,5%,65%,1.00)',
+    optionsLetterSpacing: 8,
+    textColor: white,
+    totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
+    backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
+  },
+  clubDeSport: {
+    position: 1,
+    frenchName: 'club de sport', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
+    backgroundColor: 'hsla(194,11%,63%,1.00)',
+    optionsLetterSpacing: 3,
+    textColor: white,
+    totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
+    backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
+  },
+  restaurant: {
+    position: 2,
+    frenchName: 'restaurant', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
+    backgroundColor: 'hsla(2,41%,82%,1.00)',
+    optionsLetterSpacing: 8,
+    textColor: white,
+    totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
+    backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
+  },
+  bar: {
+    position: 3,
+    frenchName: 'bar', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
+    backgroundColor: 'hsla(2,41%,82%,1.00)',
+    optionsLetterSpacing: 8,
+    textColor: white,
+    totemPictureUrl: function() { return `./src/img/totems/totem_hotel.png` },
+    backupPictureUrl: function() { return `./src/img/responsive_pictures/hotel.png` },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
+  },
+  patisserie: {
+    position: 4,
+    frenchName: 'pâtisserie', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
+    backgroundColor: 'hsla(55,76%,82%,1.00)',
+    optionsLetterSpacing: 8,
+    textColor: 'rgba(151,105,80,1.00)',
+    totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
+    backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
+  },
+  evenementiel: {
+    position: 5,
+    frenchName: 'évènementiel', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
+    backgroundColor: 'hsla(33,57%,84%,1.00)',
+    optionsLetterSpacing: 8,
+    textColor: 'rgba(151,105,80,1.00)',
+    totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
+    backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
+  },
+  potager: {
+    position: 6,
+    frenchName: 'potager', 
+    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
+    backgroundColor: 'hsla(107,12%,72%,1.00)',
+    optionsLetterSpacing: 8,
+    textColor: white,
+    totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
+    backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
+    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
+  },
+}
+
+
+
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return populateHotelOptions; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__measureFont__ = __webpack_require__(0);
+
+
+ 
+
+function populateHotelOptions (motherDiv, index, data, size, ffamily) {
+  const theme = Object.keys(data)[index];
+  
+  // we do <p><span>'letter'</span></p> for each letter, in order to create an animation on each letter
+  for (let i = 0; i < data[theme].frenchName.length; i++) {
+    const newLetterP = document.createElement('p');
+    const newLetterSpan = document.createElement('span');
+    newLetterP.appendChild(newLetterSpan);
+    newLetterSpan.textContent = data[theme].frenchName.charAt(i);
+    motherDiv.appendChild(newLetterP);
+  }
+  //then letter spacing with margin
+  [...motherDiv.children].forEach(letter => {
+    Object(__WEBPACK_IMPORTED_MODULE_0__measureFont__["a" /* exactCapitalLetterSize */])(letter, ffamily, size, 1);
+    //If the character is a space, make it clear to the eye by enlarging it 
+    if (letter.firstChild.textContent.charCodeAt(0) === 32) {
+      letter.style.marginRight = `${5 * data[theme].optionsLetterSpacing}px`;
+    } else {
+      letter.style.marginRight = `${data[theme].optionsLetterSpacing}px`;
+    }
+  })
+};
+
+
+
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(4);
+module.exports = __webpack_require__(28);
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bling__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__measureFont__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__DOMStyling__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__slideshow_slideshow__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__slideshow_slideshowPortrait__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__animMenu__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__animMenu___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__animMenu__);
+// import { uniq } from 'lodash';
+// import jsonp from 'jsonp';
+// import insane from 'insane';
+// import 'bootstrap';
+// import './Chap1Carousel';
+// import './Chap5Carousel';
+// import './Chap5BisCarousel';
+
+
+// import './lottie';
+// import './loadingAnimation';
+
+/*------------------------------------*\
+    utilities
+\*------------------------------------*/
+
+
+
+/*------------------------------------*\
+    modules
+\*------------------------------------*/
+// import './_video1';
+
+
+
+
+
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export $ */
+/* unused harmony export $$ */
+// based on https://gist.github.com/paulirish/12fb951a8b893a454b32
+
+const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
+
+Node.prototype.on = window.on = function (name, fn) {
+  this.addEventListener(name, fn);
+};
+
+NodeList.prototype.__proto__ = Array.prototype; // eslint-disable-line
+
+NodeList.prototype.on = NodeList.prototype.addEventListener = function (name, fn) {
+  this.forEach((elem) => {
+    elem.on(name, fn);
+  });
+};
+
+
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = __webpack_require__(7);
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var defaultValue = __webpack_require__(8);
+
+var findEdge = __webpack_require__(12);
+var drawCharacter = __webpack_require__(15);
+var resetCanvas = __webpack_require__(16);
+var createCanvas = __webpack_require__(17);
+
+module.exports = function measureFont(fontFamily) {
+	var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+	var fontSize = defaultValue(options.fontSize, 20);
+	var canvasSize = defaultValue(options.tolerance, 6) * fontSize;
+
+	var descenderCharacters = ["g", "j", "p", "q", "y"];
+	var ascenderCharacters = ["h", "d", "t", "l"];
+	var capHeightCharacters = ["H", "I", "T"];
+	var medianCharacters = ["x", "v", "w", "z"];
+	var topBoundingCharacters = ["O", "A", "8", "#", "%", "^", "!", "/", "|", "]"];
+
+	var testingCanvas = createCanvas(canvasSize);
+
+	function getLowest(characters) {
+		resetCanvas(testingCanvas);
+
+		characters.forEach(function (character) {
+			drawCharacter(testingCanvas, character, fontFamily, fontSize);
+		});
+
+		return findEdge.lowest(testingCanvas);
+	}
+
+	function getHighest(characters) {
+		resetCanvas(testingCanvas);
+
+		characters.forEach(function (character) {
+			drawCharacter(testingCanvas, character, fontFamily, fontSize);
+		});
+
+		return findEdge.highest(testingCanvas);
+	}
+
+	var lowestDescenderPoint = getLowest(descenderCharacters) - testingCanvas.height / 2;
+	var highestAscenderPoint = testingCanvas.height / 2 - getHighest(ascenderCharacters);
+	var highestCapHeightPoint = testingCanvas.height / 2 - getHighest(capHeightCharacters);
+	var highestMedianPoint = testingCanvas.height / 2 - getHighest(medianCharacters);
+	var highestTopBoundingPoint = testingCanvas.height / 2 - getHighest(topBoundingCharacters);
+
+	return {
+		descender: lowestDescenderPoint / fontSize,
+		ascender: -highestAscenderPoint / fontSize,
+		capHeight: -highestCapHeightPoint / fontSize,
+		median: -highestMedianPoint / fontSize,
+		topBounding: -highestTopBoundingPoint / fontSize
+	};
+};
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = __webpack_require__(9);
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var promiseTry = __webpack_require__(10);
+
+function evaluateValue(value) {
+	if (typeof value === "function") {
+		return value();
+	} else {
+		return value;
+	}
+}
+
+function maybeEvaluateValue(value, evaluate) {
+	if (evaluate === true) {
+		return evaluateValue(value);
+	} else {
+		return value;
+	}
+}
+
+function defaultValue(value, fallbackValue) {
+	var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+
+	value = maybeEvaluateValue(value, options.evaluate);
+
+	if (value != null) {
+		return value;
+	} else {
+		return maybeEvaluateValue(fallbackValue, options.evaluate);
+	}
+}
+
+defaultValue.async = function defaultAsyncValue(value, fallbackValue) {
+	var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+
+	return promiseTry(function () {
+		return maybeEvaluateValue(value, options.evaluate);
+	}).then(function (resultValue) {
+		if (resultValue != null) {
+			return resultValue;
+		} else {
+			return maybeEvaluateValue(fallbackValue, options.evaluate);
+		}
+	});
+};
+
+module.exports = defaultValue;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = __webpack_require__(11);
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function promiseTry(func) {
+	return new Promise(function (resolve, reject) {
+		resolve(func());
+	});
+};
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getImageData = __webpack_require__(13);
+var scanRow = __webpack_require__(14);
+
+function findEdge(canvas, firstRow, lastRow, step) {
+	var imageData = getImageData(canvas).data;
+	var valuesPerRow = canvas.width * 4;
+	var hitEnd = false;
+
+	if (step === 0) {
+		throw new Error("Step cannot be 0");
+	}
+
+	var row = firstRow;
+
+	while (!hitEnd) {
+		var highestValue = scanRow(imageData, row * valuesPerRow, canvas.width);
+
+		/* 240 is a somewhat randomly picked value to deal with anti-aliasing. */
+		if (highestValue > 240) {
+			return row;
+		}
+
+		row += step;
+
+		if (step > 0) {
+			hitEnd = row > lastRow;
+		} else if (step < 0) {
+			hitEnd = row < lastRow;
+		}
+	}
+}
+
+module.exports = {
+	lowest: function findLowestEdge(canvas) {
+		return findEdge(canvas, canvas.height - 1, 0, -1);
+	},
+	highest: function findHighestEdge(canvas) {
+		return findEdge(canvas, 0, canvas.height - 1, 1);
+	}
+};
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function getImageData(canvas) {
+	var context = canvas.getContext("2d");
+	return context.getImageData(0, 0, canvas.width, canvas.height);
+};
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function scanRow(imageData, offset, length) {
+	var highestValue = 0;
+
+	for (var column = 0; column < length; column += 1) {
+		var pixelValue = imageData[offset + column * 4];
+
+		if (pixelValue > highestValue) {
+			highestValue = pixelValue;
+		}
+	}
+
+	return highestValue;
+};
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function drawCharacter(canvas, character, fontFamily, fontSize) {
+	var context = canvas.getContext("2d");
+	context.textAlign = "center";
+	context.textBaseline = "alphabetic";
+	context.font = fontSize + "px '" + fontFamily + "'";
+	context.fillStyle = "white";
+	context.fillText(character, canvas.width / 2, canvas.height / 2);
+};
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function resetCanvas(canvas) {
+	var context = canvas.getContext("2d");
+	context.fillStyle = "black";
+	context.fillRect(0, 0, canvas.width, canvas.height);
+};
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function createCanvas(size) {
+	var canvas = document.createElement("canvas");
+	canvas.width = size;
+	canvas.height = size;
+	return canvas;
+};
+
+/***/ }),
+/* 18 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* unused harmony export alSize */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__measureFont_js__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__slideshow_populateLetters__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_perfect_scrollbar__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__slideshow_params__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__slideshow_populateLetters__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_perfect_scrollbar__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__slideshow_params__ = __webpack_require__(1);
 
 
  
@@ -179,7 +671,7 @@ const hotelFixedCharacters = {
   brachLast: {
     position: 1,
     frenchName: 'h', 
-    optionsLetterSpacing: 3,
+    optionsLetterSpacing: 0,
     textColor: white,
   },
   brachMiddle: {
@@ -289,7 +781,7 @@ Object(__WEBPACK_IMPORTED_MODULE_1__slideshow_populateLetters__["a" /* populateH
 
 
 /***/ }),
-/* 2 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1600,7 +2092,615 @@ PerfectScrollbar.prototype.removePsClasses = function removePsClasses () {
 
 
 /***/ }),
-/* 3 */
+/* 20 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export buildFakeTotem */
+/* unused harmony export buildFakeHotelOptionLetters */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__populateLetters__ = __webpack_require__(2);
+
+
+
+  //Building the new totem
+
+function buildFakeTotem (totemDiv, data, index) {
+  let newTotemDiv;
+  newTotemDiv = totemDiv.cloneNode(true);
+
+  newTotemDiv.style.backgroundImage = `url('${data[Object.keys(data)[index]].totemPictureUrl()}')`;
+
+  return newTotemDiv;
+  //TO DO IN THE FUNCTION
+  // document.body.append(newTotemDiv);
+};
+
+function buildFakeHotelOptionLetters (motherDiv, data, index, offset, size) {
+  // console.log(`offset: ${offset}`);
+  let newHotelOptions;
+  newHotelOptions = motherDiv.cloneNode(false);
+
+  Object(__WEBPACK_IMPORTED_MODULE_0__populateLetters__["a" /* populateHotelOptions */])(newHotelOptions, index, data, size);
+
+  const divHorizontalCenter = (motherDiv.getBoundingClientRect().right - motherDiv.getBoundingClientRect().left) / 2;
+
+  newHotelOptions.style.position = `absolute`;
+  newHotelOptions.style.height = `${motherDiv.getBoundingClientRect().height}px`;
+  newHotelOptions.style.width = `${motherDiv.getBoundingClientRect().width}px`;
+  newHotelOptions.style.left = `${motherDiv.getBoundingClientRect().left}px`;
+  newHotelOptions.style.top = `${motherDiv.getBoundingClientRect().top + offset}px`;
+  [...newHotelOptions.children].forEach(letter => {
+    letter.style.opacity = `0`;
+  });
+  const theme = Object.keys(data)[index];
+  newHotelOptions.style.color = data[theme].textColor;
+
+
+  return newHotelOptions;
+  //TO DO IN THE FUNCTION
+  // document.body.append(newHotelOptions);
+};
+
+
+
+
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export totemDiv */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__video1__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__params__ = __webpack_require__(1);
+
+
+/* ADVICE FOR SLIDESHOWS :
+-> add class instead of CSS property when it's possible
+-> add class to the direct element, not the motherDiv, when possible
+-> for the fake DOM, use absolute position to have the minimum calculation as possible
+-> use transitionend at the end of the transitions
+-> create fragment instead of crete element: https://coderwall.com/p/o9ws2g/why-you-should-always-append-dom-elements-using-documentfragments
+-> good advices hear : https://medium.com/outsystems-experts/how-to-achieve-60-fps-animations-with-css3-db7b98610108
+*/
+
+// require('smoothscroll-polyfill').polyfill();   //https://github.com/iamdustan/smoothscroll for behavior: smooth when scrolling. But we never scroll here.
+// import PerfectScrollbar from 'perfect-scrollbar';
+
+
+/*------------------------------------*\
+    VARIABLES & DATA
+\*------------------------------------*/
+
+//DATA
+
+
+//DOM
+const wholeContentDiv = document.querySelector('#wholeContent')
+const slideshowDiv = document.querySelector(".slideshow");
+const slideshowDivBackground = document.querySelector(".slideshow__background");
+const slideshowContentDiv = document.querySelector(".slideshow__content");
+const slideshowBackupDiv = document.querySelector(".slideshow__backup--container");
+// const totemDivs = Object.keys(slideshowParams).map(name => slideshowParams[name].totemDiv());
+const movingCursorDiv = document.querySelector('.slideshow__cursor--moving');
+const hotelOptions = [...document.querySelectorAll('.slideshow__description--options')];
+const hotelSlogan = document.querySelector('.slideshow__description--slogan');
+const hotelEstablishmentName = document.querySelector('.slideshow__description--establishment-name');
+const slideshowDescription = slideshowDiv.querySelector('.slideshow__description');
+const dividerInDescription = slideshowDiv.querySelector('.slideshow__description--divider');
+const video1Div = document.querySelector('#video1');
+const video2Div = document.querySelector('#video2');
+const video1iFrame = document.querySelector('.video__video1');
+const video2iFrame = document.querySelector('.video__video2');
+const hotelOptionsContainer = document.querySelector('.slideshow__description--optionsContainer');
+const controlVideo1PointerEvents = document.querySelector('.video1').querySelector('.transparent_filter-for-allow-scrolling');
+const controlVideo2PointerEvents = document.querySelector('.video2').querySelector('.transparent_filter-for-allow-scrolling');
+let allLetters;
+//CSS
+const cursorVerticalSpacing = 20;
+const transitionDurationBetweenVIdeos = 1000;  //A bit higher than the one in CSS for a proper totem transition
+
+    /*  CURSOR  */
+movingCursorDiv.style.boxShadow = `0px ${(cursorVerticalSpacing * 0)}px, 0px ${(cursorVerticalSpacing * 1)}px, 0px ${(cursorVerticalSpacing * 2)}px, 0px ${(cursorVerticalSpacing * 3)}px, 0px ${(cursorVerticalSpacing * 4)}px, 0px ${(cursorVerticalSpacing * 5)}px, 0px ${(cursorVerticalSpacing * 6)}px`;
+
+
+//SLIDESHOW PARAMS
+const numberOfSlides = Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */]).length;
+let biggestWordLength = 0;
+let biggestWordParam = 0;
+Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */]).map(param => {
+  if (__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][param].frenchName.length > biggestWordLength) {
+    biggestWordLength = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][param].frenchName.length; 
+    biggestWordParam = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][param].position;
+  }; 
+});
+
+/*------------------------------------*/  
+let CURRENT_INDEX = 0 ;
+/*------------------------------------*/
+
+
+/*------------------------------------*\
+    INIT
+\*------------------------------------*/
+
+//function to use also on transition and init
+function colorsChange(index) {
+  const theme = Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */])[index];
+
+  /*  TEXTS COLOR  */
+  slideshowDescription.style.color = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].textColor;
+  dividerInDescription.style.borderColor = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].textColor;
+  hotelOptions[index].style.color = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].textColor;
+
+  /* BACKGROUND */
+  slideshowDivBackground.style.backgroundColor = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].backgroundColor;
+  movingCursorDiv.style.color = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].textColor;
+  movingCursorDiv.style.borderColor = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].textColor;
+}
+
+//function to use also on transition and init
+function cursorMove(index) {
+  movingCursorDiv.style.transform = `translateY(${-cursorVerticalSpacing * index}px)`;
+  movingCursorDiv.addEventListener('transitionend', endTransition, false);
+}
+
+function endTransition(e) {
+  if (CURRENT_INDEX === (numberOfSlides - 1)) {
+    Object(__WEBPACK_IMPORTED_MODULE_0__video1__["c" /* playerLoad */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
+    Object(__WEBPACK_IMPORTED_MODULE_0__video1__["c" /* playerLoad */])(__WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */]);
+  }
+  [slideshowDivBackground, movingCursorDiv, dividerInDescription, slideshowDescription].forEach(item => {
+    item.classList.remove('inTransition');
+  });
+  resetHotelOptions(CURRENT_INDEX);
+  movingCursorDiv.removeEventListener('transitionend', endTransition, false);
+}
+
+const init = (index) => {
+
+  // const adjustedIndex = /*index - 1*/ index //if we use animationsController, we use index - 1;
+  const theme = Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */])[/*adjustedIndex*/index];
+  // console.log(theme)
+
+  // /*    SCROLLBAR   */
+  // const ps = new PerfectScrollbar(wholeContentDiv, {
+  //   handlers: ['click-rail', 'drag-thumb', 'keyboard', /*'wheel',*/ 'touch'],
+  // });
+
+  /* BACKGROUND AND TEXT COLORS */
+  colorsChange(/*adjustedIndex*/index);
+
+  /*  CURSOR  */
+  cursorMove(/*adjustedIndex*/index);
+
+  /*   TOTEM   */
+  document.querySelector(`.totem_${theme}`).classList.add('showTotem');
+  document.querySelector(`.totem_${theme}`).addEventListener('animationend', removeInitAnimationClasses);
+  document.querySelector(`.totem_${theme}`).classList.add('perpetual-translation');
+
+  /*  OPTIONS  */
+  document.querySelector(`.option_${theme}`).classList.add('showOption');
+
+  //RESET AFTER ANIMATION
+  //Get hotel letters
+  const nameLetters = [];
+  const hotelEstablishmentName = document.querySelector('.slideshow__description--establishment-name');
+  [...hotelEstablishmentName.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
+
+  //Get slogan letters
+  const hotelSlogan = document.querySelector('.slideshow__description--slogan');
+  const sloganLetters = [...hotelSlogan.children];
+
+  //Get option letters
+  const hotelOption = document.querySelector('.showOption');
+  const optionLetters = [...hotelOption.children];
+
+  //Gather all letters
+  allLetters = [...nameLetters, ...optionLetters, ...sloganLetters];
+  for (var i = 0; i < allLetters.length; i++) {
+    allLetters[i].addEventListener('animationend', removeInitAnimationClasses)
+  }
+};
+init(CURRENT_INDEX);
+
+function removeInitAnimationClasses() {
+  //For hotel description (slogan, name and option)
+  for (var i = 0; i < allLetters.length; i++) {
+    this.classList.remove(`fade-in-letter-up-${i + 1}`);
+  }
+  //For totem
+  this.classList.remove('fakeTotemUp');
+  //For divider in
+  if (this === allLetters[allLetters.length - 1]) {
+    console.log('youpi yo')
+    dividerInDescription.classList.add('coming-in');
+    dividerInDescription.addEventListener('animationend', removeInitForDivider);
+  }
+  //FOr everybody
+  this.removeEventListener('animationend', removeInitAnimationClasses);
+}
+
+function removeInitForDivider() {
+  console.log('on dégomme le divider');
+  console.log(this);
+  dividerInDescription.classList.remove('init');
+  this.classList.remove('coming-in');
+  this.removeEventListener('animationend', removeInitForDivider);
+}
+
+/*------------------------------------*\
+    DOM STYLING
+\*------------------------------------*/
+
+/*------------------------------------*\
+    DESCRIPTION POSITION
+\*------------------------------------*/
+
+hotelOptionsContainer.style.height = `${document.querySelector(`[data-hotel-option='${CURRENT_INDEX + 1}']`).getBoundingClientRect().height}px`
+
+function alignDescriptionWithCursorOnMiddle () {
+  const hotelOptionsContainerBottom = hotelOptionsContainer.getBoundingClientRect().bottom;
+  const hotelDescriptionBottom = slideshowDescription.getBoundingClientRect().bottom;
+  const differenceWithMiddle = hotelDescriptionBottom - hotelOptionsContainerBottom;
+  slideshowDescription.style.marginBottom = `${-differenceWithMiddle}px`;
+}
+
+alignDescriptionWithCursorOnMiddle();
+/*------------------------------------*\
+    SLIDESHOW & SCROLLING
+\*------------------------------------*/
+
+let transitionStarted = transitionDurationBetweenVIdeos + 1;
+
+function startTransitionSlideshow(e) {
+  __WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */] ? console.log(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */].getState()) : console.log('player1 not yet loaded')
+
+  //Prevent pressing any other key
+  const minScroll = 100;
+  const wheelIsNotEnough = (e.type === 'wheel') && ((e.deltaY < minScroll) && (e.deltaY > -minScroll))
+  const keyPressedIsNoGood = (e.type === 'keyup') && (e.keyCode != 38 && e.keyCode != 40 && e.keyCode != 32);
+  if (keyPressedIsNoGood || wheelIsNotEnough) { 
+    console.log('scroll more !!!!!!!')
+    return; 
+  } else {
+    console.log('let\'s do something')
+  }
+
+  //EVENT CASES
+  const eventCases = {
+    wheeledUp: (e.type === 'wheel' && e.deltaY < 0),
+    wheeledDown: (e.type === 'wheel' && e.deltaY > 0),
+    keyDown: (e.type === 'keyup' && ((e.keyCode === 40) || (e.keyCode === 32))),
+    keyUp: (e.type === 'keyup' && (e.keyCode === 38)),  //38 = arrow up
+    clickedMouseForDown: (e.type === 'click' && e.srcElement.className === 'mouse'),
+  };
+
+  const eventGoUp = (eventCases.keyUp || eventCases.wheeledUp);
+  const eventGoDown = (eventCases.keyDown || eventCases.wheeledDown || eventCases.clickedMouseForDown);
+
+  //If portrait or mobile
+  //Prevent transit while already transiting
+  if (slideshowDivBackground.classList.contains('inTransition')) {
+    console.log('case 1');
+    return;
+  } else if (eventGoUp && CURRENT_INDEX === 0) {
+    console.log('case 2');
+    return;
+    /**** Transition in videos   ****/
+    //From slideshow to first video
+  } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides - 1)) {
+    console.log('case 3');
+    transitionStarted = Date.now();
+    slideshowDiv.removeEventListener('wheel', startTransitionSlideshow);
+    scrollFromSlideshowToFirstVideo();
+    return;
+    //From first video to slideshow
+  } else if (eventGoUp && CURRENT_INDEX === (numberOfSlides)) {
+    console.log('case 4');
+    if (Date.now() - transitionStarted < 1000) {
+      console.log('transition timing:', Date.now() - transitionStarted);
+      return;
+    } else {
+      console.log('transition timing:', Date.now() - transitionStarted);
+      transitionStarted = Date.now();
+      scrollFromFirstVideoToSlideshow();
+      slideshowDiv.addEventListener('wheel', startTransitionSlideshow);
+    }
+    return;
+    //From first video to second video
+  } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides)) {
+    console.log('case 5');
+    if (Date.now() - transitionStarted < 1000) {
+      console.log('transition timing:', Date.now() - transitionStarted)
+      return
+    } else {
+      transitionStarted = 0;
+      scrollFromFirstToSecondVideo();
+    }
+    return;
+    //From second video to first
+  } else if (eventGoUp && CURRENT_INDEX === (numberOfSlides + 1)) {
+    console.log('case 6');
+    transitionStarted = Date.now();
+    scrollFromSecondToFirstVideo();
+    return;
+    /**** Transition in slideshow   ****/
+  } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides + 1)) {
+    console.log('case 7');
+    return;
+  } else {
+    console.log('case 8');
+    if (Date.now() - transitionStarted < 1000) {
+      return; 
+    } else {
+      transitionStarted = transitionDurationBetweenVIdeos + 1;
+      [slideshowDivBackground, movingCursorDiv, dividerInDescription, slideshowDescription].forEach(item => {
+        item.classList.add('inTransition');
+      });
+    };
+  }
+
+  if (!wholeContentDiv.classList.contains('slideshow__landscape')) {
+    return
+  }
+  // console.log(CURRENT_INDEX)
+  const previousIndex = CURRENT_INDEX;
+  let direction;
+  if (eventGoUp && CURRENT_INDEX > 0 && CURRENT_INDEX < numberOfSlides) { 
+    CURRENT_INDEX--;
+    direction = 'down';
+  } else if (eventGoDown && CURRENT_INDEX < numberOfSlides)  {
+    CURRENT_INDEX === numberOfSlides - 1 ? CURRENT_INDEX = 0 : CURRENT_INDEX++;
+    direction = 'up';
+  }
+
+  //Cursor move
+  cursorMove(CURRENT_INDEX);
+  
+  //Totem move
+  totemMove(previousIndex, CURRENT_INDEX, direction);
+
+  //Hotel Options change
+  hotelOptionsTransit(e, previousIndex, CURRENT_INDEX, hotelOptions, direction);
+
+  //Background color change
+  colorsChange(CURRENT_INDEX);
+}
+
+
+/*----- TOTEM FUNCTIONS-----*/
+
+function totemMove(prevIndex, nextIndex, direction) {
+  const up = direction === 'up' ? true : false;
+
+  const prevTheme = Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */])[prevIndex];
+  const nextTheme = Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */])[nextIndex];
+
+  const prevTotemDiv = document.querySelector(`.totem_${prevTheme}`);
+  const nextTotemDiv = document.querySelector(`.totem_${nextTheme}`);
+
+
+  nextTotemDiv.classList.add(up ? 'fakeTotemUp' : 'fakeTotemDown');
+  nextTotemDiv.classList.add('showTotem');
+  nextTotemDiv.classList.add('perpetual-translation');
+  prevTotemDiv.classList.add(up ? 'totemOnTransitionUp' : 'totemOnTransitionDown');
+
+  prevTotemDiv.addEventListener('animationend', removeTotemClasses); 
+  nextTotemDiv.addEventListener('animationend', removeTotemClasses); 
+};
+
+function removeTotemClasses (e) {
+  console.log(this)
+  this.classList.remove('fakeTotemUp');
+  this.classList.remove('fakeTotemDown');
+  if (this.classList.contains('totemOnTransitionUp') || this.classList.contains('totemOnTransitionDown')) {
+    this.classList.remove('showTotem');
+    this.classList.remove('perpetual-translation');
+    this.classList.remove('totemOnTransitionUp');
+    this.classList.remove('totemOnTransitionDown');
+  }
+  this.removeEventListener('animationend', removeTotemClasses); 
+}
+
+
+/*------ HOTEL OPTIONS FUNCTIONS ------*/
+function hotelOptionsTransit(e, prevIndex, nextIndex, anyHotelOptions, direction) {
+
+  const up = direction === 'up' ? true : false;
+
+  /****** DOM *******/
+  const nameLetters = [];
+  [...hotelEstablishmentName.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
+  const nameLength = nameLetters.length;
+  const sloganLetters = [...hotelSlogan.children];
+
+  const prevOptionLettersDiv = anyHotelOptions[prevIndex];
+  const prevOptionLetters = [...prevOptionLettersDiv.children];
+  const prevOptionLength = prevOptionLetters.length;
+
+  const nextOptionLettersDiv = anyHotelOptions[nextIndex];
+  const nextOptionLetters = [...nextOptionLettersDiv.children];
+
+  /******   NAME    ******/
+  for (var k = 0; k < nameLength; k++) {
+    const letter = nameLetters[k];
+    up 
+      ? letter.classList.add(`move-letter-up-first-${k + 1}`) 
+      : letter.classList.add(`move-letter-down-first-${k + 1}`);
+  }
+  
+  /******   CURRENT OPTION   ******/
+  for (let i = 0; i < prevOptionLength; i++) {
+    const letter = prevOptionLetters[i];
+    console.log(i, letter);
+    up 
+      ? letter.classList.add(`fade-out-letter-up-${i + nameLength + 1}`) 
+      : letter.classList.add(`fade-out-letter-down-${i + nameLength + 1}`);
+  }
+
+  /******   NEXT OPTION   ******/
+  nextOptionLettersDiv.classList.add('showOption');
+  nextOptionLettersDiv.classList.add('perpetual-translation');
+
+  for (let j = 0; j < nextOptionLetters.length; j++) {
+    const letter = nextOptionLetters[j];
+    up 
+      ? letter.classList.add(`fade-in-letter-up-${j + nameLength + 1}`) 
+      : letter.classList.add(`fade-in-letter-down-${j + nameLength + 1}`);
+  }
+
+  /****** SLOGAN ************/
+  for (var h = 0; h < sloganLetters.length; h++) {
+    const letter = sloganLetters[h];
+    up 
+      ? letter.classList.add(`move-letter-up-first-${h + nameLength + prevOptionLength + 1}`) 
+      : letter.classList.add(`move-letter-down-first-${h + nameLength + prevOptionLength + 1}`);
+  }
+}
+
+function resetHotelOptions(index){
+  /****** DOM *******/
+  const nameLetters = [];
+  [...hotelEstablishmentName.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
+  const nameLength = nameLetters.length;
+  const sloganLetters = [...hotelSlogan.children];
+  console.log(sloganLetters);
+  let prevOptionLength;
+
+  /******   NAME    ******/
+  for (var k = 0; k < nameLength; k++) {
+    const letter = nameLetters[k];
+    letter.classList.remove(`move-letter-up-first-${k + 1}`);
+    letter.classList.remove(`move-letter-down-first-${k + 1}`);
+  }
+  
+  hotelOptions.forEach(option => {
+    const optionIsVisible = option.classList.contains('showOption');
+    const optionNeedToStayVisible = hotelOptions.indexOf(option) === index;
+    const letters = [...option.children];
+    if (optionIsVisible && !optionNeedToStayVisible) {
+      prevOptionLength = [...option.children].length;
+    }
+    if (optionIsVisible) {
+      /******   NEXT OPTION   ******/
+      for (let i = 0; i < letters.length; i++) {
+        const letter = letters[i];
+        letter.classList.remove(`fade-in-letter-up-${i + nameLength + 1}`);
+        letter.classList.remove(`fade-in-letter-down-${i + nameLength + 1}`);
+        letter.classList.remove(`fade-out-letter-up-${i + nameLength + 1}`);
+        letter.classList.remove(`fade-out-letter-down-${i + nameLength + 1}`);
+      }
+      if (!optionNeedToStayVisible) {
+      /******   CURRENT OPTION   ******/
+        option.classList.remove('showOption');
+        option.classList.remove('perpetual-translation');
+      } else {
+        return;
+      }
+    } else {
+      return;
+    };
+  });
+  /****** SLOGAN ************/
+  for (var h = 0; h < sloganLetters.length; h++) {
+    const letter = sloganLetters[h];
+    console.log(letter);
+    console.log(letter.classList.contains(`move-letter-up-first-${h + nameLength + prevOptionLength + 1}`));
+    letter.classList.remove(`move-letter-up-first-${h + nameLength + prevOptionLength + 1}`);
+    letter.classList.remove(`move-letter-down-first-${h + nameLength + prevOptionLength + 1}`);
+  }
+};
+
+
+/*------ SCROLLING FUNCTIONS ------*/
+function scrollFromSlideshowToFirstVideo() {
+  CURRENT_INDEX++;
+  console.log('first video');
+  // [...wholeContent.children].forEach(child => child.classList.remove('perpetual-translation'));
+  wholeContent.classList.add('from_slideshow_to_first_video');
+  wholeContent.classList.remove('from_first_video_to_slideshow');
+  wholeContent.classList.remove('from_first_video_to_second_video');
+  wholeContent.classList.remove('from_second_video_to_first_video');
+
+
+  controlVideo1PointerEvents.addEventListener('wheel', startTransitionSlideshow);
+  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["e" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
+}
+
+function scrollFromFirstVideoToSlideshow() {
+  CURRENT_INDEX--;
+  console.log('first video');
+
+  wholeContent.classList.remove('from_slideshow_to_first_video');
+  wholeContent.classList.add('from_first_video_to_slideshow');
+  wholeContent.classList.remove('from_first_video_to_second_video');
+  wholeContent.classList.remove('from_second_video_to_first_video');
+
+  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["d" /* playerPause */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
+  wholeContent.addEventListener('animationend', getOutOfVideos);
+
+  controlVideo1PointerEvents.removeEventListener('wheel', startTransitionSlideshow);
+}
+
+function scrollFromFirstToSecondVideo() {
+  CURRENT_INDEX++;
+  console.log('second video');
+
+  wholeContent.classList.remove('from_slideshow_to_first_video');
+  wholeContent.classList.remove('from_first_video_to_slideshow');
+  wholeContent.classList.add('from_first_video_to_second_video');
+  wholeContent.classList.remove('from_second_video_to_first_video');
+  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["e" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */]);
+  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["d" /* playerPause */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
+}
+
+function scrollFromSecondToFirstVideo() {
+  CURRENT_INDEX--;
+  console.log('from second video to first');
+
+  wholeContent.classList.remove('from_slideshow_to_first_video');
+  wholeContent.classList.remove('from_first_video_to_slideshow');
+  wholeContent.classList.remove('from_first_video_to_second_video');
+  wholeContent.classList.add('from_second_video_to_first_video');
+  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["e" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
+  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["d" /* playerPause */])(__WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */]);
+}
+
+function getOutOfVideos() {
+  wholeContent.classList.remove('from_slideshow_to_first_video');
+  wholeContent.classList.remove('from_first_video_to_slideshow');
+  wholeContent.classList.remove('from_first_video_to_second_video');
+  wholeContent.classList.remove('from_second_video_to_first_video');
+  wholeContent.removeEventListener('animationend', getOutOfVideos);
+}
+
+function togglePlayPause() {
+  if (this.classList.contains('video1')) {
+    __WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */].getState() === 'playing' ? Object(__WEBPACK_IMPORTED_MODULE_0__video1__["d" /* playerPause */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]) : Object(__WEBPACK_IMPORTED_MODULE_0__video1__["e" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
+  } else if (this.classList.contains('video2')) {
+    __WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */].getState() === 'playing' ? Object(__WEBPACK_IMPORTED_MODULE_0__video1__["d" /* playerPause */])(__WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */]) : Object(__WEBPACK_IMPORTED_MODULE_0__video1__["e" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */]);
+  }
+}
+/*------------------------------------*\
+    EVENT LISTENERS
+\*------------------------------------*/
+
+window.addEventListener('keyup', startTransitionSlideshow);
+slideshowDiv.addEventListener('wheel', startTransitionSlideshow);
+document.querySelector('.scroll-btn').addEventListener('click', startTransitionSlideshow);
+video1Div.addEventListener('wheel', startTransitionSlideshow);
+video2Div.addEventListener('wheel', startTransitionSlideshow);
+
+controlVideo1PointerEvents.addEventListener('click', togglePlayPause);
+controlVideo2PointerEvents.addEventListener('click', togglePlayPause);
+
+
+
+
+/***/ }),
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1613,7 +2713,7 @@ PerfectScrollbar.prototype.removePsClasses = function removePsClasses () {
 /* unused harmony export player2firstStart */
 /* unused harmony export player2ResetOnFirstLoad */
 /* unused harmony export player1ResetOnFirstLoad */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_yt_player__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_yt_player__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_yt_player___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_yt_player__);
    //https://github.com/feross/yt-player
 
@@ -1863,555 +2963,11 @@ const wholeContentDiv = document.querySelector('#wholeContent');
 
 
 /***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export buildFakeTotem */
-/* unused harmony export buildFakeHotelOptionLetters */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__populateLetters__ = __webpack_require__(5);
-
-
-
-  //Building the new totem
-
-function buildFakeTotem (totemDiv, data, index) {
-  let newTotemDiv;
-  newTotemDiv = totemDiv.cloneNode(true);
-
-  newTotemDiv.style.backgroundImage = `url('${data[Object.keys(data)[index]].totemPictureUrl()}')`;
-
-  return newTotemDiv;
-  //TO DO IN THE FUNCTION
-  // document.body.append(newTotemDiv);
-};
-
-function buildFakeHotelOptionLetters (motherDiv, data, index, offset, size) {
-  // console.log(`offset: ${offset}`);
-  let newHotelOptions;
-  newHotelOptions = motherDiv.cloneNode(false);
-
-  Object(__WEBPACK_IMPORTED_MODULE_0__populateLetters__["a" /* populateHotelOptions */])(newHotelOptions, index, data, size);
-
-  const divHorizontalCenter = (motherDiv.getBoundingClientRect().right - motherDiv.getBoundingClientRect().left) / 2;
-
-  newHotelOptions.style.position = `absolute`;
-  newHotelOptions.style.height = `${motherDiv.getBoundingClientRect().height}px`;
-  newHotelOptions.style.width = `${motherDiv.getBoundingClientRect().width}px`;
-  newHotelOptions.style.left = `${motherDiv.getBoundingClientRect().left}px`;
-  newHotelOptions.style.top = `${motherDiv.getBoundingClientRect().top + offset}px`;
-  [...newHotelOptions.children].forEach(letter => {
-    letter.style.opacity = `0`;
-  });
-  const theme = Object.keys(data)[index];
-  newHotelOptions.style.color = data[theme].textColor;
-
-
-  return newHotelOptions;
-  //TO DO IN THE FUNCTION
-  // document.body.append(newHotelOptions);
-};
-
-
-
-
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return populateHotelOptions; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__measureFont__ = __webpack_require__(0);
-
-
- 
-
-function populateHotelOptions (motherDiv, index, data, size, ffamily) {
-  const theme = Object.keys(data)[index];
-  
-  // we do <p><span>'letter'</span></p> for each letter, in order to create an animation on each letter
-  for (let i = 0; i < data[theme].frenchName.length; i++) {
-    const newLetterP = document.createElement('p');
-    const newLetterSpan = document.createElement('span');
-    newLetterP.appendChild(newLetterSpan);
-    newLetterSpan.textContent = data[theme].frenchName.charAt(i);
-    motherDiv.appendChild(newLetterP);
-  }
-  //then letter spacing with margin
-  [...motherDiv.children].forEach(letter => {
-    Object(__WEBPACK_IMPORTED_MODULE_0__measureFont__["a" /* exactCapitalLetterSize */])(letter, ffamily, size, 1);
-    //If the character is a space, make it clear to the eye by enlarging it 
-    if (letter.firstChild.textContent.charCodeAt(0) === 32) {
-      letter.style.marginRight = `${5 * data[theme].optionsLetterSpacing}px`;
-    } else {
-      letter.style.marginRight = `${data[theme].optionsLetterSpacing}px`;
-    }
-  })
-};
-
-
-
-
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return slideshowParams; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__fakeDom__ = __webpack_require__(4);
-
-
-
-const totemDiv = document.querySelector('.slideshow__totem');
-const white = 'rgba(250,250,250,1.00)';
-
-const slideshowParams = {
-  hotel: {
-    position: 0,
-    frenchName: 'hôtel', 
-    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
-    backgroundColor: 'hsla(38,5%,65%,1.00)',
-    optionsLetterSpacing: 8,
-    textColor: white,
-    totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
-    backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
-  },
-  clubDeSport: {
-    position: 1,
-    frenchName: 'club de sport', 
-    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
-    backgroundColor: 'hsla(194,11%,63%,1.00)',
-    optionsLetterSpacing: 3,
-    textColor: white,
-    totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
-    backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
-  },
-  restaurant: {
-    position: 2,
-    frenchName: 'restaurant', 
-    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
-    backgroundColor: 'hsla(2,41%,82%,1.00)',
-    optionsLetterSpacing: 8,
-    textColor: white,
-    totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
-    backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
-  },
-  bar: {
-    position: 3,
-    frenchName: 'bar', 
-    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
-    backgroundColor: 'hsla(2,41%,82%,1.00)',
-    optionsLetterSpacing: 8,
-    textColor: white,
-    totemPictureUrl: function() { return `./src/img/totems/totem_hotel.png` },
-    backupPictureUrl: function() { return `./src/img/responsive_pictures/hotel.png` },
-    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
-  },
-  patisserie: {
-    position: 4,
-    frenchName: 'pâtisserie', 
-    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
-    backgroundColor: 'hsla(55,76%,82%,1.00)',
-    optionsLetterSpacing: 8,
-    textColor: 'rgba(151,105,80,1.00)',
-    totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
-    backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
-  },
-  evenementiel: {
-    position: 5,
-    frenchName: 'évènementiel', 
-    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
-    backgroundColor: 'hsla(33,57%,84%,1.00)',
-    optionsLetterSpacing: 8,
-    textColor: 'rgba(151,105,80,1.00)',
-    totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
-    backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
-  },
-  potager: {
-    position: 6,
-    frenchName: 'potager', 
-    totemDiv: function() { return document.querySelector(`.totem_${Object.keys(slideshowParams)[this.position]}`)},
-    backgroundColor: 'hsla(107,12%,72%,1.00)',
-    optionsLetterSpacing: 8,
-    textColor: white,
-    totemPictureUrl: function() { return `./src/img/totems/totem_${Object.keys(slideshowParams)[this.position]}.png` },
-    backupPictureUrl: function() { return `./src/img/responsive_pictures/${Object.keys(slideshowParams)[this.position]}.png` },
-    // fakeTotem: function() { return buildFakeTotem(totemDiv, slideshowParams, this.position) },
-  },
-}
-
-
-
-
-
-/***/ }),
-/* 7 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(8);
-module.exports = __webpack_require__(28);
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bling__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__measureFont__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__DOMStyling__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__slideshow_slideshow__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__slideshow_slideshowPortrait__ = __webpack_require__(27);
-// import { uniq } from 'lodash';
-// import jsonp from 'jsonp';
-// import insane from 'insane';
-// import 'bootstrap';
-// import './Chap1Carousel';
-// import './Chap5Carousel';
-// import './Chap5BisCarousel';
-
-
-// import './lottie';
-// import './loadingAnimation';
-
-/*------------------------------------*\
-    utilities
-\*------------------------------------*/
-
-
-
-/*------------------------------------*\
-    modules
-\*------------------------------------*/
-// import './_video1';
-
-
-
-
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export $ */
-/* unused harmony export $$ */
-// based on https://gist.github.com/paulirish/12fb951a8b893a454b32
-
-const $ = document.querySelector.bind(document);
-const $$ = document.querySelectorAll.bind(document);
-
-Node.prototype.on = window.on = function (name, fn) {
-  this.addEventListener(name, fn);
-};
-
-NodeList.prototype.__proto__ = Array.prototype; // eslint-disable-line
-
-NodeList.prototype.on = NodeList.prototype.addEventListener = function (name, fn) {
-  this.forEach((elem) => {
-    elem.on(name, fn);
-  });
-};
-
-
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(11);
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var defaultValue = __webpack_require__(12);
-
-var findEdge = __webpack_require__(16);
-var drawCharacter = __webpack_require__(19);
-var resetCanvas = __webpack_require__(20);
-var createCanvas = __webpack_require__(21);
-
-module.exports = function measureFont(fontFamily) {
-	var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-	var fontSize = defaultValue(options.fontSize, 20);
-	var canvasSize = defaultValue(options.tolerance, 6) * fontSize;
-
-	var descenderCharacters = ["g", "j", "p", "q", "y"];
-	var ascenderCharacters = ["h", "d", "t", "l"];
-	var capHeightCharacters = ["H", "I", "T"];
-	var medianCharacters = ["x", "v", "w", "z"];
-	var topBoundingCharacters = ["O", "A", "8", "#", "%", "^", "!", "/", "|", "]"];
-
-	var testingCanvas = createCanvas(canvasSize);
-
-	function getLowest(characters) {
-		resetCanvas(testingCanvas);
-
-		characters.forEach(function (character) {
-			drawCharacter(testingCanvas, character, fontFamily, fontSize);
-		});
-
-		return findEdge.lowest(testingCanvas);
-	}
-
-	function getHighest(characters) {
-		resetCanvas(testingCanvas);
-
-		characters.forEach(function (character) {
-			drawCharacter(testingCanvas, character, fontFamily, fontSize);
-		});
-
-		return findEdge.highest(testingCanvas);
-	}
-
-	var lowestDescenderPoint = getLowest(descenderCharacters) - testingCanvas.height / 2;
-	var highestAscenderPoint = testingCanvas.height / 2 - getHighest(ascenderCharacters);
-	var highestCapHeightPoint = testingCanvas.height / 2 - getHighest(capHeightCharacters);
-	var highestMedianPoint = testingCanvas.height / 2 - getHighest(medianCharacters);
-	var highestTopBoundingPoint = testingCanvas.height / 2 - getHighest(topBoundingCharacters);
-
-	return {
-		descender: lowestDescenderPoint / fontSize,
-		ascender: -highestAscenderPoint / fontSize,
-		capHeight: -highestCapHeightPoint / fontSize,
-		median: -highestMedianPoint / fontSize,
-		topBounding: -highestTopBoundingPoint / fontSize
-	};
-};
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(13);
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var promiseTry = __webpack_require__(14);
-
-function evaluateValue(value) {
-	if (typeof value === "function") {
-		return value();
-	} else {
-		return value;
-	}
-}
-
-function maybeEvaluateValue(value, evaluate) {
-	if (evaluate === true) {
-		return evaluateValue(value);
-	} else {
-		return value;
-	}
-}
-
-function defaultValue(value, fallbackValue) {
-	var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
-
-	value = maybeEvaluateValue(value, options.evaluate);
-
-	if (value != null) {
-		return value;
-	} else {
-		return maybeEvaluateValue(fallbackValue, options.evaluate);
-	}
-}
-
-defaultValue.async = function defaultAsyncValue(value, fallbackValue) {
-	var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
-
-	return promiseTry(function () {
-		return maybeEvaluateValue(value, options.evaluate);
-	}).then(function (resultValue) {
-		if (resultValue != null) {
-			return resultValue;
-		} else {
-			return maybeEvaluateValue(fallbackValue, options.evaluate);
-		}
-	});
-};
-
-module.exports = defaultValue;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(15);
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function promiseTry(func) {
-	return new Promise(function (resolve, reject) {
-		resolve(func());
-	});
-};
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var getImageData = __webpack_require__(17);
-var scanRow = __webpack_require__(18);
-
-function findEdge(canvas, firstRow, lastRow, step) {
-	var imageData = getImageData(canvas).data;
-	var valuesPerRow = canvas.width * 4;
-	var hitEnd = false;
-
-	if (step === 0) {
-		throw new Error("Step cannot be 0");
-	}
-
-	var row = firstRow;
-
-	while (!hitEnd) {
-		var highestValue = scanRow(imageData, row * valuesPerRow, canvas.width);
-
-		/* 240 is a somewhat randomly picked value to deal with anti-aliasing. */
-		if (highestValue > 240) {
-			return row;
-		}
-
-		row += step;
-
-		if (step > 0) {
-			hitEnd = row > lastRow;
-		} else if (step < 0) {
-			hitEnd = row < lastRow;
-		}
-	}
-}
-
-module.exports = {
-	lowest: function findLowestEdge(canvas) {
-		return findEdge(canvas, canvas.height - 1, 0, -1);
-	},
-	highest: function findHighestEdge(canvas) {
-		return findEdge(canvas, 0, canvas.height - 1, 1);
-	}
-};
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function getImageData(canvas) {
-	var context = canvas.getContext("2d");
-	return context.getImageData(0, 0, canvas.width, canvas.height);
-};
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function scanRow(imageData, offset, length) {
-	var highestValue = 0;
-
-	for (var column = 0; column < length; column += 1) {
-		var pixelValue = imageData[offset + column * 4];
-
-		if (pixelValue > highestValue) {
-			highestValue = pixelValue;
-		}
-	}
-
-	return highestValue;
-};
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function drawCharacter(canvas, character, fontFamily, fontSize) {
-	var context = canvas.getContext("2d");
-	context.textAlign = "center";
-	context.textBaseline = "alphabetic";
-	context.font = fontSize + "px '" + fontFamily + "'";
-	context.fillStyle = "white";
-	context.fillText(character, canvas.width / 2, canvas.height / 2);
-};
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function resetCanvas(canvas) {
-	var context = canvas.getContext("2d");
-	context.fillStyle = "black";
-	context.fillRect(0, 0, canvas.width, canvas.height);
-};
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function createCanvas(size) {
-	var canvas = document.createElement("canvas");
-	canvas.width = size;
-	canvas.height = size;
-	return canvas;
-};
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const EventEmitter = __webpack_require__(23).EventEmitter
-const loadScript = __webpack_require__(24)
+const EventEmitter = __webpack_require__(24).EventEmitter
+const loadScript = __webpack_require__(25)
 
 const YOUTUBE_IFRAME_API_SRC = 'https://www.youtube.com/iframe_api'
 
@@ -2895,7 +3451,7 @@ module.exports = YouTubePlayer
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports) {
 
 // Copyright Joyent, Inc. and other Node contributors.
@@ -3203,7 +3759,7 @@ function isUndefined(arg) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports) {
 
 module.exports = load
@@ -3232,525 +3788,11 @@ function load (src, cb) {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export totemDiv */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__video1__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__params__ = __webpack_require__(6);
-
-
-/* ADVICE FOR SLIDESHOWS :
--> add class instead of CSS property when it's possible
--> add class to the direct element, not the motherDiv, when possible
--> for the fake DOM, use absolute position to have the minimum calculation as possible
--> use transitionend at the end of the transitions
--> create fragment instead of crete element: https://coderwall.com/p/o9ws2g/why-you-should-always-append-dom-elements-using-documentfragments
--> good advices hear : https://medium.com/outsystems-experts/how-to-achieve-60-fps-animations-with-css3-db7b98610108
-*/
-
-// require('smoothscroll-polyfill').polyfill();   //https://github.com/iamdustan/smoothscroll for behavior: smooth when scrolling. But we never scroll here.
-// import PerfectScrollbar from 'perfect-scrollbar';
-
-
-/*------------------------------------*\
-    VARIABLES & DATA
-\*------------------------------------*/
-
-//DATA
-
-
-//DOM
-const wholeContentDiv = document.querySelector('#wholeContent')
-const slideshowDiv = document.querySelector(".slideshow");
-const slideshowDivBackground = document.querySelector(".slideshow__background");
-const slideshowContentDiv = document.querySelector(".slideshow__content");
-const slideshowBackupDiv = document.querySelector(".slideshow__backup--container");
-// const totemDivs = Object.keys(slideshowParams).map(name => slideshowParams[name].totemDiv());
-const movingCursorDiv = document.querySelector('.slideshow__cursor--moving');
-const hotelOptions = [...document.querySelectorAll('.slideshow__description--options')];
-const hotelSlogan = document.querySelector('.slideshow__description--slogan');
-const hotelEstablishmentName = document.querySelector('.slideshow__description--establishment-name');
-const slideshowDescription = slideshowDiv.querySelector('.slideshow__description');
-const dividerInDescription = slideshowDiv.querySelector('.slideshow__description--divider');
-const video1Div = document.querySelector('#video1');
-const video2Div = document.querySelector('#video2');
-const video1iFrame = document.querySelector('.video__video1');
-const video2iFrame = document.querySelector('.video__video2');
-const hotelOptionsContainer = document.querySelector('.slideshow__description--optionsContainer');
-const controlVideo1PointerEvents = document.querySelector('.video1').querySelector('.transparent_filter-for-allow-scrolling');
-const controlVideo2PointerEvents = document.querySelector('.video2').querySelector('.transparent_filter-for-allow-scrolling');
-//CSS
-const cursorVerticalSpacing = 20;
-const transitionDurationBetweenVIdeos = 1000;  //A bit higher than the one in CSS for a proper totem transition
-
-    /*  CURSOR  */
-movingCursorDiv.style.boxShadow = `0px ${(cursorVerticalSpacing * 0)}px, 0px ${(cursorVerticalSpacing * 1)}px, 0px ${(cursorVerticalSpacing * 2)}px, 0px ${(cursorVerticalSpacing * 3)}px, 0px ${(cursorVerticalSpacing * 4)}px, 0px ${(cursorVerticalSpacing * 5)}px, 0px ${(cursorVerticalSpacing * 6)}px`;
-
-
-//SLIDESHOW PARAMS
-const numberOfSlides = Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */]).length;
-let biggestWordLength = 0;
-let biggestWordParam = 0;
-Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */]).map(param => {
-  if (__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][param].frenchName.length > biggestWordLength) {
-    biggestWordLength = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][param].frenchName.length; 
-    biggestWordParam = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][param].position;
-  }; 
-});
-
-/*------------------------------------*/  
-let CURRENT_INDEX = 0 ;
-/*------------------------------------*/
-
-
-/*------------------------------------*\
-    INIT
-\*------------------------------------*/
-
-//function to use also on transition and init
-function colorsChange(index) {
-  const theme = Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */])[index];
-
-  /*  TEXTS COLOR  */
-  slideshowDescription.style.color = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].textColor;
-  dividerInDescription.style.borderColor = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].textColor;
-  hotelOptions[index].style.color = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].textColor;
-
-  /* BACKGROUND */
-  slideshowDivBackground.style.backgroundColor = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].backgroundColor;
-  movingCursorDiv.style.color = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].textColor;
-  movingCursorDiv.style.borderColor = __WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */][theme].textColor;
-}
-
-//function to use also on transition and init
-function cursorMove(index) {
-  movingCursorDiv.style.transform = `translateY(${-cursorVerticalSpacing * index}px)`;
-  movingCursorDiv.addEventListener('transitionend', endTransition, false);
-}
-
-function endTransition(e) {
-  if (CURRENT_INDEX === (numberOfSlides - 1)) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__video1__["c" /* playerLoad */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
-    Object(__WEBPACK_IMPORTED_MODULE_0__video1__["c" /* playerLoad */])(__WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */]);
-  }
-  [slideshowDivBackground, movingCursorDiv, dividerInDescription, slideshowDescription].forEach(item => {
-    item.classList.remove('inTransition');
-  });
-  resetHotelOptions(CURRENT_INDEX);
-  movingCursorDiv.removeEventListener('transitionend', endTransition, false);
-}
-
-const init = (index) => {
-
-  // const adjustedIndex = /*index - 1*/ index //if we use animationsController, we use index - 1;
-  const theme = Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */])[/*adjustedIndex*/index];
-  // console.log(theme)
-
-  // /*    SCROLLBAR   */
-  // const ps = new PerfectScrollbar(wholeContentDiv, {
-  //   handlers: ['click-rail', 'drag-thumb', 'keyboard', /*'wheel',*/ 'touch'],
-  // });
-
-  /* BACKGROUND AND TEXT COLORS */
-  colorsChange(/*adjustedIndex*/index);
-
-  /*  CURSOR  */
-  cursorMove(/*adjustedIndex*/index);
-
-  /*   TOTEM   */
-  document.querySelector(`.totem_${theme}`).classList.add('showTotem');
-
-  /*  OPTIONS  */
-  document.querySelector(`.option_${theme}`).classList.add('showOption');
-};
-init(CURRENT_INDEX);
-
-
-/*------------------------------------*\
-    DOM STYLING
-\*------------------------------------*/
-
-/*------------------------------------*\
-    DESCRIPTION POSITION
-\*------------------------------------*/
-
-hotelOptionsContainer.style.height = `${document.querySelector(`[data-hotel-option='${CURRENT_INDEX + 1}']`).getBoundingClientRect().height}px`
-
-function alignDescriptionWithCursorOnMiddle () {
-  const hotelOptionsContainerBottom = hotelOptionsContainer.getBoundingClientRect().bottom;
-  const hotelDescriptionBottom = slideshowDescription.getBoundingClientRect().bottom;
-  const differenceWithMiddle = hotelDescriptionBottom - hotelOptionsContainerBottom;
-  slideshowDescription.style.marginBottom = `${-differenceWithMiddle}px`;
-}
-
-alignDescriptionWithCursorOnMiddle();
-/*------------------------------------*\
-    SLIDESHOW & SCROLLING
-\*------------------------------------*/
-
-let transitionStarted = transitionDurationBetweenVIdeos + 1;
-
-function startTransitionSlideshow(e) {
-  __WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */] ? console.log(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */].getState()) : console.log('player1 not yet loaded')
-
-  //Prevent pressing any other key
-  const minScroll = 100;
-  const wheelIsNotEnough = (e.type === 'wheel') && ((e.deltaY < minScroll) && (e.deltaY > -minScroll))
-  const keyPressedIsNoGood = (e.type === 'keyup') && (e.keyCode != 38 && e.keyCode != 40 && e.keyCode != 32);
-  if (keyPressedIsNoGood || wheelIsNotEnough) { 
-    console.log('scroll more !!!!!!!')
-    return; 
-  } else {
-    console.log('let\'s do something')
-  }
-
-  //EVENT CASES
-  const eventCases = {
-    wheeledUp: (e.type === 'wheel' && e.deltaY < 0),
-    wheeledDown: (e.type === 'wheel' && e.deltaY > 0),
-    keyDown: (e.type === 'keyup' && ((e.keyCode === 40) || (e.keyCode === 32))),
-    keyUp: (e.type === 'keyup' && (e.keyCode === 38)),  //38 = arrow up
-    clickedMouseForDown: (e.type === 'click' && e.srcElement.className === 'mouse'),
-  };
-
-  const eventGoUp = (eventCases.keyUp || eventCases.wheeledUp);
-  const eventGoDown = (eventCases.keyDown || eventCases.wheeledDown || eventCases.clickedMouseForDown);
-
-  //If portrait or mobile
-  //Prevent transit while already transiting
-  if (slideshowDivBackground.classList.contains('inTransition')) {
-    console.log('case 1');
-    return;
-  } else if (eventGoUp && CURRENT_INDEX === 0) {
-    console.log('case 2');
-    return;
-    /**** Transition in videos   ****/
-    //From slideshow to first video
-  } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides - 1)) {
-    console.log('case 3');
-    transitionStarted = Date.now();
-    slideshowDiv.removeEventListener('wheel', startTransitionSlideshow);
-    scrollFromSlideshowToFirstVideo();
-    return;
-    //From first video to slideshow
-  } else if (eventGoUp && CURRENT_INDEX === (numberOfSlides)) {
-    console.log('case 4');
-    if (Date.now() - transitionStarted < 1000) {
-      console.log('transition timing:', Date.now() - transitionStarted);
-      return;
-    } else {
-      console.log('transition timing:', Date.now() - transitionStarted);
-      transitionStarted = Date.now();
-      scrollFromFirstVideoToSlideshow();
-      slideshowDiv.addEventListener('wheel', startTransitionSlideshow);
-    }
-    return;
-    //From first video to second video
-  } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides)) {
-    console.log('case 5');
-    if (Date.now() - transitionStarted < 1000) {
-      console.log('transition timing:', Date.now() - transitionStarted)
-      return
-    } else {
-      transitionStarted = 0;
-      scrollFromFirstToSecondVideo();
-    }
-    return;
-    //From second video to first
-  } else if (eventGoUp && CURRENT_INDEX === (numberOfSlides + 1)) {
-    console.log('case 6');
-    transitionStarted = Date.now();
-    scrollFromSecondToFirstVideo();
-    return;
-    /**** Transition in slideshow   ****/
-  } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides + 1)) {
-    console.log('case 7');
-    return;
-  } else {
-    console.log('case 8');
-    if (Date.now() - transitionStarted < 1000) {
-      return; 
-    } else {
-      transitionStarted = transitionDurationBetweenVIdeos + 1;
-      [slideshowDivBackground, movingCursorDiv, dividerInDescription, slideshowDescription].forEach(item => {
-        item.classList.add('inTransition');
-      });
-    };
-  }
-
-  if (!wholeContentDiv.classList.contains('slideshow__landscape')) {
-    return
-  }
-  // console.log(CURRENT_INDEX)
-  const previousIndex = CURRENT_INDEX;
-  let direction;
-  if (eventGoUp && CURRENT_INDEX > 0 && CURRENT_INDEX < numberOfSlides) { 
-    CURRENT_INDEX--;
-    direction = 'down';
-  } else if (eventGoDown && CURRENT_INDEX < numberOfSlides)  {
-    CURRENT_INDEX === numberOfSlides - 1 ? CURRENT_INDEX = 0 : CURRENT_INDEX++;
-    direction = 'up';
-  }
-
-  //Cursor move
-  cursorMove(CURRENT_INDEX);
-  
-  //Totem move
-  totemMove(previousIndex, CURRENT_INDEX, direction);
-
-  //Hotel Options change
-  hotelOptionsTransit(e, previousIndex, CURRENT_INDEX, hotelOptions, direction);
-
-  //Background color change
-  colorsChange(CURRENT_INDEX);
-}
-
-
-/*----- TOTEM FUNCTIONS-----*/
-
-function totemMove(prevIndex, nextIndex, direction) {
-  const up = direction === 'up' ? true : false;
-
-  const prevTheme = Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */])[prevIndex];
-  const nextTheme = Object.keys(__WEBPACK_IMPORTED_MODULE_1__params__["a" /* slideshowParams */])[nextIndex];
-
-  const prevTotemDiv = document.querySelector(`.totem_${prevTheme}`);
-  const nextTotemDiv = document.querySelector(`.totem_${nextTheme}`);
-
-
-  nextTotemDiv.classList.add(up ? 'fakeTotemUp' : 'fakeTotemDown');
-  nextTotemDiv.classList.add('showTotem');
-  nextTotemDiv.classList.add('perpetual-translation');
-  prevTotemDiv.classList.add(up ? 'totemOnTransitionUp' : 'totemOnTransitionDown');
-
-  prevTotemDiv.addEventListener('animationend', removeTotemClasses); 
-  nextTotemDiv.addEventListener('animationend', removeTotemClasses); 
-};
-
-function removeTotemClasses (e) {
-  console.log(this)
-  this.classList.remove('fakeTotemUp');
-  this.classList.remove('fakeTotemDown');
-  if (this.classList.contains('totemOnTransitionUp') || this.classList.contains('totemOnTransitionDown')) {
-    this.classList.remove('showTotem');
-    this.classList.remove('perpetual-translation');
-    this.classList.remove('totemOnTransitionUp');
-    this.classList.remove('totemOnTransitionDown');
-  }
-  this.removeEventListener('animationend', removeTotemClasses); 
-}
-
-
-
-/*------ HOTEL OPTIONS FUNCTIONS ------*/
-function hotelOptionsTransit(e, prevIndex, nextIndex, anyHotelOptions, direction) {
-
-  const up = direction === 'up' ? true : false;
-
-  /****** DOM *******/
-  const nameLetters = [];
-  [...hotelEstablishmentName.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
-  const nameLength = nameLetters.length;
-  const sloganLetters = [...hotelSlogan.children];
-
-  const prevOptionLettersDiv = anyHotelOptions[prevIndex];
-  const prevOptionLetters = [...prevOptionLettersDiv.children];
-  const prevOptionLength = prevOptionLetters.length;
-
-  const nextOptionLettersDiv = anyHotelOptions[nextIndex];
-  const nextOptionLetters = [...nextOptionLettersDiv.children];
-
-  /******   NAME    ******/
-  for (var k = 0; k < nameLength; k++) {
-    const letter = nameLetters[k];
-    up 
-      ? letter.classList.add(`move-letter-up-first-${k + 1}`) 
-      : letter.classList.add(`move-letter-down-first-${k + 1}`);
-  }
-  
-  /******   CURRENT OPTION   ******/
-  for (let i = 0; i < prevOptionLength; i++) {
-    const letter = prevOptionLetters[i];
-    console.log(i, letter);
-    up 
-      ? letter.classList.add(`fade-out-letter-up-${i + nameLength + 1}`) 
-      : letter.classList.add(`fade-out-letter-down-${i + nameLength + 1}`);
-  }
-
-  /******   NEXT OPTION   ******/
-  nextOptionLettersDiv.classList.add('showOption');
-  nextOptionLettersDiv.classList.add('perpetual-translation');
-
-  for (let j = 0; j < nextOptionLetters.length; j++) {
-    const letter = nextOptionLetters[j];
-    up 
-      ? letter.classList.add(`fade-in-letter-up-${j + nameLength + 1}`) 
-      : letter.classList.add(`fade-in-letter-down-${j + nameLength + 1}`);
-  }
-
-  /****** SLOGAN ************/
-  for (var h = 0; h < sloganLetters.length; h++) {
-    const letter = sloganLetters[h];
-    up 
-      ? letter.classList.add(`move-letter-up-first-${h + nameLength + prevOptionLength + 1}`) 
-      : letter.classList.add(`move-letter-down-first-${h + nameLength + prevOptionLength + 1}`);
-  }
-}
-
-
-function resetHotelOptions(index){
-  /****** DOM *******/
-  const nameLetters = [];
-  [...hotelEstablishmentName.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
-  const nameLength = nameLetters.length;
-  const sloganLetters = [...hotelSlogan.children];
-  console.log(sloganLetters);
-  let prevOptionLength;
-
-  /******   NAME    ******/
-  for (var k = 0; k < nameLength; k++) {
-    const letter = nameLetters[k];
-    letter.classList.remove(`move-letter-up-first-${k + 1}`);
-    letter.classList.remove(`move-letter-down-first-${k + 1}`);
-  }
-  
-  hotelOptions.forEach(option => {
-    const optionIsVisible = option.classList.contains('showOption');
-    const optionNeedToStayVisible = hotelOptions.indexOf(option) === index;
-    const letters = [...option.children];
-    if (optionIsVisible && !optionNeedToStayVisible) {
-      prevOptionLength = [...option.children].length;
-    }
-    if (optionIsVisible) {
-      /******   NEXT OPTION   ******/
-      for (let i = 0; i < letters.length; i++) {
-        const letter = letters[i];
-        letter.classList.remove(`fade-in-letter-up-${i + nameLength + 1}`);
-        letter.classList.remove(`fade-in-letter-down-${i + nameLength + 1}`);
-        letter.classList.remove(`fade-out-letter-up-${i + nameLength + 1}`);
-        letter.classList.remove(`fade-out-letter-down-${i + nameLength + 1}`);
-      }
-      if (!optionNeedToStayVisible) {
-      /******   CURRENT OPTION   ******/
-        option.classList.remove('showOption');
-        option.classList.remove('perpetual-translation');
-      } else {
-        return;
-      }
-    } else {
-      return;
-    };
-  });
-  /****** SLOGAN ************/
-  for (var h = 0; h < sloganLetters.length; h++) {
-    const letter = sloganLetters[h];
-    console.log(letter);
-    console.log(letter.classList.contains(`move-letter-up-first-${h + nameLength + prevOptionLength + 1}`));
-    letter.classList.remove(`move-letter-up-first-${h + nameLength + prevOptionLength + 1}`);
-    letter.classList.remove(`move-letter-down-first-${h + nameLength + prevOptionLength + 1}`);
-  }
-
-  
-};
-
-
-/*------ SCROLLING FUNCTIONS ------*/
-function scrollFromSlideshowToFirstVideo() {
-  CURRENT_INDEX++;
-  console.log('first video');
-  // [...wholeContent.children].forEach(child => child.classList.remove('perpetual-translation'));
-  wholeContent.classList.add('from_slideshow_to_first_video');
-  wholeContent.classList.remove('from_first_video_to_slideshow');
-  wholeContent.classList.remove('from_first_video_to_second_video');
-  wholeContent.classList.remove('from_second_video_to_first_video');
-
-
-  controlVideo1PointerEvents.addEventListener('wheel', startTransitionSlideshow);
-  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["e" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
-}
-
-
-function scrollFromFirstVideoToSlideshow() {
-  CURRENT_INDEX--;
-  console.log('first video');
-
-  wholeContent.classList.remove('from_slideshow_to_first_video');
-  wholeContent.classList.add('from_first_video_to_slideshow');
-  wholeContent.classList.remove('from_first_video_to_second_video');
-  wholeContent.classList.remove('from_second_video_to_first_video');
-
-  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["d" /* playerPause */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
-  wholeContent.addEventListener('animationend', getOutOfVideos);
-
-  controlVideo1PointerEvents.removeEventListener('wheel', startTransitionSlideshow);
-
-}
-
-function scrollFromFirstToSecondVideo() {
-  CURRENT_INDEX++;
-  console.log('second video');
-
-  wholeContent.classList.remove('from_slideshow_to_first_video');
-  wholeContent.classList.remove('from_first_video_to_slideshow');
-  wholeContent.classList.add('from_first_video_to_second_video');
-  wholeContent.classList.remove('from_second_video_to_first_video');
-  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["e" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */]);
-  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["d" /* playerPause */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
-}
-
-function scrollFromSecondToFirstVideo() {
-  CURRENT_INDEX--;
-  console.log('from second video to first');
-
-  wholeContent.classList.remove('from_slideshow_to_first_video');
-  wholeContent.classList.remove('from_first_video_to_slideshow');
-  wholeContent.classList.remove('from_first_video_to_second_video');
-  wholeContent.classList.add('from_second_video_to_first_video');
-  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["e" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
-  Object(__WEBPACK_IMPORTED_MODULE_0__video1__["d" /* playerPause */])(__WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */]);
-}
-
-function getOutOfVideos() {
-  wholeContent.classList.remove('from_slideshow_to_first_video');
-  wholeContent.classList.remove('from_first_video_to_slideshow');
-  wholeContent.classList.remove('from_first_video_to_second_video');
-  wholeContent.classList.remove('from_second_video_to_first_video');
-  wholeContent.removeEventListener('animationend', getOutOfVideos);
-}
-
-
-function togglePlayPause() {
-  if (this.classList.contains('video1')) {
-    __WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */].getState() === 'playing' ? Object(__WEBPACK_IMPORTED_MODULE_0__video1__["d" /* playerPause */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]) : Object(__WEBPACK_IMPORTED_MODULE_0__video1__["e" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_0__video1__["a" /* player1 */]);
-  } else if (this.classList.contains('video2')) {
-    __WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */].getState() === 'playing' ? Object(__WEBPACK_IMPORTED_MODULE_0__video1__["d" /* playerPause */])(__WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */]) : Object(__WEBPACK_IMPORTED_MODULE_0__video1__["e" /* playerPlay */])(__WEBPACK_IMPORTED_MODULE_0__video1__["b" /* player2 */]);
-  }
-}
-/*------------------------------------*\
-    EVENT LISTENERS
-\*------------------------------------*/
-
-window.addEventListener('keyup', startTransitionSlideshow);
-slideshowDiv.addEventListener('wheel', startTransitionSlideshow);
-document.querySelector('.scroll-btn').addEventListener('click', startTransitionSlideshow);
-video1Div.addEventListener('wheel', startTransitionSlideshow);
-video2Div.addEventListener('wheel', startTransitionSlideshow);
-
-controlVideo1PointerEvents.addEventListener('click', togglePlayPause);
-controlVideo2PointerEvents.addEventListener('click', togglePlayPause);
-
-
-
-
-/***/ }),
-/* 26 */,
-/* 27 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__params__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__params__ = __webpack_require__(1);
 
 
 //DATA
@@ -3778,6 +3820,78 @@ function statisSlidewhow () {
 
 statisSlidewhow();
 window.addEventListener('resize', statisSlidewhow);
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+const reservationButton = document.querySelector('.reservationButton');
+const reservation = document.querySelector('.reservation');
+const closeReservationButton = reservationButton.querySelector('.svgcross');
+
+
+/*------------------------------------*\
+    SHOW RESERVATION
+\*------------------------------------*/
+function hideReservationButton(e) {
+  reservationButton.querySelector('.reservationButton--parent1').classList.remove('visible');
+  reservationButton.querySelector('.reservationButton--parent3').classList.remove('visible');
+  reservationButton.addEventListener('transitionend', showReservation);
+  reservationButton.removeEventListener('click', hideReservationButton);
+}
+
+function showReservation(e) {
+  reservation.classList.add('visible');
+  reservation.addEventListener('transitionend', showReservationButton);
+  reservationButton.removeEventListener('transitionend', showReservation);
+}
+
+function showReservationButton(e) {
+  if (e.srcElement.className === "reservation visible") {
+  reservationButton.querySelector('.reservationButton--parent1').classList.add('visible');
+  reservationButton.querySelector('.reservationButton--parent3').classList.add('visible');
+  reservationButton.style.cursor = 'default';
+  closeReservationButton.classList.add('visible');
+  reservation.removeEventListener('transitionend', showReservationButton);
+  } else {
+    return;
+  }
+}
+
+
+/*------------------------------------*\
+    HIDE RESERVATION
+\*------------------------------------*/
+
+function hideReservationButtonThenHide(e) {
+  reservationButton.querySelector('.reservationButton--parent1').classList.remove('visible');
+  reservationButton.querySelector('.reservationButton--parent3').classList.remove('visible');
+  reservationButton.addEventListener('transitionend', hideReservation);
+}
+
+function hideReservation(e) {
+  reservation.classList.remove('visible');
+  reservation.addEventListener('transitionend', showReservationButtonWithoutReservationPannel);
+  reservationButton.removeEventListener('transitionend', hideReservation);
+}
+
+function showReservationButtonWithoutReservationPannel(e) {
+  if (e.srcElement.className === "reservation") {
+  reservationButton.querySelector('.reservationButton--parent1').classList.add('visible');
+  reservationButton.querySelector('.reservationButton--parent3').classList.add('visible');
+  reservationButton.querySelector('.svgcross').classList.remove('visible');
+  reservation.removeEventListener('transitionend', showReservationButtonWithoutReservationPannel);
+  reservationButton.style.cursor = 'pointer';
+  reservationButton.addEventListener('click', hideReservationButton);
+  } else {
+    return;
+  }
+}
+
+
+reservationButton.addEventListener('click', hideReservationButton);
+closeReservationButton.addEventListener('click', hideReservationButtonThenHide);
 
 
 /***/ }),

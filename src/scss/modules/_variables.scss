@@ -21,6 +21,8 @@ $letterOffsetForTransition: 20px;
   --letterTimeOut: calc(var(--transitionDuration) / 100);
   --letterTransitionDuration: calc(var(--transitionDuration) / 2 - var(--letterTimeOut) * 36);
   --letterOffsetForTransition: 20px;
+  --dividerTranslationDist: 120px;
+  --reservationTransition: 200ms;
 }
 $transitionDuration: 2000ms; 
 $transitionDurationOldTotem: $transitionDuration / 2;

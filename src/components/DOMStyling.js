@@ -25,7 +25,7 @@ const hotelFixedCharacters = {
   brachLast: {
     position: 1,
     frenchName: 'h', 
-    optionsLetterSpacing: 3,
+    optionsLetterSpacing: 0,
     textColor: white,
   },
   brachMiddle: {

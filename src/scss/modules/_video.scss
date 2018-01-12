@@ -1,3 +1,29 @@
+.video-anim {
+  z-index: 50;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: hsla(0,0%,100%,1.00);
+  transition: opacity 0.5s linear;
+
+  display: flex;
+  
+  justify-content: center;
+  align-items: center;
+  //align-content: center;
+  
+
+  &.hide {
+    opacity: 0;
+    // transform: translateY(-100vh);
+  }
+  > video {
+    height: 40%;
+  }
+}
+
 .video {
   position: relative;
   width: 100vw;
@@ -22,7 +48,7 @@
   }
 
   .transparent_filter-for-allow-scrolling {
-    z-index: 500;
+    z-index: 40;
     position: absolute;
     width: 100%;
     height: 100%;

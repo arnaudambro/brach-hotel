@@ -40,6 +40,7 @@ const video2iFrame = document.querySelector('.video__video2');
 const hotelOptionsContainer = document.querySelector('.slideshow__description--optionsContainer');
 const controlVideo1PointerEvents = document.querySelector('.video1').querySelector('.transparent_filter-for-allow-scrolling');
 const controlVideo2PointerEvents = document.querySelector('.video2').querySelector('.transparent_filter-for-allow-scrolling');
+let allLetters;
 //CSS
 const cursorVerticalSpacing = 20;
 const transitionDurationBetweenVIdeos = 1000;  //A bit higher than the one in CSS for a proper totem transition
@@ -120,12 +121,58 @@ const init = (index) => {
 
   /*   TOTEM   */
   document.querySelector(`.totem_${theme}`).classList.add('showTotem');
+  document.querySelector(`.totem_${theme}`).addEventListener('animationend', removeInitAnimationClasses);
+  document.querySelector(`.totem_${theme}`).classList.add('perpetual-translation');
 
   /*  OPTIONS  */
   document.querySelector(`.option_${theme}`).classList.add('showOption');
+
+  //RESET AFTER ANIMATION
+  //Get hotel letters
+  const nameLetters = [];
+  const hotelEstablishmentName = document.querySelector('.slideshow__description--establishment-name');
+  [...hotelEstablishmentName.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
+
+  //Get slogan letters
+  const hotelSlogan = document.querySelector('.slideshow__description--slogan');
+  const sloganLetters = [...hotelSlogan.children];
+
+  //Get option letters
+  const hotelOption = document.querySelector('.showOption');
+  const optionLetters = [...hotelOption.children];
+
+  //Gather all letters
+  allLetters = [...nameLetters, ...optionLetters, ...sloganLetters];
+  for (var i = 0; i < allLetters.length; i++) {
+    allLetters[i].addEventListener('animationend', removeInitAnimationClasses)
+  }
 };
 init(CURRENT_INDEX);
 
+function removeInitAnimationClasses() {
+  //For hotel description (slogan, name and option)
+  for (var i = 0; i < allLetters.length; i++) {
+    this.classList.remove(`fade-in-letter-up-${i + 1}`);
+  }
+  //For totem
+  this.classList.remove('fakeTotemUp');
+  //For divider in
+  if (this === allLetters[allLetters.length - 1]) {
+    console.log('youpi yo')
+    dividerInDescription.classList.add('coming-in');
+    dividerInDescription.addEventListener('animationend', removeInitForDivider);
+  }
+  //FOr everybody
+  this.removeEventListener('animationend', removeInitAnimationClasses);
+}
+
+function removeInitForDivider() {
+  console.log('on dégomme le divider');
+  console.log(this);
+  dividerInDescription.classList.remove('init');
+  this.classList.remove('coming-in');
+  this.removeEventListener('animationend', removeInitForDivider);
+}
 
 /*------------------------------------*\
     DOM STYLING
@@ -302,7 +349,6 @@ function removeTotemClasses (e) {
 }
 
 
-
 /*------ HOTEL OPTIONS FUNCTIONS ------*/
 function hotelOptionsTransit(e, prevIndex, nextIndex, anyHotelOptions, direction) {
 
@@ -358,7 +404,6 @@ function hotelOptionsTransit(e, prevIndex, nextIndex, anyHotelOptions, direction
   }
 }
 
-
 function resetHotelOptions(index){
   /****** DOM *******/
   const nameLetters = [];
@@ -410,8 +455,6 @@ function resetHotelOptions(index){
     letter.classList.remove(`move-letter-up-first-${h + nameLength + prevOptionLength + 1}`);
     letter.classList.remove(`move-letter-down-first-${h + nameLength + prevOptionLength + 1}`);
   }
-
-  
 };
 
 
@@ -430,7 +473,6 @@ function scrollFromSlideshowToFirstVideo() {
   playerPlay(player1);
 }
 
-
 function scrollFromFirstVideoToSlideshow() {
   CURRENT_INDEX--;
   console.log('first video');
@@ -444,7 +486,6 @@ function scrollFromFirstVideoToSlideshow() {
   wholeContent.addEventListener('animationend', getOutOfVideos);
 
   controlVideo1PointerEvents.removeEventListener('wheel', startTransitionSlideshow);
-
 }
 
 function scrollFromFirstToSecondVideo() {
@@ -478,7 +519,6 @@ function getOutOfVideos() {
   wholeContent.classList.remove('from_second_video_to_first_video');
   wholeContent.removeEventListener('animationend', getOutOfVideos);
 }
-
 
 function togglePlayPause() {
   if (this.classList.contains('video1')) {

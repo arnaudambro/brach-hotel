@@ -9,14 +9,6 @@
   <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
   <link rel="stylesheet" href="./src/css/styles.css">
-  <!-- PREFETCH ON BIG SCREENS -->
-<!--   <link rel="preload" href="./src/img/animation/img_0.svg" as="image" type="image/svg">
-  <link rel="preload" href="./src/img/animation/img_1.svg" as="image" type="image/svg">
-  <link rel="preload" href="./src/img/animation/img_2.svg" as="image" type="image/svg">
-  <link rel="preload" href="./src/img/animation/img_3.svg" as="image" type="image/svg">
-  <link rel="preload" href="./src/img/animation/img_4.svg" as="image" type="image/svg">
-  <link rel="preload" href="./src/img/animation/img_5.svg" as="image" type="image/svg">
-  <link rel="preload" href="./src/img/animation/img_6.svg" as="image" type="image/svg"> -->
 
   <link rel="preload" href="./src/img/totems/totem_hotel.png" as="image" type="image/png">
   <link rel="preload" href="./src/img/totems/totem_evenementiel.png" as="image" type="image/png">
@@ -37,9 +29,14 @@
 
 <body id="noscrollbar">
 
-  <div id="loadingAnim"></div>
+  <div class="video-anim">
+    <video id="video-anim" playsinline preload autoplay src="./src/video/ANIMATION_LOGO_CUIVRE_shorter.mp4"></video>
+    <script src="./src/components/firstAnim.js" type="text/javascript"></script>
+  </div>
+
+<!--   <div id="loadingAnim"></div>
   <script src="./src/components/lottie.js" type="text/javascript"></script>
-  <script src="./src/components/loadingAnimation.js" type="text/javascript"></script>
+  <script src="./src/components/loadingAnimation.js" type="text/javascript"></script> -->
   <div id="wholeContent">
     
 
@@ -64,7 +61,7 @@
           <div class="middle-letters"></div>
           <div class="first-last-letter"></div>
         </div>
-        <div class="slideshow__description--divider"></div>
+        <div class="slideshow__description--divider init"></div>
         <div class="slideshow__description--optionsContainer"></div>
         <div class="slideshow__description--slogan"></div>
       </div>
@@ -105,8 +102,30 @@
 
 
     </div>
+    <div class="reservation">
+      <div class="reservationButton">
+        <div class="reservationButton--parent1 visible">
+          <div class="reservationButton--parent2">
+            <div class="reservationButton--parent3 visible">
+              <p class="french">réservez</p>
+              <p class="english">book</p>
+              <svg class="svgcross" viewBox="0 0 198 197" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <g id="cross" fill="none" fill-rule="evenodd" stroke-linecap="square">
+                      <g transform="translate(1.000000, 0.000000)">
+                          <path d="M0.0657108057,196.434289 L195.934289,0.565710806" id="Line"></path>
+                          <path d="M196.080736,196.787843 L0.212157415,0.919264196" id="Line"></path>
+                      </g>
+                  </g>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reservationContainer">
+        
+      </div>
 
-    <div class="reservation"></div>
+    </div>
 
     <div class="slideshow__mouseScroll">
       <a class="scroll-btn" href="#">

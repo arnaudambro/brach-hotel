@@ -23,4 +23,5 @@ import './_measureFont';
 import './DOMStyling';
 import './slideshow/slideshow';
 import './slideshow/slideshowPortrait';
+import './animMenu';
 

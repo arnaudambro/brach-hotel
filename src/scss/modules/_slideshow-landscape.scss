@@ -39,7 +39,7 @@
       background-position-y: bottom;
       // animation: perpetual-rotation 10s linear infinite;
       &.perpetual-translation {
-        animation: perpetual-translation 10s linear infinite;
+        animation: perpetual-translation 10s ease-in-out infinite;
       }
       &.totemOnTransitionUp {
         will-change: transform;
@@ -99,8 +99,23 @@
         margin-top: 12px;
         margin-bottom: 17px;
         border-top: 1px solid; //IMPORTANT
+        &.init {
+          transform: scale(0);
+        }
         &.inTransition {
           transition: border-color $transitionDuration ease-in-out; 
+          --disappearDuration: 300ms;
+          animation: var(--disappearDuration) ease-in forwards disappear, 0.5s ease-in-out calc(var(--transitionDuration) - var(--disappearDuration)) forwards appear;
+        }
+        &.coming-in {
+          animation-name: fade-in;
+          animation-delay: 1s;
+          animation-duration: 0.5s;
+          animation-timing-function: ease-in-out;
+          animation-fill-mode: forwards;
+        }
+        &.going-out {
+          animation: 0.5 fade-in reverse forwards;
         }
       }
       &--optionsContainer {
@@ -141,7 +156,7 @@
       }
 
       &--fixed {
-        z-index: 100;
+        z-index: 20;
         position: absolute;
         top: calc(50% - 2px);
         right: 0;

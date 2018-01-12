@@ -1,7 +1,8 @@
 @import "modules/mixins";
 @import "modules/variables";
 @import "modules/animations-totem";
-@import "modules/animation-perpetual-letters";
+@import "modules/animations-divider";
+@import "modules/animations-perpetual";
 @import "modules/animations-fade-in-letters-up";
 @import "modules/animations-fade-in-letters-down";
 @import "modules/animations-fade-out-letters-up";
@@ -13,6 +14,6 @@
 @import "modules/slideshow-landscape";
 @import "modules/slideshow-portrait-easy";
 @import "modules/animations-slideshow-to-videos";
-@import "modules/animation-mouseScroll";
-@import "modules/styling-video";
+@import "modules/animations-mouseScroll";
+@import "modules/video";
 @import "modules/reservation";

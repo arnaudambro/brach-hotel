@@ -1,0 +1,53 @@
+@keyframes perpetual-letter-rotation {
+  0% {
+    transform: rotate(0deg)
+  }
+  25% {
+    transform: rotate(-1deg)
+  }
+  50% {
+    transform: rotate(0deg)
+  }
+  75% {
+    transform: rotate(1deg)
+  }
+  100% {
+    transform: rotate(0deg)
+  }
+}
+
+@keyframes perpetual-rotation {
+  0% {
+    transform: rotate(0deg)
+  }
+  25% {
+    transform: rotate(-1deg)
+  }
+  50% {
+    transform: rotate(0deg)
+  }
+  75% {
+    transform: rotate(1deg)
+  }
+  100% {
+    transform: rotate(0deg)
+  }
+}
+
+@keyframes perpetual-translation {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(2%);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-2%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
