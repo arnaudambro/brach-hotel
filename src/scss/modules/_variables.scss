@@ -3,13 +3,15 @@
 \*------------------------------------*/
 
 $white: rgba(250,250,250,1.00);
-
+$tuatara: hsla(0,0%,20%,1.00);
+$spicy: hsla(20,29%,43%,1.00);
 
 /*------------------------------------*\
     LENGTHS
 \*------------------------------------*/
 
 $letterOffsetForTransition: 20px;
+$first-break: var()
 
 /*------------------------------------*\
     DURATION
@@ -31,6 +33,18 @@ $letterTimeOut: 20ms;
 $biggestWordNumberOfLetters: 36;
 //target: timeout of the last letter + transition of the last letter = 1/2 transition
 $letterTransitionDuration: $transitionDuration / 2 - $letterTimeOut * $biggestWordNumberOfLetters;
+
+/*------------------------------------*\
+    Z-INDEX
+\*------------------------------------*/
+
+$z-index-videoanim: 200;
+$z-index-reservation: 120;
+$z-index-footer: 110;
+$z-index-mousescroll: 100;
+$z-index-transparentfilterforscrolling: 40;
+$z-index-cursorfixed: 20;
+$z-index-cursormoving: 10;
 
 
 /*------------------------------------*\

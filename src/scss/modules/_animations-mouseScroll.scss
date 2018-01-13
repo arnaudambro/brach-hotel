@@ -1,5 +1,5 @@
 .slideshow__mouseScroll {
-  z-index: 100;
+  z-index: $z-index-mousescroll;
   position: fixed;
   left: 50%;
   bottom: 0; 

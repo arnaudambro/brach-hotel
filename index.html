@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="icon" href="./src/img/icons/favicon.png">
   <!-- BRACH POLICE -->
-  <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
   <link rel="stylesheet" href="./src/css/styles.css">
 
@@ -17,12 +16,12 @@
   <link rel="preload" href="./src/img/totems/totem_potager.png" as="image" type="image/png">
   <link rel="preload" href="./src/img/totems/totem_restaurant.png" as="image" type="image/png">
   <!-- PRELOAD ON SMALL SCREENS -->
-  <link rel="preload" href="./src/img/totems/totem_hotel.png" as="image" media="(max-width: 1024px)" type="image/png">
+<!--   <link rel="preload" href="./src/img/totems/totem_hotel.png" as="image" media="(max-width: 1024px)" type="image/png">
   <link rel="preload" href="./src/img/totems/totem_evenementiel.png" as="image" media="(max-width: 1024px)" type="image/png">
   <link rel="preload" href="./src/img/totems/totem_clubDeSport.png" as="image" media="(max-width: 1024px)" type="image/png">
   <link rel="preload" href="./src/img/totems/totem_patisserie.png" as="image" media="(max-width: 1024px)" type="image/png">
   <link rel="preload" href="./src/img/totems/totem_potager.png" as="image" media="(max-width: 1024px)" type="image/png">
-  <link rel="preload" href="./src/img/totems/totem_restaurant.png" as="image" media="(max-width: 1024px)" type="image/png">
+  <link rel="preload" href="./src/img/totems/totem_restaurant.png" as="image" media="(max-width: 1024px)" type="image/png"> -->
   <title>Brach Hotel | Un style de vie à Paris  </title>
 
 </head>
@@ -34,17 +33,10 @@
     <script src="./src/components/firstAnim.js" type="text/javascript"></script>
   </div>
 
-<!--   <div id="loadingAnim"></div>
-  <script src="./src/components/lottie.js" type="text/javascript"></script>
-  <script src="./src/components/loadingAnimation.js" type="text/javascript"></script> -->
   <div id="wholeContent">
-    
-
     <!--                      SLIDESHOW                   -->
     <div class="slideshow__background"></div>
-
     <div class="slideshow">
-
       <!-- SLIDESHOW - TOTEM -->
       <div data-slidePosition='0' class="slideshow__totem totem_hotel"></div>
       <div data-slidePosition='1' class="slideshow__totem totem_clubDeSport"></div>
@@ -53,7 +45,6 @@
       <div data-slidePosition='4' class="slideshow__totem totem_patisserie"></div>
       <div data-slidePosition='5' class="slideshow__totem totem_evenementiel"></div>
       <div data-slidePosition='6' class="slideshow__totem totem_potager"></div>
-
       <!-- SLIDESHOW - DESCRIPTION -->  
       <div class="slideshow__description perpetual-translation">
         <div class="slideshow__description--establishment-name">
@@ -72,36 +63,27 @@
       <div data-slidePosition='4' data-hotel-option='5' class="slideshow__description--options option_patisserie"></div>
       <div data-slidePosition='5' data-hotel-option='6' class="slideshow__description--options option_evenementiel"></div>
       <div data-slidePosition='6' data-hotel-option='7' class="slideshow__description--options option_potager"></div>
-
       <!-- SLIDESHOW - CURSOR -->
       <div class="slideshow__cursor slideshow__cursor--fixed"></div>
       <div class="slideshow__cursor slideshow__cursor--moving"></div>
-
     </div>
-
-
     <div class="slideshow__backup--container">
       <div class="slideshow__backup--content"></div>
     </div>
-
-
     <div class="video video1" id="video1">
       <div class="transparent_filter-for-allow-scrolling video1"></div>
       <div class="video__subcontainer">
         <div id="video__video1" ></div>
       </div>
     </div>
-
     <div class="video video2"  id="video2">
       <div class="transparent_filter-for-allow-scrolling video2"></div>
       <div class="video__subcontainer">
         <div id="video__video2" ></div>
       </div>
     </div>
-    
+  </div>
 
-
-    </div>
     <div class="reservation">
       <div class="reservationButton">
         <div class="reservationButton--parent1 visible">
@@ -121,10 +103,7 @@
           </div>
         </div>
       </div>
-      <div class="reservationContainer">
-        
-      </div>
-
+      <div class="reservationContainer"></div>
     </div>
 
     <div class="slideshow__mouseScroll">
@@ -137,10 +116,75 @@
       <div class="verticalDivider"></div>
     </div> 
 
-    <script src='https://www.youtube.com/iframe_api' async></script>
-    <script src="./_build/bundle.js"></script>  <!-- loaded after the animation -->
+ 
 
+
+  <div class="footer">
+    <svg class="footer-cross" viewBox="0 0 198 197" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <g id="footer-cross" fill="none" fill-rule="evenodd" stroke-linecap="square">
+            <g transform="translate(1.000000, 0.000000)">
+                <path d="M0.0657108057,196.434289 L195.934289,0.565710806" id="Line"></path>
+                <path d="M196.080736,196.787843 L0.212157415,0.919264196" id="Line"></path>
+            </g>
+        </g>
+    </svg>
+    <div class="topcontainer">
+
+
+      <div class="topcontainer__subcontainer topcontainer__subcontainer--left">
+
+        <div class="topcontainer__subcontainer--sub logo">
+          <img src="./src/img/icons/brach-logo.svg" alt="logo">
+        </div>
+        <div class="topcontainer__subcontainer--sub coordinates">
+          <div class="coordinates__address">
+            <p class="coordinates__address--line line1 capital">brach</p>
+            <p class="coordinates__address--line line2">1-7 rue Jean Richepin, Paris 16e</p>
+            <p class="coordinates__address--line line3">t. +33 (0)1 44 30 10 10</p>
+            <p class="coordinates__address--line line4">contact@brachparis.com</p>
+            <p class="coordinates__address--line line5">wewantyou@brachparis.com</p>
+            <p class="coordinates__address--line line6">Métro: Rue de la Pompe - Ligne 9</p>
+          </div>
+          <div class="coordinates__group capital">
+            <p>Membre evok hôtels collection</p>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="topcontainer__subcontainer topcontainer__subcontainer--right">
+
+        <div class="topcontainer__subcontainer--sub email">
+          <label for="email" class="capital">Restons en contact</label>
+          <input type="text" name="email" placeholder="Saisir votre e-mail">
+        </div>
+
+        <div class="topcontainer__subcontainer--sub valider">
+          <button onsubmit="alert('blob')" class="capital">valider</button>
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+
+    <div class="divider"></div>
+
+
+
+    <div class="bottomcontainer">
+
+      <p>codes gds: sabre tw 284852 • amadeux wv par377 worldspan wv 98377 • apollo/galileo wv B9141</p>
+      <p>Website réalisé par Arnaud Ambroselli - arnaud@ambroselli.io</p>
+      
+    </div>
   </div>
+
+  <script src='https://www.youtube.com/iframe_api' async></script>
+  <script type="text/javascript" src="./_build/bundle.js"></script>  <!-- loaded after the animation -->
 </body>
 
 </html>

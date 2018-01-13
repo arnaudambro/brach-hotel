@@ -156,7 +156,7 @@
       }
 
       &--fixed {
-        z-index: 20;
+        z-index: $z-index-cursorfixed;
         position: absolute;
         top: calc(50% - 2px);
         right: 0;
@@ -165,7 +165,7 @@
         }
 
       &--moving {
-        z-index: 10;
+        z-index: $z-index-cursormoving;
         position: absolute;
         top: calc(50% - 1px);
         right: 13.5px;
