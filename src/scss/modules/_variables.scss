@@ -11,14 +11,19 @@ $spicy: hsla(20,29%,43%,1.00);
 \*------------------------------------*/
 
 $letterOffsetForTransition: 20px;
-$first-break: var()
+$footer-topcontainer-width: 90%;
+
+//BREAKPOINTS
+$small-break: 550px;
+$medium-break: 990px;
+$big-break: 2 * $small-break / 0.9 /* $footer-topcontainer-width*/; // == 1222px;
 
 /*------------------------------------*\
     DURATION
 \*------------------------------------*/
 
 :root {
-  --transitionDuration: 2000ms;
+  --transitionDuration: 3000ms;
   --letterHalfTransition: calc(var(--transitionDuration) / 2);
   --letterTimeOut: calc(var(--transitionDuration) / 100);
   --letterTransitionDuration: calc(var(--transitionDuration) / 2 - var(--letterTimeOut) * 36);
@@ -26,9 +31,9 @@ $first-break: var()
   --dividerTranslationDist: 120px;
   --reservationTransition: 200ms;
 }
-$transitionDuration: 2000ms; 
+$transitionDuration: 3000ms; 
 $transitionDurationOldTotem: $transitionDuration / 2;
-$maxTransitionDuration: 2200ms;
+$maxTransitionDuration: $transitionDuration + 10ms;
 $letterTimeOut: 20ms;
 $biggestWordNumberOfLetters: 36;
 //target: timeout of the last letter + transition of the last letter = 1/2 transition

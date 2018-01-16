@@ -11,6 +11,7 @@ function hideReservationButton(e) {
   reservationButton.querySelector('.reservationButton--parent3').classList.remove('visible');
   reservationButton.addEventListener('transitionend', showReservation);
   reservationButton.removeEventListener('click', hideReservationButton);
+  reservationButton.removeEventListener('touchend', hideReservationButton);
 }
 
 function showReservation(e) {
@@ -56,6 +57,7 @@ function showReservationButtonWithoutReservationPannel(e) {
   reservation.removeEventListener('transitionend', showReservationButtonWithoutReservationPannel);
   reservationButton.style.cursor = 'pointer';
   reservationButton.addEventListener('click', hideReservationButton);
+  reservationButton.addEventListener('touchend', hideReservationButton);
   } else {
     return;
   }
@@ -63,4 +65,6 @@ function showReservationButtonWithoutReservationPannel(e) {
 
 
 reservationButton.addEventListener('click', hideReservationButton);
+reservationButton.addEventListener('touchend', hideReservationButton);
 closeReservationButton.addEventListener('click', hideReservationButtonThenHide);
+closeReservationButton.addEventListener('touchend', hideReservationButtonThenHide);

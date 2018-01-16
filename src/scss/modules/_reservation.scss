@@ -3,9 +3,13 @@
   position: absolute;
   height: 250px;
   max-height: 45vh;
+  @media all and (max-width: $small-break) {
+    width: 10vw;
+    left: -10vw;
+  }
   width: 60px;
-  top: 0;
   left: -60px;
+  top: 0;
   cursor: pointer;
 }
 
@@ -39,6 +43,7 @@
     color: $white;
     font-family: 'Cogito';
     text-orientation: upright;
+    -webkit-text-orientation: upright;
     text-transform: uppercase;
     writing-mode: tb;
     letter-spacing: 2px;
@@ -61,6 +66,9 @@
 }
 
 .visible.reservationButton--parent1 {
+  @media all and (max-width: $small-break) {
+    width: 10vw;
+  }
   width: 60px;
 }
 
@@ -75,14 +83,191 @@
   position: fixed;
   will-change: transform;
   top: 0;
-  right: -50vw;
-  min-width: 300px;
-  width: 50vw;
+  @media all and (min-width: $small-break) {
+    --width: 50vw;
+  }
+  @media all and (max-width: $small-break) {
+    --width: 288px;
+    max-width: 90vw;
+  }
+  right: calc(var(--width) * -1);
+  width: var(--width);
   height: 100vh;
   border: 1px solid #000;
   background-color: $white;
   transition: all var(--reservationTransition) ease-in-out;
   &.visible{
-    transform: translateX(-50vw) !important;
+    transform: translateX(calc(var(--width) * -1)) !important;
   }
 }
+
+
+.reservationContainer {
+  display: flex;
+  
+  justify-content: center;
+  align-items: center;
+  font-family: 'Cogito', sans-serif;
+  font-weight: 400;
+}
+
+.reservation-form {
+  --margin-Y: 20px;
+  --margin-X: 10px;
+  max-width: 540px;
+  width: 95%;
+  display: flex;
+
+  margin-top: var(--margin-Y);
+  margin-bottom: var(--margin-Y);
+  margin-left: var(--margin-X);
+  margin-right: var(--margin-X);
+  
+  justify-content: center;
+  align-items: baseline;
+  flex-direction: column;
+
+  > * {
+    width: 100%;
+    display: flex;    
+    justify-content: space-between;
+    align-items: center;
+    flex-grow: 1;
+    flex-wrap: wrap;
+  }
+
+  .first-line {
+    margin-top: var(--margin-Y);
+    > * {
+      flex-basis: 168px;
+    }
+  }
+  .last-line {
+    margin-bottom: var(--margin-Y);
+    > * {
+      flex-basis: 168px;
+    }
+  }
+  .middle-line {
+    padding-left: var(--margin-X);
+    padding-right: var(--margin-X);
+    flex-direction: column;
+    > * {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    @media all and (min-width: 825px) {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      padding-left: 0;
+      padding-right: 0;
+      > * {
+        flex-basis: 108px;
+        margin-left: var(--margin-X);
+        margin-right: var(--margin-X);
+      }
+    }
+  }
+
+  p {
+    font-size: 1.2em;
+    font-weight: 400;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+.reservation-button {
+    font-style: normal !important;
+    background-color: $spicy !important;
+    height: 60px;
+    border-radius: 0;
+    color: $white;
+    border: none;
+    background-color: $spicy;
+    letter-spacing: 2.5px;
+  }
+
+.form-outline-inputs {
+  margin-left: var(--margin-X);
+  margin-right: var(--margin-X);
+  margin-bottom: var(--margin-X);
+  padding-left: 20px;
+  padding-right: 20px;
+
+  font-style: italic;
+
+  height: 60px;
+  flex-grow: 1;
+  flex-shrink: 1;
+
+  border-color: $spicy;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 0;
+  box-shadow: none;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+  background-color: initial;
+  -webkit-appearance: none;
+}
+
+
+
+
+
+.date-input {
+  
+  background: url(../img/icons/date-picker.svg) no-repeat;
+  background-position-x: 93%;
+  background-position-y: 9px;
+  background-size: 35px;
+  // background-repeat-x: no-repeat;
+  // background-repeat-y: no-repeat;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+  background-color: initial;
+  &::-webkit-inner-spin-button {
+    display: none;
+  }
+  &::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+}
+
+.select-input {
+  background: url('../img/icons/arrow-down.svg') no-repeat;
+  background-position-x: 90%;
+  background-position-y: 22px;
+  background-size: 20px;
+  // background-repeat-x: no-repeat;
+  // background-repeat-y: no-repeat;
+  background-attachment: initial;
+  background-origin: initial;
+  background-clip: initial;
+  background-color: initial;
+  overflow: hidden;
+  padding: 0 !important;
+  -webkit-appearance: none;
+}
+
+.select-input select {
+  width: 110%;
+  height: 100%;
+  margin-left: 0%;
+  background: transparent;
+  border: none;
+  color: gray;
+
+}
+
+
+
+
+
+
+
+

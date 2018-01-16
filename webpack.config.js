@@ -14,6 +14,7 @@ module.exports = {
   devtool: 'source-map',
   entry: {
     app: [
+    'babel-polyfill',
     './src/components/app.js',
     './src/scss/styles.scss'
     ]

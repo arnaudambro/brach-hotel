@@ -1,9 +1,3 @@
-.slideshow__landscape {
-  // overflow: hidden;
-  > .slideshow__backup--container {
-    display: none;
-  }
-
   .slideshow {
 
     position: relative;
@@ -13,6 +7,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    overflow: hidden;
 
     &__background {
       position: absolute;
@@ -20,7 +15,6 @@
       left: 0;
       height: 100vh;
       width: 100vw;
-      @include size(100%);
       &.inTransition {
         transition: background-color $transitionDuration ease-in-out; 
       }
@@ -29,10 +23,24 @@
     &__totem {
       position: absolute;
       top: 5%;
-      bottom: 5%;
-      left: 15%;
-      right: 5%;
-      height: 0;
+      width: auto;
+      opacity: 0;
+      transition: left 1s ease-in-out;
+      height: 90vh;
+      left: 5%;
+
+      &.portrait {
+        height: 50vh !important;
+        top: 8% !important;
+      }
+      @media all and (min-width: $big-break) {
+        left: 15%;
+      }
+
+
+      &.showTotem {
+        opacity: 1;
+      }
 
       background-repeat: no-repeat;
       background-size: auto 100%;
@@ -42,30 +50,37 @@
         animation: perpetual-translation 10s ease-in-out infinite;
       }
       &.totemOnTransitionUp {
-        will-change: transform;
-        animation: oldTotemToUp $transitionDurationOldTotem ease-in-out;
+        will-change: transform, opacity;
+        animation: oldTotemToUp $transitionDurationOldTotem forwards ease-in-out;
       }
       &.totemOnTransitionDown {
-        will-change: transform;
-        animation: oldTotemToDown $transitionDurationOldTotem ease-in-out;
+        will-change: transform, opacity;
+        animation: oldTotemToDown $transitionDurationOldTotem forwards ease-in-out;
       }
       &.fakeTotemUp {
-        will-change: transform;
-        animation: newTotemTranslateFromDownToUp $transitionDuration ease-in-out;
+        will-change: transform, opacity;
+        animation: newTotemTranslateFromDownToUp $transitionDuration forwards ease-in-out;
       }
       &.fakeTotemDown {
-        will-change: transform;
-        animation: newTotemTranslateFromUpToDown $transitionDuration ease-in-out;
+        will-change: transform, opacity;
+        animation: newTotemTranslateFromUpToDown $transitionDuration forwards ease-in-out;
       }
     }
 
     &__description {
+
       position: absolute;
-      bottom: 50%;
-      // bottom: 35%;
-      right: 90px;
-      width: 65%;
-      // height: 30%;
+
+      &.landscape {
+        bottom: 50%;
+        right: 90px;
+        width: 65%;
+      }
+
+      &.portrait {
+        bottom: 25%;
+        width: 100%;
+      }
 
       display: flex;
       flex-direction: column;
@@ -95,9 +110,16 @@
       }
 
       &--divider {
-        width: 50px;
-        margin-top: 12px;
-        margin-bottom: 17px;
+        &.landscape {
+          width: 50px;
+          margin-top: 12px;
+          margin-bottom: 17px;
+        }
+        &.portrait {
+          width: 30px;
+          margin-top: 9px;
+          margin-bottom: 12px;
+        }
         border-top: 1px solid; //IMPORTANT
         &.init {
           transform: scale(0);
@@ -119,19 +141,16 @@
         }
       }
       &--optionsContainer {
-        display: block;
         position: relative;
-        width: 750px;
-
-
+        width: 65vw;
+        text-align: center;
       }
 
       &--options {
-        display: none;
         position: absolute;
-        bottom: 50%;
-        right: 90px;
-        width: 65%;
+        top: 0;
+        left: 50%;
+        right: 50%;
         &.showOption { 
           display: flex !important 
         }
@@ -142,33 +161,51 @@
 
 
       &--slogan {
-        margin-top: 22px;
+        &.landscape {
+          margin-top: 22px;
+          letter-spacing: 4px;
+        }
+        &.portrait {
+          margin-top: 12px;
+          letter-spacing: 2px;
+        }
         font-weight: 400;
-        letter-spacing: 4px;
         text-transform: uppercase; 
         display: flex;
       }
     }
 
     &__cursor {
-      @media all and (max-width: 1024px) {
-        display: none;
-      }
+      --width: 90px;
 
       &--fixed {
         z-index: $z-index-cursorfixed;
         position: absolute;
         top: calc(50% - 2px);
-        right: 0;
-        width: 90px;
+        width: var(--width);
         border: 2px solid rgba(151,105,78,1.00);   //IMPORTANT   
+        @media all and (max-width: $medium-break) {
+          right: calc(var(--width) * (-1));
+          transition: right 1s ease-in-out;
         }
+        @media all and (min-width: $medium-break) {
+          right: 0;
+          transition: right 1s ease-in-out;
+        }
+      }
 
       &--moving {
         z-index: $z-index-cursormoving;
         position: absolute;
         top: calc(50% - 1px);
-        right: 13.5px;
+        @media all and (max-width: $medium-break) {
+          right: calc(var(--width) * (-1.15));
+          transition: right 1s ease-in-out;
+        }
+        @media all and (min-width: $medium-break) {
+          right: calc(var(--width) * 0.15);
+          transition: right 1s ease-in-out;
+        }
         width: 25px;
         border: 1px solid;   //IMPORTANT  
         &.inTransition {
@@ -181,11 +218,11 @@
       }
     }
   }
-}
+// }
 
 
 .slideshow__description--options {
-  display: flex;
+  display: none;
 
   justify-content: center;
   align-items: flex-start;
@@ -197,35 +234,4 @@
    margin: 0 5px;
  }
 }
-
-.totem_hotel { background-image: url('../img/totems/totem_hotel.png'); }
-.totem_clubDeSport { background-image: url('../img/totems/totem_clubDeSport.png'); }
-.totem_restaurant { background-image: url('../img/totems/totem_restaurant.png'); }
-.totem_bar { background-image: url('../img/totems/totem_bar.png'); }
-.totem_patisserie { background-image: url('../img/totems/totem_patisserie.png'); }
-.totem_evenementiel { background-image: url('../img/totems/totem_evenementiel.png'); }
-.totem_potager { background-image: url('../img/totems/totem_potager.png'); }
-
-.showTotem { height: 90% !important; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

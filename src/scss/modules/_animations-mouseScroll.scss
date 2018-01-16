@@ -1,15 +1,13 @@
 .slideshow__mouseScroll {
   z-index: $z-index-mousescroll;
   position: fixed;
-  left: 50%;
+  left: calc(50% - 26px / 2);
   bottom: 0; 
   width: 26px;
-  height: 85px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  //align-content: center;
   
   > * {
     box-sizing: border-box;
@@ -112,7 +110,13 @@
 
 
 .verticalDivider {
-  height: 30px;
+  &.landscape {
+    height: 30px;
+  }
+  &.portrait {
+    height: 5px;
+  }
+  margin-top: 15px;
   width: 2px;
   background: $white;
 }

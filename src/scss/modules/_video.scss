@@ -12,12 +12,10 @@
   
   justify-content: center;
   align-items: center;
-  //align-content: center;
   
 
   &.hide {
     opacity: 0;
-    // transform: translateY(-100vh);
   }
   > video {
     height: 40%;
@@ -35,8 +33,7 @@
 
   
   .video__subcontainer {
-    position: absolute;
-    overflow: auto;
+    overflow: hidden;
     &.portrait {
       height: 128vh;
       width: calc(128vh / 0.5625);
@@ -57,20 +54,3 @@
   }
 
 }
-
-// .video__maincontainer {
-//   position: relative;
-//   width: 100vw;
-//   height: 100vh;
-//   overflow: hidden;
-//   display: flex;  
-//   justify-content: center;
-//   align-items: center;
-
-//   .video__subcontainer {
-//     position: absolute;
-//     overflow: auto;
-//     height: 100vh;
-//     width: calc(100vh / 0.5625);
-//   }
-// }

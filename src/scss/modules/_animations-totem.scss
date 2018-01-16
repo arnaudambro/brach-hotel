@@ -1,5 +1,6 @@
 @keyframes newTotemTranslateFromDownToUp {
   0% {
+    opacity: 1;
     transform: translateY(+100vh);
   }
   50% {
@@ -19,12 +20,14 @@
   }
   100% {
     transform: translateY(0);
+    opacity: 1;
   }
 }
 
 
 @keyframes newTotemTranslateFromUpToDown {
   0% {
+    opacity: 1;
     transform: translateY(-100vh);
   }
   50% {
@@ -44,6 +47,7 @@
   }
   100% {
     transform: translateY(0);
+    opacity: 1;
   }
 }
 
@@ -54,6 +58,7 @@
   }
   100% {
     transform: translateY(+100vh);
+    opacity: 0;
   }
 }
 @keyframes oldTotemToUp {
@@ -62,6 +67,7 @@
   }
   100% {
     transform: translateY(-100vh);
+    opacity: 0;
   }
 }
 

@@ -13,6 +13,7 @@
 /*------------------------------------*\
     utilities
 \*------------------------------------*/
+import "babel-polyfill";
 import './_bling';
 import './_measureFont';
 
@@ -22,6 +23,6 @@ import './_measureFont';
 // import './_video1';
 import './DOMStyling';
 import './slideshow/slideshow';
-import './slideshow/slideshowPortrait';
+import './firstAnim';
 import './animMenu';
 

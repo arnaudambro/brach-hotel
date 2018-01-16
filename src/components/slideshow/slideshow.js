@@ -42,6 +42,7 @@ const controlVideo1PointerEvents = document.querySelector('.video1').querySelect
 const controlVideo2PointerEvents = document.querySelector('.video2').querySelector('.transparent_filter-for-allow-scrolling');
 const footer = document.querySelector('.footer');
 const closeFooter = footer.querySelector('.footer-cross');
+const animVideo = document.querySelector('#video-anim');
 
 let allLetters;
 //CSS
@@ -94,7 +95,7 @@ function cursorMove(index) {
 }
 
 function endTransition(e) {
-  if (CURRENT_INDEX === (numberOfSlides - 1)) {
+  if (CURRENT_INDEX === (numberOfSlides - 1)  && (!player1.videoId)) {
     playerLoad(player1);
     playerLoad(player2);
   }
@@ -105,52 +106,58 @@ function endTransition(e) {
   movingCursorDiv.removeEventListener('transitionend', endTransition, false);
 }
 
-const init = (index) => {
+function init(index) {
+  // console.log('init');
+  const initPromise = new Promise ((res, rej) => {
+    // const adjustedIndex = /*index - 1*/ index //if we use animationsController, we use index - 1;
+    const theme = Object.keys(slideshowParams)[/*adjustedIndex*/index];
 
-  // const adjustedIndex = /*index - 1*/ index //if we use animationsController, we use index - 1;
-  const theme = Object.keys(slideshowParams)[/*adjustedIndex*/index];
-  // console.log(theme)
+    // /*    SCROLLBAR   */
+    const ps = new PerfectScrollbar(footer, {
+      handlers: ['click-rail', 'drag-thumb', 'keyboard', 'wheel', 'touch'],
+      suppressScrollX: true
+    });
 
-  // /*    SCROLLBAR   */
-  const ps = new PerfectScrollbar(footer, {
-    handlers: ['click-rail', 'drag-thumb', 'keyboard', 'wheel', 'touch'],
-  });
+    /* BACKGROUND AND TEXT COLORS */
+    colorsChange(/*adjustedIndex*/index);
 
-  /* BACKGROUND AND TEXT COLORS */
-  colorsChange(/*adjustedIndex*/index);
+    /*  CURSOR  */
+    cursorMove(/*adjustedIndex*/index);
 
-  /*  CURSOR  */
-  cursorMove(/*adjustedIndex*/index);
+    /*   TOTEM   */
+    document.querySelector(`.totem_${theme}`).classList.add('showTotem');
+    document.querySelector(`.totem_${theme}`).addEventListener('animationend', removeInitAnimationClasses);
+    document.querySelector(`.totem_${theme}`).classList.add('perpetual-translation');
 
-  /*   TOTEM   */
-  document.querySelector(`.totem_${theme}`).classList.add('showTotem');
-  document.querySelector(`.totem_${theme}`).addEventListener('animationend', removeInitAnimationClasses);
-  document.querySelector(`.totem_${theme}`).classList.add('perpetual-translation');
+    /*  OPTIONS  */
+    document.querySelector(`.option_${theme}`).classList.add('showOption');
 
-  /*  OPTIONS  */
-  document.querySelector(`.option_${theme}`).classList.add('showOption');
+    //REMOVE ALL CLASSES AFTER ENTRANCE
+    //Get hotel letters
+    const nameLetters = [];
+    const hotelEstablishmentName = document.querySelector('.slideshow__description--establishment-name');
+    [...hotelEstablishmentName.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
 
-  //REMOVE ALL CLASSES AFTER ENTRANCE
-  //Get hotel letters
-  const nameLetters = [];
-  const hotelEstablishmentName = document.querySelector('.slideshow__description--establishment-name');
-  [...hotelEstablishmentName.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
+    //Get slogan letters
+    const hotelSlogan = document.querySelector('.slideshow__description--slogan');
+    const sloganLetters = [...hotelSlogan.children];
 
-  //Get slogan letters
-  const hotelSlogan = document.querySelector('.slideshow__description--slogan');
-  const sloganLetters = [...hotelSlogan.children];
+    //Get option letters
+    const hotelOption = document.querySelector('.showOption');
+    const optionLetters = [...hotelOption.children];
 
-  //Get option letters
-  const hotelOption = document.querySelector('.showOption');
-  const optionLetters = [...hotelOption.children];
-
-  //Gather all letters
-  allLetters = [...nameLetters, ...optionLetters, ...sloganLetters];
-  for (var i = 0; i < allLetters.length; i++) {
-    allLetters[i].addEventListener('animationend', removeInitAnimationClasses)
-  }
+    //Gather all letters
+    allLetters = [...nameLetters, ...optionLetters, ...sloganLetters];
+    for (var i = 0; i < allLetters.length; i++) {
+      allLetters[i].addEventListener('animationend', removeInitAnimationClasses)
+      if (i === (allLetters.length - 1)) {
+        res(i);
+      }
+    }
+    rej('it didn\'t work there');
+    
+  })
 };
-init(CURRENT_INDEX);
 
 function removeInitAnimationClasses() {
   //For hotel description (slogan, name and option)
@@ -169,6 +176,7 @@ function removeInitAnimationClasses() {
 }
 
 function removeInitForDivider() {
+  // console.log('we remove the init for divider');
   this.classList.remove('init');
   this.classList.remove('coming-in');
   this.removeEventListener('animationend', removeInitForDivider);
@@ -182,16 +190,16 @@ function removeInitForDivider() {
     DESCRIPTION POSITION
 \*------------------------------------*/
 
-hotelOptionsContainer.style.height = `${document.querySelector(`[data-hotel-option='${CURRENT_INDEX + 1}']`).getBoundingClientRect().height}px`
+// hotelOptionsContainer.style.height = `${document.querySelector(`[data-hotel-option='${CURRENT_INDEX + 1}']`).getBoundingClientRect().height}px`
 
-function alignDescriptionWithCursorOnMiddle () {
-  const hotelOptionsContainerBottom = hotelOptionsContainer.getBoundingClientRect().bottom;
-  const hotelDescriptionBottom = slideshowDescription.getBoundingClientRect().bottom;
-  const differenceWithMiddle = hotelDescriptionBottom - hotelOptionsContainerBottom;
-  slideshowDescription.style.marginBottom = `${-differenceWithMiddle}px`;
-}
+// function alignDescriptionWithCursorOnMiddle () {
+//   const hotelOptionsContainerBottom = hotelOptionsContainer.getBoundingClientRect().bottom;
+//   const hotelDescriptionBottom = slideshowDescription.getBoundingClientRect().bottom;
+//   const differenceWithMiddle = hotelDescriptionBottom - hotelOptionsContainerBottom;
+//   slideshowDescription.style.marginBottom = `${-differenceWithMiddle}px`;
+// }
 
-alignDescriptionWithCursorOnMiddle();
+// alignDescriptionWithCursorOnMiddle();
 /*------------------------------------*\
     SLIDESHOW & SCROLLING
 \*------------------------------------*/
@@ -199,16 +207,27 @@ alignDescriptionWithCursorOnMiddle();
 let transitionStarted = transitionDurationBetweenVIdeos + 1;
 let firstScrollTimeStamp = 0;
 let wheelIsNotEnough = false;
+let touchYOnScreen = 0;
 
 function startTransitionSlideshow(e) {
+  console.log(e);
+  e.preventDefault();
   // player1 ? '': throw new Error('Video not loaded')
   //Prevent transit while already transiting
   if (slideshowDivBackground.classList.contains('inTransition') || dividerInDescription.classList.contains('inTransition')) {
     console.log('case 1');
     return;
   };
+  if (e.type === "touchstart") {
+    console.log('touchstart');
+    touchYOnScreen = e.changedTouches[0].clientY;
+    return;
+  } else if (e.type === "touchend" && e.changedTouches[0].clientY === touchYOnScreen) {
+    console.log('touchend same same');
+    return;
+  }
   //Prevent pressing any other key
-  const minScroll = 100;
+  const minScroll = 8;
   let smallScroll = ((e.deltaY < minScroll) && (e.deltaY > -minScroll));
 
   if ((e.type === 'wheel') && firstScrollTimeStamp === 0) { 
@@ -246,13 +265,17 @@ function startTransitionSlideshow(e) {
     wheeledDown: (e.type === 'wheel' && e.deltaY > 0),
     keyDown: (e.type === 'keyup' && ((e.keyCode === 40) || (e.keyCode === 32))),
     keyUp: (e.type === 'keyup' && (e.keyCode === 38)),  //38 = arrow up
-    clickedMouseForDown: (e.type === 'click' && e.srcElement.className === 'mouse'),
-    clickedCrossForUp: (e.type === 'click' && e.srcElement.nodeName === 'svg'),
+    clickedMouseForDown: ((e.type === 'click' && e.srcElement.className === 'mouse') || (e.type === 'touchend') && e.srcElement.className === 'mouse'),
+    clickedCrossForUp: ((e.type === 'click' && e.srcElement.nodeName === 'svg') || (e.type === 'touchend') && (e.srcElement.nodeName === 'svg')),
+    touchedForDown: (e.type === 'touchend' && e.changedTouches[0].clientY < touchYOnScreen),
+    touchedForUp: (e.type === 'touchend' && e.changedTouches[0].clientY > touchYOnScreen)
   };
 
-  const eventGoUp = (eventCases.keyUp || eventCases.wheeledUp || eventCases.clickedCrossForUp);
-  const eventGoDown = (eventCases.keyDown || eventCases.wheeledDown || eventCases.clickedMouseForDown);
+  const eventGoUp = (eventCases.keyUp || eventCases.wheeledUp || eventCases.clickedCrossForUp || eventCases.touchedForUp);
+  const eventGoDown = (eventCases.keyDown || eventCases.wheeledDown || eventCases.clickedMouseForDown || eventCases.touchedForDown);
 
+  console.log(`eventGoUp: ${eventGoUp}`);
+  console.log(`eventGoDown: ${eventGoDown}`);
   //If portrait or mobile
  if (eventGoUp && CURRENT_INDEX === 0) {
     console.log('case 2');
@@ -261,18 +284,23 @@ function startTransitionSlideshow(e) {
   //From slideshow to first video
   } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides - 1)) {
     console.log('case 3');
-    //We keep in mind we started transition
-    transitionStarted = Date.now();
-    //We keep the totem slideshow mute from scrolling
-    slideshowDiv.removeEventListener('wheel', startTransitionSlideshow);
-    //We do what we need to do
-    scrollFromSlideshowToFirstVideo();
-    return;
+    //If case 5, we prevent to scroll directly more down and go to case 3
+    if (Date.now() - transitionStarted < 1000) {
+      return;
+    } else {
+      //We keep in mind we started transition
+      transitionStarted = Date.now();
+      //We keep the totem slideshow mute from scrolling
+      slideshowDiv.removeEventListener('wheel', startTransitionSlideshow);
+      //We do what we need to do
+      scrollFromSlideshowToFirstVideo();
+      return;
+    }
   //From first video to slideshow
   } else if (eventGoUp && CURRENT_INDEX === (numberOfSlides)) {
     console.log('case 4');
     //If case 6, we prevent to scroll directly more up and go to case 4
-    if (Date.now() - transitionStarted < 1000) {
+    if (Date.now() - transitionStarted < transitionDurationBetweenVIdeos + 100) {
       return;
     } else {
       //We keep in mind we started transition
@@ -287,7 +315,7 @@ function startTransitionSlideshow(e) {
   } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides)) {
     console.log('case 5');
     //If case 3, we prevent to scroll directly more down and go to case 5
-    if (Date.now() - transitionStarted < 1000) {
+    if (Date.now() - transitionStarted < transitionDurationBetweenVIdeos + 100) {
       return
     } else {
       //We keep in mind we started transition
@@ -300,7 +328,7 @@ function startTransitionSlideshow(e) {
   } else if (eventGoUp && CURRENT_INDEX === (numberOfSlides + 1)) {
     console.log('case 6');
     //If case 8, we prevent to scroll directly more up and go to case 6
-    if (Date.now() - transitionStarted < 1000) {
+    if (Date.now() - transitionStarted < transitionDurationBetweenVIdeos + 100) {
       return;
     } else {
       //We keep in mind we started transition
@@ -313,7 +341,7 @@ function startTransitionSlideshow(e) {
   } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides + 1)) {
     console.log('case 7');
     //If case 5, we prevent to scroll directly more down and go to case 7
-    if (Date.now() - transitionStarted < 1000) {
+    if (Date.now() - transitionStarted < transitionDurationBetweenVIdeos + 100) {
       return;
     } else {
       //There is nothing more to show after this, so no need to keep in mind we started transition
@@ -324,7 +352,7 @@ function startTransitionSlideshow(e) {
     }
   //From footer to second video
   } else if (eventGoUp && CURRENT_INDEX === (numberOfSlides + 2)) {
-    console.log('case 6');
+    console.log('case 8');
     transitionStarted = Date.now();
     hideFooter();
     return;
@@ -334,6 +362,7 @@ function startTransitionSlideshow(e) {
     return;
   /**** Transition in slideshow   ****/
   } else if (wheelIsNotEnough) {
+    console.log('case 10');
     if (dividerInDescription.classList.contains('inTransition')) {
       return;
     } else {
@@ -348,7 +377,7 @@ function startTransitionSlideshow(e) {
     }
   } else {
     firstScrollTimeStamp = 0;
-    if (Date.now() - transitionStarted < 1000) {
+    if (Date.now() - transitionStarted < transitionDurationBetweenVIdeos + 100) {
       return; 
     } else {
       transitionStarted = transitionDurationBetweenVIdeos + 1;
@@ -358,9 +387,9 @@ function startTransitionSlideshow(e) {
     };
   }
 
-  if (!wholeContentDiv.classList.contains('slideshow__landscape')) {
-    return
-  }
+  // if (!wholeContentDiv.classList.contains('slideshow__landscape')) {
+  //   return
+  // }
   const previousIndex = CURRENT_INDEX;
   let direction;
   if (eventGoUp && CURRENT_INDEX > 0 && CURRENT_INDEX < numberOfSlides) { 
@@ -387,6 +416,11 @@ function startTransitionSlideshow(e) {
 function fakeScroll (e) {
   allLetters = [];
 
+  //Get totem
+  e.deltaY > 0
+    ? document.querySelector('.showTotem').classList.add(`move-letter-up-first-1`)
+    : document.querySelector('.showTotem').classList.add(`move-letter-down-first-1`);
+
   //Get hotel letters
   const nameLetters = [];
   const hotelEstablishmentName = document.querySelector('.slideshow__description--establishment-name');
@@ -410,10 +444,13 @@ function fakeScroll (e) {
         allLetters[i].addEventListener('animationend', removeFakeScroll);
       };
   };
+
 };
 
 function removeFakeScroll (e) {
-
+  // debugger
+  document.querySelector('.showTotem').classList.remove(`move-letter-up-first-1`);
+  document.querySelector('.showTotem').classList.remove(`move-letter-down-first-1`);
   for (var i = 0; i < allLetters.length; i++) {
     allLetters[i].classList.remove(`move-letter-down-first-${i + 1}`);
     allLetters[i].classList.remove(`move-letter-up-first-${i + 1}`);
@@ -543,6 +580,7 @@ function resetHotelOptions(index){
       prevOptionLength = [...option.children].length;
     }
     if (optionIsVisible) {
+      option.classList.remove('hideLetter');
       /******   NEXT OPTION   ******/
       for (let i = 0; i < letters.length; i++) {
         const letter = letters[i];
@@ -554,6 +592,7 @@ function resetHotelOptions(index){
       if (!optionNeedToStayVisible) {
       /******   CURRENT OPTION   ******/
         option.classList.remove('showOption');
+        option.classList.add('hideLetter');
         option.classList.remove('perpetual-translation');
       } else {
         return;
@@ -582,12 +621,12 @@ function scrollFromSlideshowToFirstVideo() {
 
 
   controlVideo1PointerEvents.addEventListener('wheel', startTransitionSlideshow);
+  controlVideo1PointerEvents.addEventListener('touchstart', startTransitionSlideshow);
+  controlVideo1PointerEvents.addEventListener('touchend', startTransitionSlideshow);
   playerPlay(player1);
 }
 
 function scrollFromFirstVideoToSlideshow() {
-  CURRENT_INDEX--;
-
   wholeContent.classList.remove('from_slideshow_to_first_video');
   wholeContent.classList.add('from_first_video_to_slideshow');
   wholeContent.classList.remove('from_first_video_to_second_video');
@@ -597,6 +636,8 @@ function scrollFromFirstVideoToSlideshow() {
   wholeContent.addEventListener('animationend', getOutOfVideos);
 
   controlVideo1PointerEvents.removeEventListener('wheel', startTransitionSlideshow);
+  controlVideo1PointerEvents.removeEventListener('touchstart', startTransitionSlideshow);
+  controlVideo1PointerEvents.removeEventListener('touchend', startTransitionSlideshow);
 }
 
 function scrollFromFirstToSecondVideo() {
@@ -622,6 +663,7 @@ function scrollFromSecondToFirstVideo() {
 }
 
 function getOutOfVideos() {
+  CURRENT_INDEX--;
   wholeContent.classList.remove('from_slideshow_to_first_video');
   wholeContent.classList.remove('from_first_video_to_slideshow');
   wholeContent.classList.remove('from_first_video_to_second_video');
@@ -652,12 +694,38 @@ function hideFooter () {
 
 window.addEventListener('keyup', startTransitionSlideshow);
 slideshowDiv.addEventListener('wheel', startTransitionSlideshow);
+// slideshowDiv.addEventListener('touchmove', startTransitionSlideshow);
+
+
+[...document.querySelectorAll('.slideshow__totem')].forEach(totem => {
+  totem.addEventListener('touchstart', startTransitionSlideshow);
+  totem.addEventListener('touchend', startTransitionSlideshow);
+})
+
+
 document.querySelector('.scroll-btn').addEventListener('click', startTransitionSlideshow);
+document.querySelector('.scroll-btn').addEventListener('touchstart', startTransitionSlideshow);
+document.querySelector('.scroll-btn').addEventListener('touchend', startTransitionSlideshow);
 video1Div.addEventListener('wheel', startTransitionSlideshow);
+video1Div.addEventListener('touchstart', startTransitionSlideshow);
+video1Div.addEventListener('touchend', startTransitionSlideshow);
 video2Div.addEventListener('wheel', startTransitionSlideshow);
+video2Div.addEventListener('touchstart', startTransitionSlideshow);
+video2Div.addEventListener('touchend', startTransitionSlideshow);
 
 controlVideo1PointerEvents.addEventListener('click', togglePlayPause);
+controlVideo1PointerEvents.addEventListener('touchstart', togglePlayPause);
 controlVideo2PointerEvents.addEventListener('click', togglePlayPause);
+controlVideo2PointerEvents.addEventListener('touchstart', togglePlayPause);
 
 closeFooter.addEventListener('click', startTransitionSlideshow);
-// export { totemDiv };
+closeFooter.addEventListener('touchstart', startTransitionSlideshow);
+closeFooter.addEventListener('touchend', startTransitionSlideshow);
+
+// animVideo.addEventListener('loadeddata', function(e) {
+//   window.setTimeout(() => {
+//     init(CURRENT_INDEX);
+//   }, 200);
+// });
+
+export {  CURRENT_INDEX, colorsChange, cursorMove, startTransitionSlideshow };

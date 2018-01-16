@@ -70,11 +70,11 @@ let player2StartLoad = 0;
 
 function playerLoad(player) {
   if (player === player1) {
-    console.log('loading player 1')
+    // console.log('loading player 1')
     player1StartLoad = Date.now();
     player1.load('M6kQi1_Btqg');  
   } else if (player === player2) {
-    console.log('loading player 2')
+    // console.log('loading player 2')
     player2StartLoad = Date.now();
     player2.load('M6kQi1_Btqg');  
   }
@@ -94,7 +94,7 @@ function playerLoad(player) {
 // };
 
 function playerPlay(player) {
-  console.log('play', player)
+  // console.log('play', player)
   player.play();
 }
 

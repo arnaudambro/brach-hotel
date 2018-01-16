@@ -1,8 +1,9 @@
 'use strict';
 
 import { exactCapitalLetterSize } from '../_measureFont'; 
+import "babel-polyfill";
 
-function populateHotelOptions (motherDiv, index, data, size, ffamily) {
+function populateHotelOptions (motherDiv, index, data, size, ffamily, anyLetterSpacing = 0) {
   const theme = Object.keys(data)[index];
   
   // we do <p><span>'letter'</span></p> for each letter, in order to create an animation on each letter
@@ -17,10 +18,11 @@ function populateHotelOptions (motherDiv, index, data, size, ffamily) {
   [...motherDiv.children].forEach(letter => {
     exactCapitalLetterSize(letter, ffamily, size, 1);
     //If the character is a space, make it clear to the eye by enlarging it 
+    const letterSpacing = data[theme].optionsLetterSpacingLargeScreen * size / data[theme].fontSizeLargeScreen
     if (letter.firstChild.textContent.charCodeAt(0) === 32) {
-      letter.style.marginRight = `${5 * data[theme].optionsLetterSpacing}px`;
+      letter.style.marginRight = `${5 * (anyLetterSpacing === 0 ? letterSpacing : anyLetterSpacing)}px`;
     } else {
-      letter.style.marginRight = `${data[theme].optionsLetterSpacing}px`;
+      letter.style.marginRight = `${anyLetterSpacing === 0 ? letterSpacing : anyLetterSpacing}px`;
     }
   })
 };

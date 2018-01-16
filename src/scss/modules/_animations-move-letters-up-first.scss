@@ -9,7 +9,7 @@
 }
 
 .move-letter-up-first-1 { 
-  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 1) forwards move-letters-up-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 1) reverse forwards move-letters-up-first;
+  animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 1) forwards move-letters-up-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 1) reverse forwards move-letters-up-first !important;
 }
 .move-letter-up-first-2 { 
   animation: var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTimeOut) * 2) forwards move-letters-up-first, var(--letterTransitionDuration) cubic-bezier(0.96, 0.57, 0.6, 1.29) calc(var(--letterTransitionDuration) + var(--letterTimeOut) * 2) reverse forwards move-letters-up-first;
