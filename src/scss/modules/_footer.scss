@@ -15,6 +15,7 @@
     transform: translateY(50vh);
     transition: transform 1s ease-in-out;
     will-change: transform;
+    max-height: 400px;
   }
   &.portrait {
     position: relative;
@@ -173,6 +174,7 @@
           .valider {
             width: 200px;
             height: var(--height);
+            margin-left: 20px;
             > button {
               @include size(100%);
               border-radius: 0;
@@ -180,6 +182,9 @@
               border: none;
               background-color: $spicy;
               letter-spacing: 2.5px;
+            }
+            @media all and (max-width: $small-break) {
+              margin-left: 0;
             }
           }
 
