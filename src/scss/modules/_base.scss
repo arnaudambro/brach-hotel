@@ -2,20 +2,23 @@
   box-sizing: border-box;
   // border: 1px solid #000;
   @include resetMarginPadding;
+  scroll-behavior: smooth;
 }
 
-html, body {
+html {
   @include size(100%);
-  overflow: hidden;
+  // overflow: hidden;
 }
 
 body {
+  @include size(100%);
   position: relative;
+  overflow: hidden;
+  &.portrait {
+    overflow: scroll !important;
+  }
 }
 
-.english {
-  display: none !important;
-}
 
 #wholeContent {
   position: relative;
@@ -28,6 +31,9 @@ body {
   > * {
     flex-grow: 0;
     flex-shrink: 0;
+  }
+  &.portrait {
+    overflow-x: hidden !important;
   }
 }
 

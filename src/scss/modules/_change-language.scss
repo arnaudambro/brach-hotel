@@ -1,0 +1,23 @@
+.change-language {
+  position: fixed;
+  top: 20px;
+  left: 30px;
+  > span {
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 400;
+    font-family: 'Cogito', sans-serif;
+    color: $white;
+    opacity: 1;
+    &.inactive {
+      display: inline !important;
+      opacity: 0.5;
+    }
+  }
+}
+
+.english, .french {
+  &.inactive {
+    display: none !important;
+  }
+}

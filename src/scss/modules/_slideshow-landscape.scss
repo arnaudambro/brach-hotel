@@ -1,237 +1,266 @@
-  .slideshow {
+.slideshow {
 
-    position: relative;
+  &.portrait {
+    display: none;
+  }
+  &.landscape {
+    display: flex;
+  }
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  @include resetMarginPadding;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+
+  &__background {
+    &.portrait {
+      display: none;
+    }
+
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100vh;
     width: 100vw;
-    @include resetMarginPadding;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    overflow: hidden;
-
-    &__background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100vh;
-      width: 100vw;
-      &.inTransition {
-        transition: background-color $transitionDuration ease-in-out; 
-      }
-    }
-
-    &__totem {
-      position: absolute;
-      top: 5%;
-      width: auto;
-      opacity: 0;
-      transition: left 1s ease-in-out;
-      height: 90vh;
-      left: 5%;
-
-      &.portrait {
-        height: 50vh !important;
-        top: 8% !important;
-      }
-      @media all and (min-width: $big-break) {
-        left: 15%;
-      }
-
-
-      &.showTotem {
-        opacity: 1;
-      }
-
-      background-repeat: no-repeat;
-      background-size: auto 100%;
-      background-position-y: bottom;
-      // animation: perpetual-rotation 10s linear infinite;
-      &.perpetual-translation {
-        animation: perpetual-translation 10s ease-in-out infinite;
-      }
-      &.totemOnTransitionUp {
-        will-change: transform, opacity;
-        animation: oldTotemToUp $transitionDurationOldTotem forwards ease-in-out;
-      }
-      &.totemOnTransitionDown {
-        will-change: transform, opacity;
-        animation: oldTotemToDown $transitionDurationOldTotem forwards ease-in-out;
-      }
-      &.fakeTotemUp {
-        will-change: transform, opacity;
-        animation: newTotemTranslateFromDownToUp $transitionDuration forwards ease-in-out;
-      }
-      &.fakeTotemDown {
-        will-change: transform, opacity;
-        animation: newTotemTranslateFromUpToDown $transitionDuration forwards ease-in-out;
-      }
-    }
-
-    &__description {
-
-      position: absolute;
-
-      &.landscape {
-        bottom: 50%;
-        right: 90px;
-        width: 65%;
-      }
-
-      &.portrait {
-        bottom: 25%;
-        width: 100%;
-      }
-
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      &.perpetual-translation {
-        animation: perpetual-translation 10s linear infinite;
-        animation-direction: reverse;
-      }
-      &.inTransition {
-        transition: color $transitionDuration ease-in-out; 
-      }
-      
-
-      &--establishment-name {
-        display: flex;
-
-        justify-content: center;
-        align-items: flex-start;
-        align-content: flex-start;
-
-        font-weight: 500;
-        text-transform: uppercase; 
-        > div {
-          display: flex;
-        }
-      }
-
-      &--divider {
-        &.landscape {
-          width: 50px;
-          margin-top: 12px;
-          margin-bottom: 17px;
-        }
-        &.portrait {
-          width: 30px;
-          margin-top: 9px;
-          margin-bottom: 12px;
-        }
-        border-top: 1px solid; //IMPORTANT
-        &.init {
-          transform: scale(0);
-        }
-        &.inTransition {
-          transition: border-color $transitionDuration ease-in-out; 
-          --disappearDuration: 300ms;
-          animation: var(--disappearDuration) ease-in forwards disappear, 0.5s ease-in-out calc(var(--transitionDuration) - var(--disappearDuration)) forwards appear;
-        }
-        &.coming-in {
-          animation-name: fade-in;
-          animation-delay: 1s;
-          animation-duration: 0.5s;
-          animation-timing-function: ease-in-out;
-          animation-fill-mode: forwards;
-        }
-        &.going-out {
-          animation: 0.5 fade-in reverse forwards;
-        }
-      }
-      &--optionsContainer {
-        position: relative;
-        width: 65vw;
-        text-align: center;
-      }
-
-      &--options {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        right: 50%;
-        &.showOption { 
-          display: flex !important 
-        }
-        > .hideLetter {
-          opacity: 0;
-        }
-      }
-
-
-      &--slogan {
-        &.landscape {
-          margin-top: 22px;
-          letter-spacing: 4px;
-        }
-        &.portrait {
-          margin-top: 12px;
-          letter-spacing: 2px;
-        }
-        font-weight: 400;
-        text-transform: uppercase; 
-        display: flex;
-      }
-    }
-
-    &__cursor {
-      --width: 90px;
-
-      &--fixed {
-        z-index: $z-index-cursorfixed;
-        position: absolute;
-        top: calc(50% - 2px);
-        width: var(--width);
-        border: 2px solid rgba(151,105,78,1.00);   //IMPORTANT   
-        @media all and (max-width: $medium-break) {
-          right: calc(var(--width) * (-1));
-          transition: right 1s ease-in-out;
-        }
-        @media all and (min-width: $medium-break) {
-          right: 0;
-          transition: right 1s ease-in-out;
-        }
-      }
-
-      &--moving {
-        z-index: $z-index-cursormoving;
-        position: absolute;
-        top: calc(50% - 1px);
-        @media all and (max-width: $medium-break) {
-          right: calc(var(--width) * (-1.15));
-          transition: right 1s ease-in-out;
-        }
-        @media all and (min-width: $medium-break) {
-          right: calc(var(--width) * 0.15);
-          transition: right 1s ease-in-out;
-        }
-        width: 25px;
-        border: 1px solid;   //IMPORTANT  
-        &.inTransition {
-          transition: 
-            color $maxTransitionDuration ease-in-out, 
-            border-color $maxTransitionDuration ease-in-out, 
-            transform $maxTransitionDuration ease-in-out; 
-          //COLOR FOR THE SHADOW + BORDER-COLOR FOR THE MAIN + TRANSFORM
-        }
-      }
+    &.inTransition {
+      transition: background-color $miniTransitionDuration ease-in-out; 
     }
   }
-// }
+
+  &__totem {
+    position: absolute;
+    top: 5%;
+    width: auto;
+    opacity: 0;
+    transition: left 1s ease-in-out;
+    height: 90vh;
+    left: 5%;
+
+    &.portrait {
+      height: 50vh !important;
+      top: 8% !important;
+      display: none;
+      &.displayTotem {
+        display: block !important;
+      }
+    }
+    @media all and (min-width: $big-break) {
+      left: 15%;
+    }
 
 
-.slideshow__description--options {
-  display: none;
+    &.showTotem {
+      opacity: 1;
+    }
 
-  justify-content: center;
-  align-items: flex-start;
-  align-content: flex-start;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position-y: bottom;
+    &.perpetual-translation {
+      // animation: perpetual-translation 10s ease-in-out infinite;
+    }
+    &.totemOnTransitionUp {
+      will-change: transform, opacity;
+      animation: oldTotemToUp $transitionDurationOldTotem forwards ease-in-out;
+    }
+    &.totemOnTransitionDown {
+      will-change: transform, opacity;
+      animation: oldTotemToDown $transitionDurationOldTotem forwards ease-in-out;
+    }
+    &.fakeTotemUp {
+      will-change: transform, opacity;
+      animation: newTotemTranslateFromDownToUp $transitionDuration forwards ease-in-out;
+    }
+    &.fakeTotemDown {
+      will-change: transform, opacity;
+      animation: newTotemTranslateFromUpToDown $transitionDuration forwards ease-in-out;
+    }
+  }
 
-  font-weight: 500;
-  text-transform: uppercase; 
-  > p {
-   margin: 0 5px;
- }
+  &__description {
+
+    position: absolute;
+
+    &.landscape {
+      bottom: 50%;
+      right: 90px;
+      width: 65%;
+    }
+
+    &.portrait {
+      bottom: 25%;
+      width: 100%;
+    }
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &.perpetual-translation {
+      // animation: perpetual-translation 10s linear infinite;
+      animation-direction: reverse;
+    }
+    &.inTransition {
+      transition: color $miniTransitionDuration ease-in-out; 
+    }
+
+
+    &--establishment-name {
+      display: flex;
+
+      justify-content: center;
+      align-items: flex-start;
+      align-content: flex-start;
+
+      font-weight: 500;
+      text-transform: uppercase; 
+      > div {
+        display: flex;
+      }
+    }
+
+    &--divider {
+      &.landscape {
+        width: 50px;
+        margin-top: 12px;
+        margin-bottom: 17px;
+      }
+      &.portrait {
+        width: 30px;
+        margin-top: 9px;
+        margin-bottom: 12px;
+      }
+      border-top: 1px solid;
+      &.init {
+        transform: scale(0);
+      }
+      &.inTransition {
+        transition: border-color $miniTransitionDuration ease-in-out; 
+        --disappearDuration: 300ms;
+        animation: var(--disappearDuration) ease-in forwards disappear, 0.5s ease-in-out calc(4 * var(--disappearDuration) - var(--disappearDuration)) forwards appear;
+        // animation: calc(var(--disappearDuration) * 5) ease-in-out forwards appear-disappear;
+      }
+      &.coming-in {
+        animation-name: fade-in;
+        animation-delay: 1s;
+        animation-duration: 0.5s;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+      }
+      &.going-out {
+        animation: 0.5 fade-in reverse forwards;
+      }
+    }
+    &--optionsContainer {
+      position: relative;
+      width: 65vw;
+      text-align: center;
+      &.landscape {
+        height: 53px;
+      }
+    }
+
+    &--options {
+      display: none;
+      &.portrait {
+        position: initial;
+        display: flex !important;
+      }
+      &.landscape {
+        position: absolute;
+      }
+
+      justify-content: center;
+      align-items: flex-start;
+      align-content: flex-start;
+
+      font-weight: 500;
+      text-transform: uppercase; 
+      > p {
+        margin: 0 5px;
+      }
+      top: 0;
+      left: 50%;
+      right: 50%;
+      &.showOption { 
+        display: flex !important ;
+      }
+      > .hideLetter {
+        opacity: 0;
+      }
+      
+    }
+
+
+    &--slogan {
+      &.landscape {
+        margin-top: 22px;
+        letter-spacing: 4px;
+      }
+      &.portrait {
+        margin-top: 12px;
+        letter-spacing: 2px;
+      }
+      font-weight: 400;
+      text-transform: uppercase; 
+      display: flex;
+    }
+  }
+
+  &__cursor {
+    --width: 90px;
+
+    &--fixed {
+      z-index: $z-index-cursorfixed;
+      position: absolute;
+      top: calc(50% - 2px);
+      width: var(--width);
+      border: 2px solid rgba(151,105,78,1.00);  
+      @media all and (max-width: $medium-break) {
+        right: calc(var(--width) * (-1));
+        transition: right 1s ease-in-out;
+      }
+      @media all and (min-width: $medium-break) {
+        right: 0;
+        transition: right 1s ease-in-out;
+      }
+    }
+
+    &--moving {
+      z-index: $z-index-cursormoving;
+      position: absolute;
+      top: calc(50% - 1px);
+      @media all and (max-width: $medium-break) {
+        right: calc(var(--width) * (-1.15));
+        transition: right 1s ease-in-out;
+      }
+      @media all and (min-width: $medium-break) {
+        right: calc(var(--width) * 0.15);
+        transition: right 1s ease-in-out;
+      }
+      width: 25px;
+      // height: 15%;
+      > .cursor {
+        cursor: pointer;
+        width: 100%;
+        border: 1px solid; 
+      }
+      &.inTransition {
+        transition: transform $miniTransitionDuration ease-in-out; 
+        > .cursor {
+          transition: 
+          color $miniTransitionDuration ease-in-out, 
+          border-color $miniTransitionDuration ease-in-out;
+        }
+      }
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
 }
+
+
 

@@ -24,11 +24,13 @@ const player1options = {
     modestBranding: true,
     related: false,
     info: false,
+    playsinline: 0, //https://github.com/die20/yt-player/blob/master/index.js
     timeupdateFrequency: 1000,  // default: 1000
 }
 
 player1 = new YTPlayer('#video__video1', player1options);
 // player1.load('M6kQi1_Btqg');  
+// player1.setAttribute('webkit-playsinline', 'webkit-playsinline');
 
 
 /*------------------------------------*\
@@ -54,6 +56,7 @@ const player2options = {
     modestBranding: true,
     related: false,
     info: false,
+    playsinline: 0, //https://github.com/die20/yt-player/blob/master/index.js
     timeupdateFrequency: 1000,  // default: 1000
 }
 
@@ -72,11 +75,11 @@ function playerLoad(player) {
   if (player === player1) {
     // console.log('loading player 1')
     player1StartLoad = Date.now();
-    player1.load('M6kQi1_Btqg');  
+    player1.load('eCXI7e6cbbI');  
   } else if (player === player2) {
     // console.log('loading player 2')
     player2StartLoad = Date.now();
-    player2.load('M6kQi1_Btqg');  
+    player2.load('5zdNUmc8lBk');  
   }
 }
 

@@ -10,6 +10,7 @@
   align-items: center;
   
   > * {
+    cursor: initial;
     box-sizing: border-box;
   }
 }
@@ -91,6 +92,7 @@
   box-sizing: border-box;
   border: 2px solid $white;
   border-radius: 23px;
+  cursor: pointer;
 }
 .scroll-btn .mouse > * {
   position: absolute;

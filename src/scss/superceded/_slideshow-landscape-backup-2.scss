@@ -151,9 +151,9 @@
         border: 1px solid;   //IMPORTANT  
         &.inTransition {
           transition: 
-            color $maxTransitionDuration ease-in-out, 
-            border-color $maxTransitionDuration ease-in-out, 
-            transform $maxTransitionDuration ease-in-out; 
+            color $miniTransitionDuration ease-in-out, 
+            border-color $miniTransitionDuration ease-in-out, 
+            transform $miniTransitionDuration ease-in-out; 
           //COLOR FOR THE SHADOW + BORDER-COLOR FOR THE MAIN + TRANSFORM
         }
       }

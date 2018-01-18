@@ -18,7 +18,7 @@
     opacity: 0;
   }
   > video {
-    height: 40%;
+    height: 60%;
   }
 }
 
@@ -31,16 +31,24 @@
   justify-content: center;
   align-items: center;
 
+
   
   .video__subcontainer {
     overflow: hidden;
+    position: absolute;
     &.portrait {
-      height: 128vh;
-      width: calc(128vh / 0.5625);
+      height: 113vh;
+      width: calc(113vh / 0.5625);
     }
     &.landscape-max {
      height: calc(105vw * 0.5625); 
      width: 105vw
+    }
+    &.fixed {
+      height: 100% !important;
+      width: 100% !important;
+      left: 0;
+      top: 0;
     }
   }
 
@@ -51,6 +59,9 @@
     height: 100%;
     top: 0;
     left: 0;
+    &.portrait {
+      display: none;
+    }
   }
 
 }

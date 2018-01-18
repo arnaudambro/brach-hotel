@@ -19,39 +19,33 @@ import { playerLoad, playerPlay, playerPause, player1, player1firstStart, player
 
 //DATA
 import { slideshowParams } from './_params';
+import { mqsm } from '../DOMStyling';
 
 //DOM
 const wholeContentDiv = document.querySelector('#wholeContent')
 const slideshowDiv = document.querySelector(".slideshow");
-const slideshowDivBackground = document.querySelector(".slideshow__background");
-const slideshowContentDiv = document.querySelector(".slideshow__content");
-const slideshowBackupDiv = document.querySelector(".slideshow__backup--container");
-// const totemDivs = Object.keys(slideshowParams).map(name => slideshowParams[name].totemDiv());
+const slideshowDivBackgroundLandscape = document.querySelector(".slideshow__background.landscape");
 const movingCursorDiv = document.querySelector('.slideshow__cursor--moving');
-const hotelOptions = [...document.querySelectorAll('.slideshow__description--options')];
-const hotelSlogan = document.querySelector('.slideshow__description--slogan');
-const hotelEstablishmentName = document.querySelector('.slideshow__description--establishment-name');
-const slideshowDescription = slideshowDiv.querySelector('.slideshow__description');
-const dividerInDescription = slideshowDiv.querySelector('.slideshow__description--divider');
+const hotelOptions = [...document.querySelectorAll('.slideshow__description--options.landscape')];
+const hotelSloganLandscape = slideshowDiv.querySelector('.slideshow__description--slogan.landscape');
+const hotelEstablishmentNameLandscape = slideshowDiv.querySelector('.slideshow__description--establishment-name');
+const slideshowDescriptionLandscape = slideshowDiv.querySelector('.slideshow__description.landscape');
+const dividerInDescriptionLandscape = slideshowDiv.querySelector('.slideshow__description--divider.landscape');
 const video1Div = document.querySelector('#video1');
 const video2Div = document.querySelector('#video2');
 const video1iFrame = document.querySelector('.video__video1');
 const video2iFrame = document.querySelector('.video__video2');
-const hotelOptionsContainer = document.querySelector('.slideshow__description--optionsContainer');
 const controlVideo1PointerEvents = document.querySelector('.video1').querySelector('.transparent_filter-for-allow-scrolling');
 const controlVideo2PointerEvents = document.querySelector('.video2').querySelector('.transparent_filter-for-allow-scrolling');
 const footer = document.querySelector('.footer');
 const closeFooter = footer.querySelector('.footer-cross');
 const animVideo = document.querySelector('#video-anim');
+const slideshowBackup = document.querySelector('.slideshow__backup');
 
 let allLetters;
 //CSS
 const cursorVerticalSpacing = 20;
 const transitionDurationBetweenVIdeos = 1000;  //A bit higher than the one in CSS for a proper totem transition
-
-    /*  CURSOR  */
-movingCursorDiv.style.boxShadow = `0px ${(cursorVerticalSpacing * 0)}px, 0px ${(cursorVerticalSpacing * 1)}px, 0px ${(cursorVerticalSpacing * 2)}px, 0px ${(cursorVerticalSpacing * 3)}px, 0px ${(cursorVerticalSpacing * 4)}px, 0px ${(cursorVerticalSpacing * 5)}px, 0px ${(cursorVerticalSpacing * 6)}px`;
-
 
 //SLIDESHOW PARAMS
 const numberOfSlides = Object.keys(slideshowParams).length;
@@ -63,6 +57,10 @@ Object.keys(slideshowParams).map(param => {
     biggestWordParam = slideshowParams[param].position;
   }; 
 });
+    /*  CURSOR  SHADOW */
+// movingCursorDiv.style.boxShadow = `0px ${(cursorVerticalSpacing * 0)}px, 0px ${(cursorVerticalSpacing * 1)}px, 0px ${(cursorVerticalSpacing * 2)}px, 0px ${(cursorVerticalSpacing * 3)}px, 0px ${(cursorVerticalSpacing * 4)}px, 0px ${(cursorVerticalSpacing * 5)}px, 0px ${(cursorVerticalSpacing * 6)}px`;
+movingCursorDiv.style.height = `${(numberOfSlides - 1) * (cursorVerticalSpacing) + 2}px`;
+
 
 /*------------------------------------*/  
 let CURRENT_INDEX = 0 ;
@@ -78,14 +76,27 @@ function colorsChange(index) {
   const theme = Object.keys(slideshowParams)[index];
 
   /*  TEXTS COLOR  */
-  slideshowDescription.style.color = slideshowParams[theme].textColor;
-  dividerInDescription.style.borderColor = slideshowParams[theme].textColor;
+  slideshowDescriptionLandscape.style.color = slideshowParams[theme].textColor;
+  dividerInDescriptionLandscape.style.borderColor = slideshowParams[theme].textColor;
   hotelOptions[index].style.color = slideshowParams[theme].textColor;
 
+
   /* BACKGROUND */
-  slideshowDivBackground.style.backgroundColor = slideshowParams[theme].backgroundColor;
-  movingCursorDiv.style.color = slideshowParams[theme].textColor;
-  movingCursorDiv.style.borderColor = slideshowParams[theme].textColor;
+  slideshowDivBackgroundLandscape.style.backgroundColor = slideshowParams[theme].backgroundColor;
+
+  /* CURSOR  */
+  movingCursorDiv.querySelectorAll('.cursor').forEach(cursor => cursor.style.color = slideshowParams[theme].textColor);
+  movingCursorDiv.querySelectorAll('.cursor').forEach(cursor => cursor.style.borderColor = slideshowParams[theme].textColor);
+
+  /* BACKUP */
+  Object.keys(slideshowParams).map(theme =>  {
+    const option = slideshowBackup.querySelector(`.slideshow__description.option_${theme}`);
+    option.style.color = slideshowParams[theme].textColor;
+    option.querySelector('.slideshow__description--divider').style.borderColor = slideshowParams[theme].textColor;
+
+    const background = slideshowBackup.querySelector(`.slideshow__background--${theme}`);
+    background.style.backgroundColor = slideshowParams[theme].backgroundColor;
+  })
 }
 
 //function to use also on transition and init
@@ -99,7 +110,7 @@ function endTransition(e) {
     playerLoad(player1);
     playerLoad(player2);
   }
-  [slideshowDivBackground, movingCursorDiv, dividerInDescription, slideshowDescription].forEach(item => {
+  [slideshowDivBackgroundLandscape, movingCursorDiv, dividerInDescriptionLandscape, slideshowDescriptionLandscape].forEach(item => {
     item.classList.remove('inTransition');
   });
   resetHotelOptions(CURRENT_INDEX);
@@ -135,12 +146,11 @@ function init(index) {
     //REMOVE ALL CLASSES AFTER ENTRANCE
     //Get hotel letters
     const nameLetters = [];
-    const hotelEstablishmentName = document.querySelector('.slideshow__description--establishment-name');
-    [...hotelEstablishmentName.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
+    [...hotelEstablishmentNameLandscape.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
 
     //Get slogan letters
-    const hotelSlogan = document.querySelector('.slideshow__description--slogan');
-    const sloganLetters = [...hotelSlogan.children];
+    const hotelSloganLandscape = document.querySelector('.slideshow__description--slogan');
+    const sloganLetters = [...hotelSloganLandscape.children];
 
     //Get option letters
     const hotelOption = document.querySelector('.showOption');
@@ -148,10 +158,10 @@ function init(index) {
 
     //Gather all letters
     allLetters = [...nameLetters, ...optionLetters, ...sloganLetters];
-    for (var i = 0; i < allLetters.length; i++) {
-      allLetters[i].addEventListener('animationend', removeInitAnimationClasses)
-      if (i === (allLetters.length - 1)) {
-        res(i);
+    for (let index = 0; index < allLetters.length; index++) {
+      allLetters[index].addEventListener('animationend', removeInitAnimationClasses)
+      if (index === (allLetters.length - 1)) {
+        res(index);
       }
     }
     rej('it didn\'t work there');
@@ -161,15 +171,15 @@ function init(index) {
 
 function removeInitAnimationClasses() {
   //For hotel description (slogan, name and option)
-  for (var i = 0; i < allLetters.length; i++) {
-    this.classList.remove(`fade-in-letter-up-${i + 1}`);
+  for (let index = 0; index < allLetters.length; index++) {
+    this.classList.remove(`fade-in-letter-up-${index + 1}`);
   }
+
   //For totem
   this.classList.remove('fakeTotemUp');
   //For divider in
   if (this === allLetters[allLetters.length - 1]) {
-    dividerInDescription.classList.add('coming-in');
-    dividerInDescription.addEventListener('animationend', removeInitForDivider);
+
   }
   //FOr everybody
   this.removeEventListener('animationend', removeInitAnimationClasses);
@@ -177,29 +187,18 @@ function removeInitAnimationClasses() {
 
 function removeInitForDivider() {
   // console.log('we remove the init for divider');
-  this.classList.remove('init');
-  this.classList.remove('coming-in');
-  this.removeEventListener('animationend', removeInitForDivider);
+  // if (dividerInDescriptionLandscape.classList.contains('inTransition') && !dividerInDescriptionLandscape.classList.contains('coming-in')) {
+  //   console.log('end of first transition');
+  //   dividerInDescriptionLandscape.classList.add('coming-in');
+  // } else {
+  //   console.log('end of second transition');
+    this.classList.remove('init');
+    this.classList.remove('coming-in');
+    this.removeEventListener('animationend', removeInitForDivider);
+  // }
 }
 
-/*------------------------------------*\
-    DOM STYLING
-\*------------------------------------*/
 
-/*------------------------------------*\
-    DESCRIPTION POSITION
-\*------------------------------------*/
-
-// hotelOptionsContainer.style.height = `${document.querySelector(`[data-hotel-option='${CURRENT_INDEX + 1}']`).getBoundingClientRect().height}px`
-
-// function alignDescriptionWithCursorOnMiddle () {
-//   const hotelOptionsContainerBottom = hotelOptionsContainer.getBoundingClientRect().bottom;
-//   const hotelDescriptionBottom = slideshowDescription.getBoundingClientRect().bottom;
-//   const differenceWithMiddle = hotelDescriptionBottom - hotelOptionsContainerBottom;
-//   slideshowDescription.style.marginBottom = `${-differenceWithMiddle}px`;
-// }
-
-// alignDescriptionWithCursorOnMiddle();
 /*------------------------------------*\
     SLIDESHOW & SCROLLING
 \*------------------------------------*/
@@ -210,20 +209,20 @@ let wheelIsNotEnough = false;
 let touchYOnScreen = 0;
 
 function startTransitionSlideshow(e) {
-  console.log(e);
+  if (document.body.classList.contains('portrait') || slideshowDivBackgroundLandscape.classList.contains('inTransition') || dividerInDescriptionLandscape.classList.contains('inTransition')) {
+    // console.log('case 1');
+    return;
+  } 
+  // console.log(e);
   e.preventDefault();
   // player1 ? '': throw new Error('Video not loaded')
   //Prevent transit while already transiting
-  if (slideshowDivBackground.classList.contains('inTransition') || dividerInDescription.classList.contains('inTransition')) {
-    console.log('case 1');
-    return;
-  };
   if (e.type === "touchstart") {
-    console.log('touchstart');
+    // console.log('touchstart');
     touchYOnScreen = e.changedTouches[0].clientY;
     return;
   } else if (e.type === "touchend" && e.changedTouches[0].clientY === touchYOnScreen) {
-    console.log('touchend same same');
+    // console.log('touchend same same');
     return;
   }
   //Prevent pressing any other key
@@ -274,16 +273,17 @@ function startTransitionSlideshow(e) {
   const eventGoUp = (eventCases.keyUp || eventCases.wheeledUp || eventCases.clickedCrossForUp || eventCases.touchedForUp);
   const eventGoDown = (eventCases.keyDown || eventCases.wheeledDown || eventCases.clickedMouseForDown || eventCases.touchedForDown);
 
-  console.log(`eventGoUp: ${eventGoUp}`);
-  console.log(`eventGoDown: ${eventGoDown}`);
+  // console.log(`CURRENT_INDEX: ${CURRENT_INDEX}`);
+  // console.log(`eventGoUp: ${eventGoUp}`);
+  // console.log(`eventGoDown: ${eventGoDown}`);
   //If portrait or mobile
  if (eventGoUp && CURRENT_INDEX === 0) {
-    console.log('case 2');
+    // console.log('case 2');
     return;
   /**** Transition in videos   ****/
   //From slideshow to first video
   } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides - 1)) {
-    console.log('case 3');
+    // console.log('case 3');
     //If case 5, we prevent to scroll directly more down and go to case 3
     if (Date.now() - transitionStarted < 1000) {
       return;
@@ -298,7 +298,7 @@ function startTransitionSlideshow(e) {
     }
   //From first video to slideshow
   } else if (eventGoUp && CURRENT_INDEX === (numberOfSlides)) {
-    console.log('case 4');
+    // console.log('case 4');
     //If case 6, we prevent to scroll directly more up and go to case 4
     if (Date.now() - transitionStarted < transitionDurationBetweenVIdeos + 100) {
       return;
@@ -313,7 +313,7 @@ function startTransitionSlideshow(e) {
     return;
   //From first video to second video
   } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides)) {
-    console.log('case 5');
+    // console.log('case 5');
     //If case 3, we prevent to scroll directly more down and go to case 5
     if (Date.now() - transitionStarted < transitionDurationBetweenVIdeos + 100) {
       return
@@ -326,7 +326,7 @@ function startTransitionSlideshow(e) {
     }
   //From second video to first
   } else if (eventGoUp && CURRENT_INDEX === (numberOfSlides + 1)) {
-    console.log('case 6');
+    // console.log('case 6');
     //If case 8, we prevent to scroll directly more up and go to case 6
     if (Date.now() - transitionStarted < transitionDurationBetweenVIdeos + 100) {
       return;
@@ -339,7 +339,7 @@ function startTransitionSlideshow(e) {
     }
     //From second video to footer
   } else if (eventGoDown && CURRENT_INDEX === (numberOfSlides + 1)) {
-    console.log('case 7');
+    // console.log('case 7');
     //If case 5, we prevent to scroll directly more down and go to case 7
     if (Date.now() - transitionStarted < transitionDurationBetweenVIdeos + 100) {
       return;
@@ -352,22 +352,22 @@ function startTransitionSlideshow(e) {
     }
   //From footer to second video
   } else if (eventGoUp && CURRENT_INDEX === (numberOfSlides + 2)) {
-    console.log('case 8');
+    // console.log('case 8');
     transitionStarted = Date.now();
     hideFooter();
     return;
     //From second video to footer
   }else if (eventGoDown && CURRENT_INDEX === (numberOfSlides + 2)) {
-    console.log('case 9');
+    // console.log('case 9');
     return;
   /**** Transition in slideshow   ****/
   } else if (wheelIsNotEnough) {
-    console.log('case 10');
-    if (dividerInDescription.classList.contains('inTransition')) {
+    // console.log('case 10');
+    if (dividerInDescriptionLandscape.classList.contains('inTransition')) {
       return;
     } else {
       //Tell everybody we started the transition and prevent any other transition
-      dividerInDescription.classList.add('inTransition');
+      dividerInDescriptionLandscape.classList.add('inTransition');
       //Remove the wheel event while we fake moving
       slideshowDiv.removeEventListener('wheel', startTransitionSlideshow);
       firstScrollTimeStamp = 0;
@@ -376,13 +376,15 @@ function startTransitionSlideshow(e) {
       return;
     }
   } else {
+    // console.log('case 11');
     firstScrollTimeStamp = 0;
     if (Date.now() - transitionStarted < transitionDurationBetweenVIdeos + 100) {
       return; 
     } else {
       transitionStarted = transitionDurationBetweenVIdeos + 1;
-      [slideshowDivBackground, movingCursorDiv, dividerInDescription, slideshowDescription].forEach(item => {
+      [slideshowDivBackgroundLandscape, movingCursorDiv, dividerInDescriptionLandscape, slideshowDescriptionLandscape].forEach(item => {
         item.classList.add('inTransition');
+        dividerInDescriptionLandscape.addEventListener('animationend', removeInitForDivider);
       });
     };
   }
@@ -398,6 +400,11 @@ function startTransitionSlideshow(e) {
   } else if (eventGoDown && CURRENT_INDEX < numberOfSlides)  {
     CURRENT_INDEX === numberOfSlides - 1 ? CURRENT_INDEX = 0 : CURRENT_INDEX++;
     direction = 'up';
+  } else if (e.target.classList.contains('cursor')) {
+    // console.log(e.target);
+    // debugger;
+    CURRENT_INDEX < parseInt(e.target.dataset.slideposition) ? direction = 'up' : direction = 'down';
+    CURRENT_INDEX = parseInt(e.target.dataset.slideposition);
   }
 
   //Cursor move
@@ -423,12 +430,11 @@ function fakeScroll (e) {
 
   //Get hotel letters
   const nameLetters = [];
-  const hotelEstablishmentName = document.querySelector('.slideshow__description--establishment-name');
-  [...hotelEstablishmentName.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
+  [...hotelEstablishmentNameLandscape.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
 
   //Get slogan letters
-  const hotelSlogan = document.querySelector('.slideshow__description--slogan');
-  const sloganLetters = [...hotelSlogan.children];
+  const hotelSloganLandscape = document.querySelector('.slideshow__description--slogan');
+  const sloganLetters = [...hotelSloganLandscape.children];
 
   //Get option letters
   const hotelOption = document.querySelector('.showOption');
@@ -436,12 +442,12 @@ function fakeScroll (e) {
 
   //Gather all letters
   allLetters = [...nameLetters, ...optionLetters, ...sloganLetters];
-  for (var i = 0; i < allLetters.length; i++) {
+  for (let index = 0; index < allLetters.length; index++) {
     e.deltaY > 0 
-      ? allLetters[i].classList.add(`move-letter-up-first-${i + 1}`)
-      : allLetters[i].classList.add(`move-letter-down-first-${i + 1}`);
-      if (i === allLetters.length - 1) {
-        allLetters[i].addEventListener('animationend', removeFakeScroll);
+      ? allLetters[index].classList.add(`move-letter-up-first-${index + 1}`)
+      : allLetters[index].classList.add(`move-letter-down-first-${index + 1}`);
+      if (index === allLetters.length - 1) {
+        allLetters[index].addEventListener('animationend', removeFakeScroll);
       };
   };
 
@@ -451,21 +457,21 @@ function removeFakeScroll (e) {
   // debugger
   document.querySelector('.showTotem').classList.remove(`move-letter-up-first-1`);
   document.querySelector('.showTotem').classList.remove(`move-letter-down-first-1`);
-  for (var i = 0; i < allLetters.length; i++) {
-    allLetters[i].classList.remove(`move-letter-down-first-${i + 1}`);
-    allLetters[i].classList.remove(`move-letter-up-first-${i + 1}`);
+  for (let index = 0; index < allLetters.length; index++) {
+    allLetters[index].classList.remove(`move-letter-down-first-${index + 1}`);
+    allLetters[index].classList.remove(`move-letter-up-first-${index + 1}`);
   }
   if (this === allLetters[allLetters.length - 1]) {
     this.removeEventListener('animationend', removeFakeScroll);
-    dividerInDescription.addEventListener('animationend', removeTransitForDivider);
-    // dividerInDescription.addEventListener('animationend', removeTransitForDivider);
+    dividerInDescriptionLandscape.addEventListener('animationend', removeTransitForDivider);
+    // dividerInDescriptionLandscape.addEventListener('animationend', removeTransitForDivider);
   }
   this.removeEventListener('animationend', removeFakeScroll);
 }
 
 function removeTransitForDivider() {
-  dividerInDescription.classList.remove('inTransition');
-  dividerInDescription.removeEventListener('animationend', removeTransitForDivider);
+  dividerInDescriptionLandscape.classList.remove('inTransition');
+  dividerInDescriptionLandscape.removeEventListener('animationend', removeTransitForDivider);
   slideshowDiv.addEventListener('wheel', startTransitionSlideshow);
 }
 
@@ -480,7 +486,8 @@ function totemMove(prevIndex, nextIndex, direction) {
   const prevTotemDiv = document.querySelector(`.totem_${prevTheme}`);
   const nextTotemDiv = document.querySelector(`.totem_${nextTheme}`);
 
-
+  prevTotemDiv.classList.remove('fakeTotemUp');
+  prevTotemDiv.classList.remove('fakeTotemDown');
   nextTotemDiv.classList.add(up ? 'fakeTotemUp' : 'fakeTotemDown');
   nextTotemDiv.classList.add('showTotem');
   nextTotemDiv.classList.add('perpetual-translation');
@@ -510,9 +517,9 @@ function hotelOptionsTransit(e, prevIndex, nextIndex, anyHotelOptions, direction
 
   /****** DOM *******/
   const nameLetters = [];
-  [...hotelEstablishmentName.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
+  [...hotelEstablishmentNameLandscape.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
   const nameLength = nameLetters.length;
-  const sloganLetters = [...hotelSlogan.children];
+  const sloganLetters = [...hotelSloganLandscape.children];
 
   const prevOptionLettersDiv = anyHotelOptions[prevIndex];
   const prevOptionLetters = [...prevOptionLettersDiv.children];
@@ -522,54 +529,54 @@ function hotelOptionsTransit(e, prevIndex, nextIndex, anyHotelOptions, direction
   const nextOptionLetters = [...nextOptionLettersDiv.children];
 
   /******   NAME    ******/
-  for (var k = 0; k < nameLength; k++) {
-    const letter = nameLetters[k];
+  for (let kndex = 0; kndex < nameLength; kndex++) {
+    const letter = nameLetters[kndex];
     up 
-      ? letter.classList.add(`move-letter-up-first-${k + 1}`) 
-      : letter.classList.add(`move-letter-down-first-${k + 1}`);
+      ? letter.classList.add(`move-letter-up-first-${kndex + 1}`) 
+      : letter.classList.add(`move-letter-down-first-${kndex + 1}`);
   }
   
   /******   CURRENT OPTION   ******/
-  for (let i = 0; i < prevOptionLength; i++) {
-    const letter = prevOptionLetters[i];
+  for (let index = 0; index < prevOptionLength; index++) {
+    const letter = prevOptionLetters[index];
     up 
-      ? letter.classList.add(`fade-out-letter-up-${i + nameLength + 1}`) 
-      : letter.classList.add(`fade-out-letter-down-${i + nameLength + 1}`);
+      ? letter.classList.add(`fade-out-letter-up-${index + nameLength + 1}`) 
+      : letter.classList.add(`fade-out-letter-down-${index + nameLength + 1}`);
   }
 
   /******   NEXT OPTION   ******/
   nextOptionLettersDiv.classList.add('showOption');
   nextOptionLettersDiv.classList.add('perpetual-translation');
 
-  for (let j = 0; j < nextOptionLetters.length; j++) {
-    const letter = nextOptionLetters[j];
+  for (let jndex = 0; jndex < nextOptionLetters.length; jndex++) {
+    const letter = nextOptionLetters[jndex];
     up 
-      ? letter.classList.add(`fade-in-letter-up-${j + nameLength + 1}`) 
-      : letter.classList.add(`fade-in-letter-down-${j + nameLength + 1}`);
+      ? letter.classList.add(`fade-in-letter-up-${jndex + nameLength + 1}`) 
+      : letter.classList.add(`fade-in-letter-down-${jndex + nameLength + 1}`);
   }
 
   /****** SLOGAN ************/
-  for (var h = 0; h < sloganLetters.length; h++) {
-    const letter = sloganLetters[h];
+  for (let hndex = 0; hndex < sloganLetters.length; hndex++) {
+    const letter = sloganLetters[hndex];
     up 
-      ? letter.classList.add(`move-letter-up-first-${h + nameLength + prevOptionLength + 1}`) 
-      : letter.classList.add(`move-letter-down-first-${h + nameLength + prevOptionLength + 1}`);
+      ? letter.classList.add(`move-letter-up-first-${hndex + nameLength + prevOptionLength + 1}`) 
+      : letter.classList.add(`move-letter-down-first-${hndex + nameLength + prevOptionLength + 1}`);
   }
 }
 
 function resetHotelOptions(index){
   /****** DOM *******/
   const nameLetters = [];
-  [...hotelEstablishmentName.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
+  [...hotelEstablishmentNameLandscape.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
   const nameLength = nameLetters.length;
-  const sloganLetters = [...hotelSlogan.children];
+  const sloganLetters = [...hotelSloganLandscape.children];
   let prevOptionLength;
 
   /******   NAME    ******/
-  for (var k = 0; k < nameLength; k++) {
-    const letter = nameLetters[k];
-    letter.classList.remove(`move-letter-up-first-${k + 1}`);
-    letter.classList.remove(`move-letter-down-first-${k + 1}`);
+  for (let kndex = 0; kndex < nameLength; kndex++) {
+    const letter = nameLetters[kndex];
+    letter.classList.remove(`move-letter-up-first-${kndex + 1}`);
+    letter.classList.remove(`move-letter-down-first-${kndex + 1}`);
   }
   
   hotelOptions.forEach(option => {
@@ -582,12 +589,12 @@ function resetHotelOptions(index){
     if (optionIsVisible) {
       option.classList.remove('hideLetter');
       /******   NEXT OPTION   ******/
-      for (let i = 0; i < letters.length; i++) {
-        const letter = letters[i];
-        letter.classList.remove(`fade-in-letter-up-${i + nameLength + 1}`);
-        letter.classList.remove(`fade-in-letter-down-${i + nameLength + 1}`);
-        letter.classList.remove(`fade-out-letter-up-${i + nameLength + 1}`);
-        letter.classList.remove(`fade-out-letter-down-${i + nameLength + 1}`);
+      for (let index = 0; index < letters.length; index++) {
+        const letter = letters[index];
+        letter.classList.remove(`fade-in-letter-up-${index + nameLength + 1}`);
+        letter.classList.remove(`fade-in-letter-down-${index + nameLength + 1}`);
+        letter.classList.remove(`fade-out-letter-up-${index + nameLength + 1}`);
+        letter.classList.remove(`fade-out-letter-down-${index + nameLength + 1}`);
       }
       if (!optionNeedToStayVisible) {
       /******   CURRENT OPTION   ******/
@@ -602,10 +609,10 @@ function resetHotelOptions(index){
     };
   });
   /****** SLOGAN ************/
-  for (var h = 0; h < sloganLetters.length; h++) {
-    const letter = sloganLetters[h];
-    letter.classList.remove(`move-letter-up-first-${h + nameLength + prevOptionLength + 1}`);
-    letter.classList.remove(`move-letter-down-first-${h + nameLength + prevOptionLength + 1}`);
+  for (let hndex = 0; hndex< sloganLetters.length; hndex++) {
+    const letter = sloganLetters[hndex];
+    letter.classList.remove(`move-letter-up-first-${hndex + nameLength + prevOptionLength + 1}`);
+    letter.classList.remove(`move-letter-down-first-${hndex + nameLength + prevOptionLength + 1}`);
   }
 };
 
@@ -621,8 +628,8 @@ function scrollFromSlideshowToFirstVideo() {
 
 
   controlVideo1PointerEvents.addEventListener('wheel', startTransitionSlideshow);
-  controlVideo1PointerEvents.addEventListener('touchstart', startTransitionSlideshow);
-  controlVideo1PointerEvents.addEventListener('touchend', startTransitionSlideshow);
+  // controlVideo1PointerEvents.addEventListener('touchstart', startTransitionSlideshow);
+  // controlVideo1PointerEvents.addEventListener('touchend', startTransitionSlideshow);
   playerPlay(player1);
 }
 
@@ -636,8 +643,8 @@ function scrollFromFirstVideoToSlideshow() {
   wholeContent.addEventListener('animationend', getOutOfVideos);
 
   controlVideo1PointerEvents.removeEventListener('wheel', startTransitionSlideshow);
-  controlVideo1PointerEvents.removeEventListener('touchstart', startTransitionSlideshow);
-  controlVideo1PointerEvents.removeEventListener('touchend', startTransitionSlideshow);
+  // controlVideo1PointerEvents.removeEventListener('touchstart', startTransitionSlideshow);
+  // controlVideo1PointerEvents.removeEventListener('touchend', startTransitionSlideshow);
 }
 
 function scrollFromFirstToSecondVideo() {
@@ -671,9 +678,20 @@ function getOutOfVideos() {
   wholeContent.removeEventListener('animationend', getOutOfVideos);
 }
 
-function togglePlayPause() {
+function togglePlayPause(e) {
+  if (document.body.classList.contains('portrait')) {
+    return;
+  }
   if (this.classList.contains('video1')) {
-    player1.getState() === 'playing' ? playerPause(player1) : playerPlay(player1);
+    if (player1.getState() === 'playing') {
+      // console.log(e);
+      // console.log('pause');
+      playerPause(player1);
+    } else {
+      // console.log(e);
+      // console.log('play');
+      playerPlay(player1);
+    };
   } else if (this.classList.contains('video2')) {
     player2.getState() === 'playing' ? playerPause(player2) : playerPlay(player2);
   }
@@ -681,11 +699,13 @@ function togglePlayPause() {
 
 function showFooter () {
   CURRENT_INDEX++;
+  playerPause(player2);
   footer.classList.add('visible');
 }
 
 function hideFooter () {
   CURRENT_INDEX--;
+  playerPlay(player2);
   footer.classList.remove('visible');
 }
 /*------------------------------------*\
@@ -697,10 +717,10 @@ slideshowDiv.addEventListener('wheel', startTransitionSlideshow);
 // slideshowDiv.addEventListener('touchmove', startTransitionSlideshow);
 
 
-[...document.querySelectorAll('.slideshow__totem')].forEach(totem => {
+[...document.querySelectorAll('.slideshow__totem.landscape')].forEach(totem => {
   totem.addEventListener('touchstart', startTransitionSlideshow);
   totem.addEventListener('touchend', startTransitionSlideshow);
-})
+});
 
 
 document.querySelector('.scroll-btn').addEventListener('click', startTransitionSlideshow);
@@ -714,18 +734,15 @@ video2Div.addEventListener('touchstart', startTransitionSlideshow);
 video2Div.addEventListener('touchend', startTransitionSlideshow);
 
 controlVideo1PointerEvents.addEventListener('click', togglePlayPause);
-controlVideo1PointerEvents.addEventListener('touchstart', togglePlayPause);
+// controlVideo1PointerEvents.addEventListener('touchstart', togglePlayPause);
 controlVideo2PointerEvents.addEventListener('click', togglePlayPause);
-controlVideo2PointerEvents.addEventListener('touchstart', togglePlayPause);
+// controlVideo2PointerEvents.addEventListener('touchstart', togglePlayPause);
 
 closeFooter.addEventListener('click', startTransitionSlideshow);
 closeFooter.addEventListener('touchstart', startTransitionSlideshow);
 closeFooter.addEventListener('touchend', startTransitionSlideshow);
 
-// animVideo.addEventListener('loadeddata', function(e) {
-//   window.setTimeout(() => {
-//     init(CURRENT_INDEX);
-//   }, 200);
-// });
+document.querySelectorAll('.cursor').forEach(cursor => cursor.addEventListener('click', startTransitionSlideshow))
 
-export {  CURRENT_INDEX, colorsChange, cursorMove, startTransitionSlideshow };
+
+export {  CURRENT_INDEX, colorsChange, cursorMove, startTransitionSlideshow, togglePlayPause };

@@ -7,14 +7,21 @@
     --mobile-width: 370px;
   }
   z-index: $z-index-footer;
-  position: fixed;
   bottom: 0;
   height: 50vh;
   width: 100vw;
-
-  transform: translateY(50vh);
-  transition: transform 1s ease-in-out;
-  will-change: transform;
+  &.landscape {
+    position: fixed;
+    transform: translateY(50vh);
+    transition: transform 1s ease-in-out;
+    will-change: transform;
+  }
+  &.portrait {
+    position: relative;
+    > svg {
+      display: none;
+    }
+  }
 
   display: flex;
   overflow: hidden;
@@ -57,8 +64,11 @@
     :first-child {
       letter-spacing: 1.5px;
       text-transform: uppercase;
+      font-size: 0.8em;
+      color: $white;
     }
-    :last-child {
+    .copyright {
+      // display: none;
       margin-top: 5px;
       margin-bottom: 20px;
 
@@ -79,7 +89,7 @@
     }
 
     @media all and (max-width: $small-break) {
-      height: 680px;
+      height: 700px;
     }
 
     justify-content: space-between;
@@ -126,37 +136,60 @@
       }
 
       &--right {
-        justify-content: space-around;
-        align-items: flex-end;
-        --height: 60px;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-direction: column;
 
-        .email {
+        .first-container {
           display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          > input {
-            width: 280px;
-            height: var(--height);
-            margin-top: 25px;
-            padding-left: 20px;
-            &::placeholder {
-              font-style: italic;
-              font-size: 1em;
-              color: hsla(0,0%,49%,1.00);
+          
+          justify-content: space-around;
+          align-items: flex-end;
+          --height: 60px;
+          @media all and (max-width: $small-break) {
+            flex-direction: column;
+            align-items: center !important;
+
+            &--sub {
+              margin-bottom: 20px;
             }
           }
-        }
-        .valider {
-          width: 200px;
-          height: var(--height);
-          > button {
-            @include size(100%);
-            border-radius: 0;
-            color: $white;
-            border: none;
-            background-color: $spicy;
-            letter-spacing: 2.5px;
+          .email {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            > input {
+              width: 280px;
+              height: var(--height);
+              margin-top: 10px;
+              padding-left: 20px;
+              &::placeholder {
+                font-style: italic;
+                font-size: 1em;
+                color: hsla(0,0%,49%,1.00);
+              }
+            }
           }
+          .valider {
+            width: 200px;
+            height: var(--height);
+            > button {
+              @include size(100%);
+              border-radius: 0;
+              color: $white;
+              border: none;
+              background-color: $spicy;
+              letter-spacing: 2.5px;
+            }
+          }
+
+        }
+        .wewantyou {
+          :first-child {
+            margin-bottom: 4px; 
+          }
+          margin-top: 25px;
+          margin-bottom: 25px;
         }
       }
     }

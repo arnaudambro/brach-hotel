@@ -1,6 +1,9 @@
 const reservationButton = document.querySelector('.reservationButton');
 const reservation = document.querySelector('.reservation');
+const formFrench = document.querySelector('.formContainer');
 const closeReservationButton = reservationButton.querySelector('.svgcross');
+import PerfectScrollbar from 'perfect-scrollbar';
+
 
 
 /*------------------------------------*\

@@ -15,7 +15,7 @@
 
 .reservationButton--parent1 {
   height: 100%;
-  overflow: hidden;
+    overflow: hidden;
   transition-property: width;
   transition-duration: var(--reservationTransition);
   perspective: 1000px;
@@ -39,7 +39,7 @@
   align-items: center;
   height: 250px;
   max-height: 45vh;
-  .french {
+  p {
     color: $white;
     font-family: 'Cogito';
     text-orientation: upright;
@@ -47,9 +47,6 @@
     text-transform: uppercase;
     writing-mode: tb;
     letter-spacing: 2px;
-  }
-  .english {
-    display: none;
   }
   > svg {
     display: none;
@@ -103,12 +100,23 @@
 
 
 .reservationContainer {
+  @include size(100%);  
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.formContainer {
+  @include size(100%);  
   display: flex;
-  
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   font-family: 'Cogito', sans-serif;
   font-weight: 400;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .reservation-form {
@@ -249,7 +257,7 @@
   background-origin: initial;
   background-clip: initial;
   background-color: initial;
-  overflow: hidden;
+    overflow: hidden;
   padding: 0 !important;
   -webkit-appearance: none;
 }

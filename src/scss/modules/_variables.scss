@@ -15,6 +15,7 @@ $footer-topcontainer-width: 90%;
 
 //BREAKPOINTS
 $small-break: 550px;
+$small-medium-break: 800px;
 $medium-break: 990px;
 $big-break: 2 * $small-break / 0.9 /* $footer-topcontainer-width*/; // == 1222px;
 
@@ -24,20 +25,20 @@ $big-break: 2 * $small-break / 0.9 /* $footer-topcontainer-width*/; // == 1222px
 
 :root {
   --transitionDuration: 3000ms;
-  --letterHalfTransition: calc(var(--transitionDuration) / 2);
-  --letterTimeOut: calc(var(--transitionDuration) / 100);
-  --letterTransitionDuration: calc(var(--transitionDuration) / 2 - var(--letterTimeOut) * 36);
+  --letterHalfTransition: calc(var(--transitionDuration) * 0.6 / 2);
+  --letterTimeOut: 20ms;
+  --letterTransitionDuration: calc(2000ms / 2 - var(--letterTimeOut) * 36);
   --letterOffsetForTransition: 20px;
   --dividerTranslationDist: 120px;
   --reservationTransition: 200ms;
 }
 $transitionDuration: 3000ms; 
 $transitionDurationOldTotem: $transitionDuration / 2;
-$maxTransitionDuration: $transitionDuration + 10ms;
+$miniTransitionDuration: /* $transitionDuration + 10ms */ $transitionDuration * 0.6; //== 1800ms
 $letterTimeOut: 20ms;
 $biggestWordNumberOfLetters: 36;
 //target: timeout of the last letter + transition of the last letter = 1/2 transition
-$letterTransitionDuration: $transitionDuration / 2 - $letterTimeOut * $biggestWordNumberOfLetters;
+$letterTransitionDuration: 2000ms / 2 - $letterTimeOut * $biggestWordNumberOfLetters;
 
 /*------------------------------------*\
     Z-INDEX

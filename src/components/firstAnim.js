@@ -5,163 +5,62 @@ import { CURRENT_INDEX, colorsChange, cursorMove, startTransitionSlideshow } fro
 import { slideshowParams } from './slideshow/_params';
 import PerfectScrollbar from 'perfect-scrollbar';
 import "babel-polyfill";
+import { playerLoad, player1, player2  } from './_video1';
 
 
 const footer = document.querySelector('.footer');
 const animVideo = document.querySelector('#video-anim');
+// console.log(animVideo);
 const theme = Object.keys(slideshowParams)[CURRENT_INDEX];
-const hotelEstablishmentName = document.querySelector('.slideshow__description--establishment-name');
-const hotelSlogan = document.querySelector('.slideshow__description--slogan');
-const dividerInDescription = document.querySelector('.slideshow__description--divider');
+const hotelEstablishmentNameLandscape = document.querySelector('.slideshow__description--establishment-name.landscape');
+const hotelSloganLandscape = document.querySelector('.slideshow__description--slogan.landscape');
+const dividerInDescriptionLandscape = document.querySelector('.slideshow__description--divider.landscape');
 let allLetters = [];
 
 
 /*------------------------------------*\
-    AFTER LOADING
+    AFTER LOADING -- LANDSCAPE
 \*------------------------------------*/
 
-function whenLoadedData(e) {
-  animVideo.play();
-  // /*    SCROLLBAR   */
-  const ps = new PerfectScrollbar(footer, {
-    handlers: ['click-rail', 'drag-thumb', 'keyboard', 'wheel', 'touch'],
-    suppressScrollX: true
-  });
-
-  /* BACKGROUND AND TEXT COLORS */
-  colorsChange(/*adjustedIndex*/CURRENT_INDEX);
-  /*  CURSOR  */
-  cursorMove(/*adjustedIndex*/CURRENT_INDEX);
-
-  /*   TOTEM   */
-  document.querySelector(`.totem_${theme}`).classList.add('showTotem');
-  document.querySelector(`.totem_${theme}`).addEventListener('animationend', removeInitAnimationClasses);
-  document.querySelector(`.totem_${theme}`).classList.add('perpetual-translation');
-  /*  OPTIONS  */
-  [...document.querySelectorAll(`.slideshow__description--options`)].forEach(option => option.classList.contains(`.option_${theme}`) ? '' : option.classList.add('hideLetter'));
-  document.querySelector(`.option_${theme}`).classList.add('showOption');
-
-  //REMOVE ALL CLASSES AFTER ENTRANCE
-  //Get hotel letters
-//   const nameLetters = [];
-//   const hotelLettersNodes = [...hotelEstablishmentName.children];
-//   for (let node of hotelLettersNodes) {
-//     const nodeChildren = [node.children];
-//     for (let letter of nodeChildren) {
-//       console.log(letter);
-//       await nameLetters.push(letter);
-//     }
-//   }
-
-//   console.log(nameLetters);
-
-//   //Get slogan letters
-//   const sloganLetters = [];
-//   const sloganChildren = [...hotelSlogan.children];
-//   for (let sloganLetter of sloganChildren) {
-//     console.log(sloganLetter);
-//     await sloganLetters.push(sloganLetter);
-//   }
-// console.log(sloganLetters);
-//   //Get option letters
-//   const hotelOption = document.querySelector('.showOption');
-//   const optionLetters = [];
-//   const hotelOptionLetters = [...hotelOption.children];
-//   for (let hotelLetter of hotelOptionLetters) {
-//     console.log(hotelLetter);
-//     await optionLetters.push(hotelLetter);
-//   }
-// console.log(optionLetters);
-
-  window.setTimeout(() => {
-    //Get hotel letters
-    console.log('step 1');
-    const nameLetters = [];
-    [...hotelEstablishmentName.children].forEach(node => [...node.children].forEach(letter => nameLetters.push(letter)));
-
-    window.setTimeout(() => {
-      console.log('step 2');
-      //Get slogan letters
-      const sloganLetters = [...hotelSlogan.children];
-
-      window.setTimeout(() => {
-        console.log('step 3');
-        //Get option letters
-        const hotelOption = document.querySelector('.showOption');
-        const optionLetters = [...hotelOption.children];
-
-        window.setTimeout(() => {
-          console.log('step 4');
-          window.setTimeout(() => {
-            console.log('step 5');
-            for (let letter of [...nameLetters, ...optionLetters, ...sloganLetters]) {
-              letter.addEventListener('animationend', removeInitAnimationClasses);
-              allLetters.push(letter);
-            }
-            console.log(allLetters);
-            window.setTimeout(() => {
-              console.log('step 6');
-              alignDescriptionWithCursorOnMiddle();
-              console.log('it worked !');
-              console.log(allLetters);
-            }, 200);
-          }, 500);
-        });
-      }, 20);
-    }, 20);
-  }, 100);
-
-}
-
-function removeInitAnimationClasses() {
-
-  //For hotel description (slogan, name and option)
-  for (var i = 0; i < allLetters.length; i++) {
-    this.classList.remove(`fade-in-letter-up-${i + 1}`);
-  }
-  //For totem
-  this.classList.remove('fakeTotemUp');
-  //For divider in
-  if (this === allLetters[allLetters.length - 1]) {
-    dividerInDescription.classList.add('coming-in');
-    dividerInDescription.addEventListener('animationend', removeInitForDivider);
-  }
-  //FOr everybody
-  this.removeEventListener('animationend', removeInitAnimationClasses);
-}
-
-function removeInitForDivider() {
-  console.log('we remove the init for divider');
-  this.classList.remove('init');
-  this.classList.remove('coming-in');
-  this.removeEventListener('animationend', removeInitForDivider);
-}
 /*------------------------------------*\
     AFTER PLAYING
 \*------------------------------------*/
 
+let counterHandleEnd = 0;
 function whenEnded(e) {
-  animVideo.parentNode.classList.add('hide');
-  document.querySelector('.showTotem').classList.add('fakeTotemUp');
-  populateLettersFirstTime();
-  window.setTimeout(() => {
-    document.body.removeChild(animVideo.parentNode);
-  }, 500);
+  // console.log(`this.currentTime: ${this.currentTime}`);;
+  // console.log(`this.duration: ${this.duration}`);;
+  // console.log('ended'); 
+  if ((this.currentTime === this.duration) && counterHandleEnd === 0) {
+    counterHandleEnd++;
+    animVideo.parentNode.classList.add('hide');
+    if (document.body.classList.contains('landscape')) {
+      document.querySelector('.showTotem.landscape').classList.add('fakeTotemUp')
+      populateLettersFirstTime();
+    }    
+    window.setTimeout(() => {
+      if (document.body.classList.contains('portrait')) {
+        player1.videoId ? '' : playerLoad(player1);
+        player2.videoId ? '' : playerLoad(player2);
+        [...document.querySelectorAll('.slideshow__totem.portrait')].forEach(totem => totem.classList.add('displayTotem'));
+      }
+      document.body.removeChild(animVideo.parentNode);
+    }, 2000);
+  }
+
 }
 
 function populateLettersFirstTime() {
   //Get hotel letters
   const nameLetters = [];
-  const hotelEstablishmentName = document.querySelector('.slideshow__description--establishment-name');
-  [...hotelEstablishmentName.children].forEach(node => {
+  [...hotelEstablishmentNameLandscape.children].forEach(node => {
     [...node.children].forEach(letter => {
       nameLetters.push(letter)
     });
   });
 
   //Get slogan letters
-  const hotelSlogan = document.querySelector('.slideshow__description--slogan');
-  const sloganLetters = [...hotelSlogan.children];
+  const sloganLetters = [...hotelSloganLandscape.children];
 
   //Get option letters
   const hotelOption = document.querySelector('.showOption');
@@ -179,5 +78,8 @@ function populateLettersFirstTime() {
     EVENT LISTENERS
 \*------------------------------------*/
 
-animVideo.addEventListener('loadeddata', whenLoadedData);
-animVideo.addEventListener('ended', whenEnded);
+// animVideo.addEventListener('loadeddata', whenLoadedData);
+// animVideo.addEventListener('ended', whenEnded);
+animVideo.addEventListener('timeupdate', whenEnded);
+
+export { whenLoadedData };

@@ -1,8 +1,9 @@
 
 const webpack = require('webpack');
 const nodeEnv = process.env.NODE_ENV || 'production';
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
-var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const extractSass = new ExtractTextPlugin({
     filename: "./src/css/styles.css",
@@ -49,17 +50,30 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['env']
+          presets: ['@babel/preset-env', {
+          shippedProposals: true, // to support spread operators
+          forceAllTransforms: true
+            }]
         },
       }
     ]
   },
   plugins: [
     //uglify js
-    new webpack.optimize.UglifyJsPlugin({
-      compress: { warnings: false },
-      output: { comments: false },
-      sourceMap: true
+    new UglifyJsPlugin({
+      sourceMap: true,
+      uglifyOptions: {
+        ie8: false,
+        ecma: 5,
+        warnings: false,
+        compress: true,
+        mangle: {
+          safari10: true,
+        },
+        output: {
+          comments: false,
+        },
+      }
     }),
     // env plugin
     // new webpack.DefinePlugin({
